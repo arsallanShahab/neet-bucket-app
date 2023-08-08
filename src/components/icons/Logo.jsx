@@ -50,9 +50,4 @@ const Logo = (props) => {
   );
 };
 
-Logo.defaultProps = {
-  width: "182px",
-  height: "75px",
-};
-
 export default Logo;
