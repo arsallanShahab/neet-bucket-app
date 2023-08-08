@@ -1,3 +1,3 @@
-import Logo from "./logo.jsx";
+import Logo from "./Logo";
 
 export { Logo };
