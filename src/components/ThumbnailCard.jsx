@@ -9,16 +9,14 @@ import { buttonVariants } from "./ui/button";
 const ThumbnailCard = ({ data }) => {
   const {
     chapterName: chapter_name,
-    demoImage: demo_image,
+    chapterThumbnail: chapter_thumbnail,
     keyPoints: key_points,
   } = data.fields;
   const { createdAt: created_at, updatedAt: updated_at, id } = data.sys;
 
-  if (demo_image.fields.file.url.startsWith("//")) {
-    demo_image.fields.file.url = demo_image.fields.file.url.replace(
-      "//",
-      "https://",
-    );
+  if (chapter_thumbnail?.fields.file.url.startsWith("//")) {
+    chapter_thumbnail.fields.file.url =
+      chapter_thumbnail.fields.file.url.replace("//", "https://");
   }
 
   return (
@@ -36,10 +34,9 @@ const ThumbnailCard = ({ data }) => {
       </div>
       <div className="h-56 w-full rounded-3xl">
         <Image
-          src={demo_image.fields.file.url}
-          alt={demo_image.fields.title}
-          objectFit="cover"
-          className="h-full w-full rounded-3xl border-2 object-cover"
+          src={chapter_thumbnail?.fields.file.url}
+          alt={chapter_thumbnail?.fields.title}
+          className="h-full w-full rounded-3xl border-2 object-cover object-top"
           width={500}
           height={500}
         />

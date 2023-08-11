@@ -1,6 +1,6 @@
 import Heading from "@/components/Heading";
 import ThumbnailCard from "@/components/ThumbnailCard";
-import ViewPdf from "@/components/ViewPdf";
+import ViewImage from "@/components/ViewImage";
 import { Button, buttonVariants } from "@/components/ui/button";
 import client from "@/lib/contentful";
 import { cn } from "@/lib/utils";
@@ -24,21 +24,16 @@ export default function Index({ data, title }) {
       teacher_name: data.fields.subject.fields.teacherName,
       subject_name: data.fields.subject.fields.subjectName,
       price: 25,
-      image: data.fields.demoImage.fields.file.url,
+      image: data.fields.chapterThumbnail.fields.file.url,
     };
 
     dispatch(addToCart(item));
   };
 
-  let pdfUrl = data?.fields?.demoPdf?.fields?.file?.url;
-  if (pdfUrl.startsWith("//")) {
-    pdfUrl = "https:" + pdfUrl;
-  }
-
   return (
     <div className="p-10">
       <div className="grid grid-cols-2 gap-5 rounded-3xl border p-10">
-        <ViewPdf url={pdfUrl} />
+        <ViewImage images={data.fields?.demoImages} />
         <div className="flex-col-start gap-5 px-10 py-10 pr-0">
           <h1 className="font-sora text-6xl font-bold capitalize text-black">
             {title}
