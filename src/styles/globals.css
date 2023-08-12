@@ -60,5 +60,7 @@ body {
 }
 
 .custom-btn {
-  @apply flex origin-top items-center justify-center rounded-xl border-[0.125em] p-[calc((4em-(1em*1.5)-(0.125em*2)-0.375em)/2)calc(1em*1.5)] text-base font-semibold transition-all duration-150 active:translate-y-1 active:scale-[0.98];
+  @apply flex origin-top items-center justify-center rounded-xl border-[0.125em] py-3 text-sm font-semibold transition-all duration-150 active:translate-y-1 active:scale-[0.98] md:px-8 md:py-4 md:text-base;
 }
+
+/* p-[calc((4em-(1em*1.5)-(0.125em*2)-0.375em)/2)calc(1em*1.5)] */

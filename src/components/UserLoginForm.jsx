@@ -2,6 +2,7 @@ import { useFetch } from "@/lib/hooks/useFetch";
 import { cn } from "@/lib/utils";
 import { setToken, setUser } from "@/redux/reducer/auth";
 import { Loader } from "lucide-react";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Button } from "./ui/button";
@@ -23,6 +24,9 @@ export default function UserLoginForm({ className, ...props }) {
 
   //redux
   const dispatch = useDispatch();
+
+  //router
+  const router = useRouter();
 
   // handlers for the form
   const handleChange = (e) => {
@@ -54,6 +58,7 @@ export default function UserLoginForm({ className, ...props }) {
         title: "Successful",
         description: message,
       });
+      router.push("/");
     }
     setIsLoading(false);
   };

@@ -4,13 +4,30 @@ import client from "@/lib/contentful";
 
 export default function Index({ data, title }) {
   console.log(data);
+  const classElevenChapters = data.filter((item) => item.fields.class === "11");
+  const classTwelveChapters = data.filter((item) => item.fields.class === "12");
   return (
     <div className="py-10">
       <Heading>{title}</Heading>
-      <div className="grid grid-cols-1 gap-5 p-5 pt-0 md:grid-cols-2 md:p-10 md:pt-0 lg:grid-cols-3">
-        {data.map((item, i) => {
-          return <ThumbnailCard key={i} data={item} />;
-        })}
+      <div>
+        <h2 className="mb-5 px-5 font-sora text-3xl font-semibold md:px-10">
+          Class XI
+        </h2>
+        <div className="grid grid-cols-1 gap-5 p-5 pt-0 md:grid-cols-2 md:p-10 md:pt-0 lg:grid-cols-3">
+          {classElevenChapters.map((item, i) => {
+            return <ThumbnailCard key={i} data={item} />;
+          })}
+        </div>
+      </div>
+      <div>
+        <h2 className="mb-5 px-5 font-inter text-3xl font-semibold md:px-10">
+          Class XII
+        </h2>
+        <div className="grid grid-cols-1 gap-5 p-5 pt-0 md:grid-cols-2 md:p-10 md:pt-0 lg:grid-cols-3">
+          {classTwelveChapters.map((item, i) => {
+            return <ThumbnailCard key={i} data={item} />;
+          })}
+        </div>
       </div>
     </div>
   );

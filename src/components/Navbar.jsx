@@ -20,19 +20,10 @@ import { Input } from "./ui/input";
 const Navbar = () => {
   const { user } = useSelector((state) => state.auth);
   const { totalQuantity } = useSelector((state) => state.cart);
-  const dispatch = useDispatch();
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      // console.log(token, "token");
-      dispatch(setUser(token));
-      dispatch(setToken(token));
-    }
-  }, []);
   return (
     <>
-      <div className="flex-row-between mx-auto w-full max-w-screen-2xl flex-wrap gap-5 border-b px-5 py-5 md:px-10">
-        <div className="flex-row-start flex-wrap gap-10">
+      <div className="flex-row-between sticky top-0 z-[700] mx-auto w-full max-w-screen-2xl flex-wrap gap-5 border-b bg-white px-5 py-5 md:px-10">
+        <div className="flex-row-start flex-wrap gap-5 md:gap-10">
           <Link href={"/"}>
             <Logo height="25px" />
           </Link>
@@ -46,10 +37,10 @@ const Navbar = () => {
               if (item.name === "Subjects") {
                 return (
                   <DropdownMenu key={index}>
-                    <DropdownMenuTrigger className="text-sm font-medium text-gray-500 transition-colors duration-200 hover:text-gray-900">
+                    <DropdownMenuTrigger className="relative z-[800] text-sm font-medium text-gray-500 transition-colors duration-200 hover:text-gray-900">
                       {item.name}
                     </DropdownMenuTrigger>
-                    <DropdownMenuContent>
+                    <DropdownMenuContent className="z-[800]">
                       <DropdownMenuItem>
                         <Link href="/soft-copy">Soft copy</Link>
                       </DropdownMenuItem>

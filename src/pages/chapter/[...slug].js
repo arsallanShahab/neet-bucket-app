@@ -4,19 +4,26 @@ import ViewImage from "@/components/ViewImage";
 import { Button, buttonVariants } from "@/components/ui/button";
 import client from "@/lib/contentful";
 import { cn } from "@/lib/utils";
-import { addToCart } from "@/redux/reducer/cart";
+import { addToCart, removeFromCart } from "@/redux/reducer/cart";
 import { Avatar } from "@radix-ui/react-avatar";
 import { ShoppingBag, ShoppingCart } from "lucide-react";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function Index({ data, title }) {
+  const { cartItems } = useSelector((state) => state.cart);
   const [pointsVisible, setPointsVisible] = useState(false);
+  const [isInCart, setIsInCart] = useState(false);
   const dispatch = useDispatch();
 
   console.log(data);
 
-  const handleAddToCart = () => {
+  //handlers
+  const handleCart = () => {
+    if (isInCart) {
+      dispatch(removeFromCart(data.sys.id));
+      return;
+    }
     const item = {
       id: data.sys.id,
       chapter_name: data.fields.chapterName,
@@ -26,9 +33,14 @@ export default function Index({ data, title }) {
       price: 25,
       image: data.fields.chapterThumbnail.fields.file.url,
     };
-
     dispatch(addToCart(item));
   };
+
+  //useEffect
+  useEffect(() => {
+    const findItem = cartItems.find((item) => item.id === data.sys.id);
+    setIsInCart(findItem ? true : false);
+  }, [cartItems]);
 
   return (
     <div className="p-2.5 md:p-10">
@@ -88,14 +100,14 @@ export default function Index({ data, title }) {
           </div>
           <div className="flex w-full flex-col gap-5 md:flex-row">
             <Button
-              onClick={handleAddToCart}
+              onClick={handleCart}
               className={cn(
                 buttonVariants({ variant: "ghost" }),
                 "group w-full gap-2 rounded-xl border bg-slate-50 px-10 py-7 text-base text-slate-950 transition-all active:scale-[0.97] active:bg-slate-200 md:flex-1",
               )}
             >
               <span className="translate-x-3 duration-150 group-hover:translate-x-0">
-                Add to Cart
+                {isInCart ? "Remove From Cart" : "Add To Cart"}
               </span>
               <Avatar className="h-auto w-auto -translate-x-2 scale-75 pr-1.5 text-slate-950 opacity-0 duration-150 group-hover:translate-x-0 group-hover:scale-100 group-hover:opacity-100">
                 <ShoppingCart className="h-[18px] w-[18px] stroke-[2px]" />
@@ -115,16 +127,7 @@ export default function Index({ data, title }) {
               </Avatar>
             </Button>
           </div>
-          <div className="flex-col-start gap-2">
-            <h3 className="text-sm font-semibold text-black">
-              Shipping And returns:
-            </h3>
-            <p className="text-sm leading-relaxed text-slate-600">
-              4-5 standard delivery on all orders. For any queries, please
-              contact Customer Service at +91 9876543210 or email us at
-              abc@gmail.com
-            </p>
-          </div>
+          <div className="flex-col-start gap-2"></div>
         </div>
       </div>
     </div>

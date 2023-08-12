@@ -14,8 +14,8 @@ const Index = () => {
   return (
     <div className="py-10">
       <Heading>Cart</Heading>
-      <div className="flex items-start justify-center gap-5 px-10">
-        <div className="grid basis-3/4 grid-cols-2 gap-5">
+      <div className="flex flex-col items-center justify-center gap-5 px-5 md:flex-row md:items-start md:px-10">
+        <div className="grid basis-3/4 grid-cols-1 gap-5 md:grid-cols-2">
           {cartItems.map((_, i) => {
             let thumbnail_url = _.image;
             if (thumbnail_url.startsWith("//")) {
@@ -64,7 +64,7 @@ const Index = () => {
             );
           })}
         </div>
-        <div className="flex-col-start basis-1/4 gap-5">
+        <div className="flex-col-start w-full basis-full gap-5 md:basis-1/4">
           <div className="flex w-full flex-col items-start gap-5 rounded-2xl border bg-slate-50 p-5">
             <h1 className="font-sora text-2xl font-bold capitalize text-black">
               Summary

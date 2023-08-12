@@ -1,5 +1,6 @@
 import { cn } from "@/lib/utils";
 import { Loader } from "lucide-react";
+import { useRouter } from "next/router";
 import { useState } from "react";
 import { Button, buttonVariants } from "./ui/button";
 import { Input } from "./ui/input";
@@ -17,6 +18,7 @@ export default function UserSignUpForm({ className, ...props }) {
   });
 
   const { toast } = useToast();
+  const router = useRouter();
 
   const onSubmit = async (event) => {
     event.preventDefault();
@@ -42,6 +44,7 @@ export default function UserSignUpForm({ className, ...props }) {
         title: "Successful",
         description: message,
       });
+      router.push("/user/login");
     }
     setIsLoading(false);
   };
