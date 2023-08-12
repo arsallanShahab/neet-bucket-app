@@ -7,7 +7,7 @@ export default function Index({ data, title }) {
   return (
     <div className="py-10">
       <Heading>{title}</Heading>
-      <div className="grid grid-cols-1 gap-5 p-10 pt-0 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid grid-cols-1 gap-5 p-5 pt-0 md:grid-cols-2 md:p-10 md:pt-0 lg:grid-cols-3">
         {data.map((item, i) => {
           return <ThumbnailCard key={i} data={item} />;
         })}

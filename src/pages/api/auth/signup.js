@@ -30,7 +30,7 @@ export default async function handler(req, res) {
 
   try {
     const { db } = await connectToDatabase();
-    const existingUser = db.collection("users").findOne({ email });
+    const existingUser = await db.collection("users").findOne({ email });
     if (existingUser) {
       return res.status(400).send({ success: false, message: "User exists" });
     }

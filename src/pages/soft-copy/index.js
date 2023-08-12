@@ -8,10 +8,10 @@ import Link from "next/link";
 const Index = ({ data }) => {
   console.log(data);
   return (
-    <div className="py-10">
+    <div className="py-5 md:py-10">
       <Heading>Soft Copy</Heading>
-      <div className="flex-row-start flex-wrap gap-10 px-10 pb-20">
-        <div className="grid w-full grid-cols-1 place-items-center gap-20 md:grid-cols-2 lg:grid-cols-3">
+      <div className="flex-row-start flex-wrap gap-5 px-5 pb-20 md:gap-10 md:px-10">
+        <div className="grid w-full grid-cols-1 place-items-center gap-5 md:grid-cols-2 md:gap-20 lg:grid-cols-3">
           {data.length > 0 &&
             data?.map((item, i) => {
               return (
@@ -60,9 +60,9 @@ const AnimatedCard = (props) => {
   return (
     <Link
       href={`/subject/${slug}/${id}`}
-      className="group relative z-20 flex w-full flex-col items-start justify-center rounded-2xl border border-indigo-100 bg-indigo-50 px-4 pb-3 pt-6 duration-150 hover:bg-indigo-600"
+      className="group relative z-20 flex w-full flex-col items-start justify-center rounded-2xl border border-indigo-100 bg-indigo-50 px-4 pb-3 pt-4 duration-150 hover:bg-indigo-600"
     >
-      <div className="absolute right-4 top-4 z-30 flex h-14 w-14 items-center justify-center rounded-2xl bg-indigo-600 p-3  duration-150 group-hover:h-20 sm:right-2 sm:top-2">
+      <div className="absolute right-4 top-4 z-30 flex h-10 w-10 items-center justify-center rounded-2xl bg-indigo-600 p-3 duration-150 group-hover:h-14 sm:right-2  sm:top-2 md:h-14 md:w-14 md:group-hover:h-16">
         <Icon name={icon_name} size={"24px"} color={"#FFFFFF"} />
       </div>
       <div className="translate-y-2 duration-150 group-hover:translate-y-0">

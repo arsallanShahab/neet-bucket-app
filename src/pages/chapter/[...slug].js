@@ -31,11 +31,11 @@ export default function Index({ data, title }) {
   };
 
   return (
-    <div className="p-10">
-      <div className="grid grid-cols-2 gap-5 rounded-3xl border p-10">
+    <div className="p-2.5 md:p-10">
+      <div className="grid grid-cols-1 gap-5 rounded-3xl p-2.5 md:grid-cols-2 md:border md:p-10">
         <ViewImage images={data.fields?.demoImages} />
-        <div className="flex-col-start gap-5 px-10 py-10 pr-0">
-          <h1 className="font-sora text-6xl font-bold capitalize text-black">
+        <div className="flex-col-start gap-5 px-0 py-5 pb-20 pr-0 md:px-10 md:py-10">
+          <h1 className="font-sora text-3xl font-bold capitalize text-black md:text-6xl">
             {title}
           </h1>
           <div className="flex-col-start gap-5">
@@ -86,12 +86,12 @@ export default function Index({ data, title }) {
               </div>
             </div>
           </div>
-          <div className="flex w-full gap-5">
+          <div className="flex w-full flex-col gap-5 md:flex-row">
             <Button
               onClick={handleAddToCart}
               className={cn(
                 buttonVariants({ variant: "ghost" }),
-                "group flex-1 gap-2 rounded-xl border bg-slate-50 px-10 py-7 text-base text-slate-950",
+                "group w-full gap-2 rounded-xl border bg-slate-50 px-10 py-7 text-base text-slate-950 transition-all active:scale-[0.97] active:bg-slate-200 md:flex-1",
               )}
             >
               <span className="translate-x-3 duration-150 group-hover:translate-x-0">
@@ -104,7 +104,7 @@ export default function Index({ data, title }) {
             <Button
               className={cn(
                 buttonVariants({}),
-                "group flex-1 gap-2 rounded-xl border px-10 py-7 text-base ",
+                "group w-full gap-2  rounded-xl border px-10 py-7 text-base transition-all active:scale-[0.97] active:bg-slate-800 md:flex-1 ",
               )}
             >
               <span className="translate-x-3 duration-150 group-hover:translate-x-0">

@@ -31,12 +31,12 @@ const Navbar = () => {
   }, []);
   return (
     <>
-      <div className="flex-row-between mx-auto w-full max-w-screen-2xl flex-wrap gap-5 border-b px-10 py-5">
-        <div className="flex-row-start gap-10">
+      <div className="flex-row-between mx-auto w-full max-w-screen-2xl flex-wrap gap-5 border-b px-5 py-5 md:px-10">
+        <div className="flex-row-start flex-wrap gap-10">
           <Link href={"/"}>
-            <Logo width="100%" height="25px" />
+            <Logo height="25px" />
           </Link>
-          <nav className="flex-row-start gap-5">
+          <nav className="flex flex-row justify-start gap-5">
             {[
               { name: "Home", path: "/" },
               { name: "Subjects", path: "/subjects" },
@@ -72,33 +72,35 @@ const Navbar = () => {
             })}
           </nav>
         </div>
-        <div className="flex-row-end gap-5">
+        <div className="flex w-full flex-col items-center justify-end gap-5 md:w-auto md:flex-row">
           <Input
             type="search"
             placeholder="Search..."
-            className="md:w-[100px] lg:w-[300px]"
+            className="w-full md:w-[100px] lg:w-[300px]"
           />
-          <Link
-            href={"/cart"}
-            className="relative rounded-xl border border-transparent bg-slate-50 hover:border-slate-200 hover:bg-slate-100"
-          >
-            <Avatar className="h-full w-full p-2.5 text-slate-950">
-              <ShoppingCart className="h-4 w-4 object-cover" />
-            </Avatar>
-            <div className="absolute -right-1.5 -top-1.5 flex h-5 w-5 items-center justify-center rounded-3xl border bg-indigo-600 text-xs text-white">
-              {totalQuantity}
-            </div>
-          </Link>
-          {user ? (
-            <UserNav user={user} />
-          ) : (
+          <div className="flex w-full items-center justify-between gap-5 md:w-auto">
             <Link
-              href="/user/login"
-              className={cn(buttonVariants({ variant: "ghost" }), "border")}
+              href={"/cart"}
+              className="relative rounded-xl border border-transparent bg-slate-50 hover:border-slate-200 hover:bg-slate-100"
             >
-              Login
+              <Avatar className="h-full w-full p-2.5 text-slate-950">
+                <ShoppingCart className="h-4 w-4 object-cover" />
+              </Avatar>
+              <div className="absolute -right-1.5 -top-1.5 flex h-5 w-5 items-center justify-center rounded-3xl border bg-indigo-600 text-xs text-white">
+                {totalQuantity}
+              </div>
             </Link>
-          )}
+            {user ? (
+              <UserNav user={user} />
+            ) : (
+              <Link
+                href="/user/login"
+                className={cn(buttonVariants({ variant: "ghost" }), "border")}
+              >
+                Login
+              </Link>
+            )}
+          </div>
         </div>
       </div>
     </>

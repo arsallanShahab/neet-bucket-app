@@ -21,6 +21,10 @@ module.exports = {
         sora: ["Sora", "sans-serif"],
         inter: ["Inter", "sans-serif"],
       },
+      boxShadow: {
+        custom: " 0 0.375em 0 0 var(--tw-shadow-colored)",
+        "btn-active": "0 0.375em 0 -0.375em var(--tw-shadow-colored)",
+      },
       keyframes: {
         "slide-x": {
           "0%": { transform: "translateX(0)" },

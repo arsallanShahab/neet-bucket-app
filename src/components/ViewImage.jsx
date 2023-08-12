@@ -3,6 +3,7 @@ import { useState } from "react";
 
 const ViewImage = ({ images }) => {
   const [currentImage, setCurrentImage] = useState(0);
+  const [imageLoaded, setImageLoaded] = useState(false);
   images = images?.map((image) => {
     if (image.fields.file.url.startsWith("//")) {
       image.fields.file.url = image.fields.file.url.replace("//", "https://");
@@ -10,8 +11,8 @@ const ViewImage = ({ images }) => {
     return image;
   });
   return (
-    <div className="flex h-full w-full flex-row items-start gap-5">
-      <div className="flex flex-col gap-2.5 rounded-lg bg-slate-100 p-2">
+    <div className="flex h-full w-full flex-col-reverse items-center gap-5 md:flex-row md:items-start">
+      <div className="flex gap-2.5 rounded-lg bg-slate-100 p-2 md:flex-col">
         {images &&
           images.map((image, index) => {
             let imageUrl = image.fields.file.url;
@@ -27,8 +28,8 @@ const ViewImage = ({ images }) => {
                 <Image
                   src={imageUrl}
                   alt="image"
-                  width={100}
-                  height={100}
+                  width={500}
+                  height={500}
                   className="h-16 w-16  object-cover object-top hover:opacity-80"
                 />
               </div>

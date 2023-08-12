@@ -58,3 +58,7 @@ body {
 .flex-col-end {
   @apply flex flex-col items-center justify-end;
 }
+
+.custom-btn {
+  @apply flex origin-top items-center justify-center rounded-xl border-[0.125em] p-[calc((4em-(1em*1.5)-(0.125em*2)-0.375em)/2)calc(1em*1.5)] text-base font-semibold transition-all duration-150 active:translate-y-1 active:scale-[0.98];
+}
