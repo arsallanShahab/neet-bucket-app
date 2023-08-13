@@ -1,15 +1,49 @@
 import Heading from "@/components/Heading";
 import { buttonVariants } from "@/components/ui/button";
+import { useToast } from "@/components/ui/use-toast";
 import { cn } from "@/lib/utils";
 import { removeFromCart } from "@/redux/reducer/cart";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 
 const Index = () => {
+  //selectors
   const { cartItems, totalQuantity, totalPrice } = useSelector(
     (state) => state.cart,
   );
+  const { user } = useSelector((state) => state.auth);
+
+  //initializers
   const dispatch = useDispatch();
+  const router = useRouter();
+  const toast = useToast();
+
+  //handlers
+  const handleCheckout = async () => {
+    if (!user) {
+      toast.error("Please login to continue");
+      router.push("/login");
+      return;
+    }
+    const res = await fetch("/api/stripe/checkout", {
+      method: "POST",
+      body: JSON.stringify({
+        cartItems,
+        totalQuantity,
+        totalPrice,
+        user_id: user.id,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const { url, success, id } = await res.json();
+    console.log(url, success, id);
+    if (success) {
+      router.push(url);
+    }
+  };
   console.log(cartItems);
   return (
     <div className="py-10">
@@ -40,7 +74,7 @@ const Index = () => {
                       {_.teacher_name}
                     </h1>
                     <button
-                      onClick={() => dispatch(removeFromCart(_.id))}
+                      onClick={() => dispatch(removeFromCart(_.demoId))}
                       href="signup"
                       className={cn(
                         buttonVariants({ variant: "ghost" }),
@@ -88,6 +122,7 @@ const Index = () => {
                 buttonVariants({ variant: "default" }),
                 "h-auto w-full rounded-xl border bg-green-600 px-4 py-4 text-sm font-medium text-white hover:bg-green-700",
               )}
+              onClick={handleCheckout}
             >
               Proceed to Checkout
             </button>

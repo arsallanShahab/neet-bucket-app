@@ -1,6 +1,8 @@
 import Heading from "@/components/Heading";
 import ThumbnailCard from "@/components/ThumbnailCard";
 import client from "@/lib/contentful";
+import { ChevronLeft } from "lucide-react";
+import Link from "next/link";
 
 export default function Index({ data, title }) {
   console.log(data);
@@ -8,7 +10,17 @@ export default function Index({ data, title }) {
   const classTwelveChapters = data.filter((item) => item.fields.class === "12");
   return (
     <div className="py-10">
-      <Heading>{title}</Heading>
+      <div className="flex justify-start px-5 md:px-10">
+        <Link
+          href="/soft-copy"
+          className="flex -translate-x-2 items-center justify-start rounded-md border border-transparent px-2 py-1 duration-100 hover:border-slate-200 hover:bg-slate-100"
+        >
+          <ChevronLeft className="h-4 w-4 stroke-black" /> Back
+        </Link>
+      </div>
+      <h1 className="w-full max-w-2xl px-5 pb-10 pt-2.5 text-left font-sora text-5xl font-bold capitalize text-slate-950 md:px-10">
+        {title}
+      </h1>
       <div>
         <h2 className="mb-5 px-5 font-sora text-3xl font-semibold md:px-10">
           Class XI

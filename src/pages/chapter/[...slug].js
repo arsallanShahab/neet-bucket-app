@@ -18,6 +18,11 @@ export default function Index({ data, title }) {
 
   console.log(data);
 
+  let thumbnail_url = data.fields.chapterThumbnail.fields.file.url;
+  if (thumbnail_url.startsWith("//")) {
+    thumbnail_url = "https:" + thumbnail_url;
+  }
+
   //handlers
   const handleCart = () => {
     if (isInCart) {
@@ -25,20 +30,22 @@ export default function Index({ data, title }) {
       return;
     }
     const item = {
-      id: data.sys.id,
+      demoId: data.sys.id,
+      fullPdfId: data.fields.fullPdf.sys.id,
       chapter_name: data.fields.chapterName,
       class: data.fields.class,
       teacher_name: data.fields.subject.fields.teacherName,
       subject_name: data.fields.subject.fields.subjectName,
       price: 25,
-      image: data.fields.chapterThumbnail.fields.file.url,
+      quantity: 1,
+      image: thumbnail_url,
     };
     dispatch(addToCart(item));
   };
 
   //useEffect
   useEffect(() => {
-    const findItem = cartItems.find((item) => item.id === data.sys.id);
+    const findItem = cartItems.find((item) => item.demoId === data.sys.id);
     setIsInCart(findItem ? true : false);
   }, [cartItems]);
 

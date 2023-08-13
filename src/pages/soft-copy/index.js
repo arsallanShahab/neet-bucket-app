@@ -2,6 +2,7 @@ import Heading from "@/components/Heading";
 import Icon from "@/components/LucideIcon";
 import client from "@/lib/contentful";
 import { cn } from "@/lib/utils";
+import { ChevronLeft } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -9,7 +10,17 @@ const Index = ({ data }) => {
   console.log(data);
   return (
     <div className="py-5 md:py-10">
-      <Heading>Soft Copy</Heading>
+      <div className="flex justify-start px-5 md:px-10">
+        <Link
+          href="/"
+          className="flex -translate-x-2 items-center justify-start rounded-md border border-transparent px-2 py-1 duration-100 hover:border-slate-200 hover:bg-slate-100"
+        >
+          <ChevronLeft className="h-4 w-4 stroke-black" /> Back
+        </Link>
+      </div>
+      <h1 className="w-full max-w-2xl px-5 pb-10 pt-2.5 text-left font-sora text-5xl font-bold capitalize text-slate-950 md:px-10">
+        Soft Copy
+      </h1>
       <div className="flex-row-start flex-wrap gap-5 px-5 pb-20 md:gap-10 md:px-10">
         <div className="grid w-full grid-cols-1 place-items-center gap-5 md:grid-cols-2 md:gap-20 lg:grid-cols-3">
           {data.length > 0 &&

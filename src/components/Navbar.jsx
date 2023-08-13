@@ -30,27 +30,10 @@ const Navbar = () => {
           <nav className="flex flex-row justify-start gap-5">
             {[
               { name: "Home", path: "/" },
-              { name: "Subjects", path: "/subjects" },
-              { name: "Teachers", path: "teachers" },
-              { name: "About", path: "/about" },
+              { name: "Study Materials", path: "/study-materials" },
+              { name: "About Us", path: "/about-us" },
+              { name: "Contact Us", path: "/contact" },
             ].map((item, index) => {
-              if (item.name === "Subjects") {
-                return (
-                  <DropdownMenu key={index}>
-                    <DropdownMenuTrigger className="relative z-[800] text-sm font-medium text-gray-500 transition-colors duration-200 hover:text-gray-900">
-                      {item.name}
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent className="z-[800]">
-                      <DropdownMenuItem>
-                        <Link href="/soft-copy">Soft copy</Link>
-                      </DropdownMenuItem>
-                      <DropdownMenuItem>
-                        <Link href="/#">Hard Copy</Link>
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                );
-              }
               return (
                 <Link
                   href={item.path}
