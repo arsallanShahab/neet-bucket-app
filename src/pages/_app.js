@@ -4,7 +4,7 @@ import Navbar from "@/components/Navbar";
 import { Toaster } from "@/components/ui/toaster";
 import { setAppLoading, setAppSuccess } from "@/redux/reducer/app";
 import { setToken, setUser } from "@/redux/reducer/auth";
-import { addCartFromLocalStorage } from "@/redux/reducer/cart";
+import { setCartItems } from "@/redux/reducer/cart";
 import store from "@/redux/store";
 import "@/styles/globals.css";
 import { useEffect } from "react";
@@ -26,7 +26,7 @@ export default function App({ Component, pageProps }) {
     const token = localStorage.getItem("token");
     if (cart) {
       store.dispatch(
-        addCartFromLocalStorage({
+        setCartItems({
           cart,
           totalQuantity,
           totalPrice,

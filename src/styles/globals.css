@@ -63,4 +63,21 @@ body {
   @apply flex origin-top items-center justify-center rounded-xl border-[0.125em] py-3 text-sm font-semibold transition-all duration-150 active:translate-y-1 active:scale-[0.98] md:px-8 md:py-4 md:text-base;
 }
 
+.custom-shadow {
+  box-shadow: 0 0.375em 0 0 var(--tw-shadow-colored);
+}
+.custom-shadow:active {
+  box-shadow: 0 0.375em 0 -0.375em var(--tw-shadow-colored);
+}
+
+.responsive-nav {
+  display: none !important;
+}
+
+@media (min-width: 640px) {
+  .responsive-nav {
+    display: flex !important;
+  }
+}
+
 /* p-[calc((4em-(1em*1.5)-(0.125em*2)-0.375em)/2)calc(1em*1.5)] */

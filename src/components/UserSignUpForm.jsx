@@ -9,10 +9,13 @@ import { Label } from "./ui/label";
 import { useToast } from "./ui/use-toast";
 
 export default function UserSignUpForm({ className, ...props }) {
+  const [formState, setFormState] = useState({
+    step_one: true,
+    step_two: false,
+    step_three: false,
+  });
   const [isLoading, setIsLoading] = useState(false);
-  const [getOtp, setGetOtp] = useState(false);
   const [otp, setOtp] = useState("");
-  const [showOtpInput, setShowOtpInput] = useState(false);
   const [error, setError] = useState(null);
   const [form, setForm] = useState({
     name: "",
@@ -82,11 +85,14 @@ export default function UserSignUpForm({ className, ...props }) {
         title: "Successful",
         description: message,
       });
-      setShowOtpInput(true);
+      setFormState((prev) => ({
+        ...prev,
+        step_one: false,
+        step_two: true,
+      }));
       setError(null);
     }
     setIsLoading(false);
-    console.log("otp");
   };
 
   const handleChange = (event) => {
@@ -118,8 +124,11 @@ export default function UserSignUpForm({ className, ...props }) {
               title: "Successful",
               description: message,
             });
-            setGetOtp(true);
-            setShowOtpInput(false);
+            setFormState((prev) => ({
+              ...prev,
+              step_two: false,
+              step_three: true,
+            }));
             setError(null);
           }
           setIsLoading(false);
@@ -131,7 +140,7 @@ export default function UserSignUpForm({ className, ...props }) {
     <div className={cn("grid gap-6", className)} {...props}>
       <form onSubmit={onSubmit}>
         <div className="grid gap-2">
-          {getOtp && (
+          {formState.step_three && (
             <div className="grid gap-1">
               <Label className="sr-only" htmlFor="email">
                 Name
@@ -146,23 +155,25 @@ export default function UserSignUpForm({ className, ...props }) {
               />
             </div>
           )}
-          <div className="grid gap-1">
-            <Label className="sr-only" htmlFor="email">
-              Email
-            </Label>
-            <Input
-              id="email"
-              placeholder="name@example.com"
-              type="email"
-              autoCapitalize="none"
-              autoComplete="email"
-              autoCorrect="off"
-              disabled={isLoading}
-              value={form.email}
-              onChange={handleChange}
-            />
-          </div>
-          {getOtp && (
+          {formState.step_one && (
+            <div className="grid gap-1">
+              <Label className="sr-only" htmlFor="email">
+                Email
+              </Label>
+              <Input
+                id="email"
+                placeholder="name@example.com"
+                type="email"
+                autoCapitalize="none"
+                autoComplete="email"
+                autoCorrect="off"
+                disabled={isLoading}
+                value={form.email}
+                onChange={handleChange}
+              />
+            </div>
+          )}
+          {formState.step_three && (
             <>
               <div className="relative grid gap-1">
                 <Label className="sr-only" htmlFor="email">
@@ -237,7 +248,7 @@ export default function UserSignUpForm({ className, ...props }) {
               </Button>
             </>
           )}
-          {showOtpInput && (
+          {formState.step_two && (
             <>
               <div className="relative flex w-full justify-center px-5 py-5">
                 <OTPInput
@@ -256,13 +267,9 @@ export default function UserSignUpForm({ className, ...props }) {
                   )}
                 />
               </div>
-              <Button disabled={isLoading} onClick={handleOtp}>
-                {isLoading && <Loader className="mr-2 h-4 w-4 animate-spin" />}
-                Verify OTP
-              </Button>
             </>
           )}
-          {!getOtp && !showOtpInput && (
+          {formState.step_one && (
             <Button disabled={isLoading} onClick={handleOtp}>
               {isLoading && <Loader className="mr-2 h-4 w-4 animate-spin" />}
               Get OTP

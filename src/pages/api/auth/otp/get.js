@@ -27,12 +27,10 @@ export default async function handler(req, res) {
       .json({ success: false, message: "User already exists" });
   }
   //delete existing otp if any
-  const deleteOtps = await db.collection("otps").deleteMany({ email });
+  //   const getOtp = await db.collection("otps").deleteMany({ email });
 
   //save otp and expiry in db
-  const saveOtp = await db
-    .collection("otps")
-    .insertOne({ email, otp, otpExpiry: expiry });
+  const saveOtp = await db.collection("otps").insertOne({ email, otp, expiry });
 
   //send thorugh smtp
   const transporter = nodemailer.createTransport({
@@ -47,7 +45,7 @@ export default async function handler(req, res) {
     from: `"${process.env.NODEMAILER_EMAIL_NAME}" <${process.env.NODEMAILER_EMAIL_USER}>`,
     to: email,
     subject: "OTP for login",
-    text: `Your OTP for email verification is: ${otp}`,
+    text: `Your OTP is ${otp} and is valid for 5 minutes.`,
   };
   transporter.sendMail(mailOptions, function (error, info) {
     if (error) {

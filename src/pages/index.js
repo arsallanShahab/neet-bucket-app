@@ -1,3 +1,4 @@
+import CustomButton from "@/components/CustomButton";
 import Heading from "@/components/Heading";
 import { FileIcon, TruckIcon } from "@/components/icons";
 import client from "@/lib/contentful";
@@ -59,11 +60,11 @@ export default function Home({ subjects }) {
           </div>
         </Link>
       </div>
-      <div>
+      {/* <div className="px-5 sm:px-10">
         <Heading>
           Most Selling <span className="text-blue-500">Notes</span>
         </Heading>
-      </div>
+      </div> */}
     </main>
   );
 }

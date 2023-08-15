@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 import { setLoading, setToken, setUser } from "@/redux/reducer/auth";
 import { ShoppingCart } from "lucide-react";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { UserNav } from "./UserNav";
 import { Logo } from "./icons";
@@ -20,7 +20,12 @@ import { Input } from "./ui/input";
 const Navbar = () => {
   const { user } = useSelector((state) => state.auth);
   const { totalQuantity } = useSelector((state) => state.cart);
-  const [menuOpen, setMenuOpen] = useState(true);
+  const navRef = useRef(null);
+  const handleMenuOpen = () => {
+    if (navRef.current) {
+      navRef.current.classList.toggle("responsive-nav");
+    }
+  };
   return (
     <>
       <div className="flex-row-between sticky top-0 z-[700] mx-auto w-full max-w-screen-2xl flex-wrap gap-5 border-b bg-white px-5 py-5 md:px-10">
@@ -29,17 +34,15 @@ const Navbar = () => {
             <Logo height="25px" />
           </Link>
           <Button
-            onClick={() => setMenuOpen(!menuOpen)}
+            onClick={handleMenuOpen}
             variant="outline"
             className="ml-auto block h-auto text-xs sm:hidden"
           >
             Menu
           </Button>
           <nav
-            style={{
-              display: menuOpen ? "flex" : "none",
-            }}
-            className="flex w-full flex-col justify-start gap-5 sm:w-auto sm:flex-row"
+            ref={navRef}
+            className="responsive-nav flex w-full flex-col justify-start gap-5 sm:flex sm:w-auto sm:flex-row"
           >
             {[
               { name: "Home", path: "/" },

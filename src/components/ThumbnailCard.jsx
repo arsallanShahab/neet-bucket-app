@@ -1,12 +1,12 @@
 import { cn } from "@/lib/utils";
 import { addToCart, removeFromCart } from "@/redux/reducer/cart";
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, ShoppingCart } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Avatar } from "./ui/avatar";
-import { buttonVariants } from "./ui/button";
+import { Button, buttonVariants } from "./ui/button";
 
 const ThumbnailCard = ({ data }) => {
   const { cartItems } = useSelector((state) => state.cart);
@@ -50,7 +50,7 @@ const ThumbnailCard = ({ data }) => {
     setIsInCart(findItem ? true : false);
   }, [cartItems]);
   return (
-    <div className="flex-col-start group w-full gap-2 rounded-3xl border border-transparent bg-white p-3 duration-300 hover:border-indigo-100 hover:bg-indigo-50">
+    <div className="flex-col-start group relative z-10 w-full gap-2 rounded-3xl border border-transparent bg-white p-3 duration-300 hover:border-indigo-100 hover:bg-slate-50">
       <Link
         href={`/chapter/${data.fields.chapterName
           .toLowerCase()
@@ -58,7 +58,7 @@ const ThumbnailCard = ({ data }) => {
         className="w-full"
       >
         <div className="flex-row-between w-full">
-          <div className="rounded-3xl bg-indigo-600 px-4 py-2">
+          <div className="rounded-3xl bg-slate-900 px-4 py-2">
             <h1 className="text-base font-bold text-white">
               {data.fields.chapterName}
             </h1>
@@ -83,12 +83,13 @@ const ThumbnailCard = ({ data }) => {
         <div className="rounded-3xl px-4 py-2 text-base font-semibold text-slate-900">
           Price: ₹{data.fields.price}
         </div>
-        <button
+        <Button
           onClick={handleCart}
-          className="h-auto rounded-3xl border bg-slate-900 px-4 py-1 text-xs font-medium text-white"
+          className="h-auto rounded-3xl border bg-indigo-600 px-4 py-0 text-xs font-semibold leading-none text-white"
         >
-          {isInCart ? "Remove from cart" : "Add to cart"}
-        </button>
+          {isInCart ? "Remove from cart" : "Add to cart"}{" "}
+          <ShoppingCart className="ml-1 h-4 w-4" />
+        </Button>
       </div>
     </div>
   );

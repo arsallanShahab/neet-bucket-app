@@ -1,4 +1,5 @@
 import AppLoader from "@/components/AppLoader";
+import Heading from "@/components/Heading";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -31,9 +32,10 @@ const Index = () => {
   }
 
   return (
-    <div className="px-5 py-16 md:px-10">
+    <div className="p-5 py-16 md:p-10">
+      <Heading>My Account</Heading>
       <Tabs defaultValue="account">
-        <TabsList className="grid w-[400px] grid-cols-2">
+        <TabsList className="grid w-full grid-cols-2 sm:w-[400px]">
           <TabsTrigger value="account">Account</TabsTrigger>
           <TabsTrigger value="password">Password</TabsTrigger>
         </TabsList>

@@ -58,7 +58,7 @@ export default function UserLoginForm({ className, ...props }) {
         title: "Successful",
         description: message,
       });
-      router.push("/");
+      router.push("/profile");
     }
     setIsLoading(false);
   };

@@ -22,7 +22,7 @@ module.exports = {
         inter: ["Inter", "sans-serif"],
       },
       boxShadow: {
-        custom: " 0 0.375em 0 0 var(--tw-shadow-colored)",
+        custom: "0 0.375em 0 0 var(--tw-shadow-colored)",
         "btn-active": "0 0.375em 0 -0.375em var(--tw-shadow-colored)",
       },
       keyframes: {

@@ -1,3 +1,4 @@
+import CustomButton from "@/components/CustomButton";
 import Heading from "@/components/Heading";
 import Icon from "@/components/LucideIcon";
 import client from "@/lib/contentful";
@@ -9,35 +10,23 @@ import Link from "next/link";
 const Index = ({ data }) => {
   console.log(data);
   return (
-    <div className="py-5 md:py-10">
-      <div className="flex justify-start px-5 md:px-10">
-        <Link
-          href="/"
-          className="flex -translate-x-2 items-center justify-start rounded-md border border-transparent px-2 py-1 duration-100 hover:border-slate-200 hover:bg-slate-100"
-        >
-          <ChevronLeft className="h-4 w-4 stroke-black" /> Back
-        </Link>
-      </div>
-      <h1 className="w-full max-w-2xl px-5 pb-10 pt-2.5 text-left font-sora text-5xl font-bold capitalize text-slate-950 md:px-10">
-        Soft Copy
-      </h1>
-      <div className="flex-row-start flex-wrap gap-5 px-5 pb-20 md:gap-10 md:px-10">
-        <div className="grid w-full grid-cols-1 place-items-center gap-5 md:grid-cols-2 md:gap-20 lg:grid-cols-3">
-          {data.length > 0 &&
-            data?.map((item, i) => {
-              return (
-                <AnimatedCard
-                  key={i}
-                  subject={item.fields.subjectName}
-                  teacher={item.fields.teacherName}
-                  icon_name={item.fields.iconName}
-                  teacher_image={item.fields.teacherImage}
-                  slug={item.fields.slug}
-                  id={item.sys.id}
-                />
-              );
-            })}
-        </div>
+    <div className="p-5 md:p-10">
+      <Heading>Soft copy</Heading>
+      <div className="grid w-full grid-cols-1 place-items-center gap-5 border-b border-r pb-20 md:grid-cols-2 lg:grid-cols-3">
+        {data.length > 0 &&
+          data?.map((item, i) => {
+            return (
+              <AnimatedCard
+                key={i}
+                subject={item.fields.subjectName}
+                teacher={item.fields.teacherName}
+                icon_name={item.fields.iconName}
+                teacher_image={item.fields.teacherImage}
+                slug={item.fields.slug}
+                id={item.sys.id}
+              />
+            );
+          })}
       </div>
     </div>
   );
@@ -69,33 +58,24 @@ const AnimatedCard = (props) => {
   const { subject, teacher, icon_name, slug = "#", id, teacher_image } = props;
   console.log(teacher_image);
   return (
-    <Link
-      href={`/subject/${slug}/${id}`}
-      className="group relative z-20 flex w-full flex-col items-start justify-center rounded-2xl border border-indigo-100 bg-indigo-50 px-4 pb-3 pt-4 duration-150 hover:bg-indigo-600"
-    >
-      <div className="absolute right-4 top-4 z-30 flex h-10 w-10 items-center justify-center rounded-2xl bg-indigo-600 p-3 duration-150 group-hover:h-14 sm:right-2  sm:top-2 md:h-14 md:w-14 md:group-hover:h-16">
-        <Icon name={icon_name} size={"24px"} color={"#FFFFFF"} />
-      </div>
-      <div className="translate-y-2 duration-150 group-hover:translate-y-0">
-        <div className="h-10 w-10 origin-top translate-x-2 duration-150 group-hover:w-24 ">
-          <Image
-            src={teacher_image?.fields?.file.url.replace("//", "http://")}
-            alt={teacher_image?.fields?.file.fileName}
-            width={100}
-            height={100}
-            className="h-full w-full rounded-3xl object-cover object-top"
-          />
+    <>
+      <Link
+        href={`/subject/${slug}/${id}`}
+        className="flex w-full origin-top items-center justify-start gap-5 rounded-xl border-[0.125em] border-slate-200 px-4 py-5 text-sm font-semibold shadow-custom shadow-slate-100 transition-all duration-150 active:translate-y-2 active:scale-[0.98] active:shadow-btn-active md:px-8 md:py-10 md:text-base"
+      >
+        <Image
+          src={teacher_image?.fields?.file.url.replace("//", "http://")}
+          alt={teacher_image?.fields?.file.fileName}
+          width={100}
+          height={100}
+          className="h-12 w-12 origin-top rounded-[50%] object-cover object-top duration-150 sm:h-14 sm:w-14"
+        />
+        <div>
+          <p className="text-xl font-bold sm:text-2xl">{subject}</p>
+          <span className="text-sm text-slate-500 md:block">{teacher}</span>
         </div>
-        <div className="relative z-20 mt-2 w-full text-left group-hover:text-white">
-          <h1 className="flex w-full translate-x-2 flex-wrap font-sora text-3xl font-bold duration-150  group-hover:translate-x-0">
-            {subject}
-          </h1>
-          <p className="mt-2 -translate-y-0 font-inter text-sm font-medium opacity-0 duration-150 group-hover:-translate-y-2 group-hover:opacity-100">
-            {teacher}
-          </p>
-        </div>
-      </div>
-    </Link>
+      </Link>
+    </>
   );
 };
 

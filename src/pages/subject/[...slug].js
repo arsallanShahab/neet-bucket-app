@@ -9,33 +9,23 @@ export default function Index({ data, title }) {
   const classElevenChapters = data.filter((item) => item.fields.class === "11");
   const classTwelveChapters = data.filter((item) => item.fields.class === "12");
   return (
-    <div className="py-10">
-      <div className="flex justify-start px-5 md:px-10">
-        <Link
-          href="/soft-copy"
-          className="flex -translate-x-2 items-center justify-start rounded-md border border-transparent px-2 py-1 duration-100 hover:border-slate-200 hover:bg-slate-100"
-        >
-          <ChevronLeft className="h-4 w-4 stroke-black" /> Back
-        </Link>
-      </div>
-      <h1 className="w-full max-w-2xl px-5 pb-10 pt-2.5 text-left font-sora text-5xl font-bold capitalize text-slate-950 md:px-10">
-        {title}
-      </h1>
-      <div>
-        <h2 className="mb-5 px-5 font-sora text-3xl font-semibold md:px-10">
-          Class XI
-        </h2>
-        <div className="grid grid-cols-1 gap-5 p-5 pt-0 md:grid-cols-2 md:p-10 md:pt-0 lg:grid-cols-3">
-          {classElevenChapters.map((item, i) => {
-            return <ThumbnailCard key={i} data={item} />;
-          })}
+    <div className="p-5 sm:p-10">
+      <Heading>{title}</Heading>
+      {classElevenChapters && classElevenChapters.length > 0 ? (
+        <div>
+          <h2 className="mb-5 font-sora text-3xl font-semibold">Class XI</h2>
+          <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
+            {classElevenChapters.map((item, i) => {
+              return <ThumbnailCard key={i} data={item} />;
+            })}
+          </div>
         </div>
-      </div>
-      <div>
-        <h2 className="mb-5 px-5 font-inter text-3xl font-semibold md:px-10">
+      ) : null}
+      <div className="relative flex w-full flex-col items-start justify-start">
+        <h2 className="relative -z-10 -mb-9 rounded-2xl border bg-white px-5 pb-12 pt-3 font-inter text-xl font-semibold">
           Class XII
         </h2>
-        <div className="grid grid-cols-1 gap-5 p-5 pt-0 md:grid-cols-2 md:p-10 md:pt-0 lg:grid-cols-3">
+        <div className="relative z-0 grid w-full grid-cols-1 gap-5 rounded-3xl border bg-white p-2 md:grid-cols-2 lg:grid-cols-3">
           {classTwelveChapters.map((item, i) => {
             return <ThumbnailCard key={i} data={item} />;
           })}
