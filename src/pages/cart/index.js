@@ -17,12 +17,15 @@ const Index = () => {
   //initializers
   const dispatch = useDispatch();
   const router = useRouter();
-  const toast = useToast();
+  const { toast } = useToast();
 
   //handlers
   const handleCheckout = async () => {
     if (!user) {
-      toast.error("Please login to continue");
+      toast({
+        title: "Please login to continue",
+        status: "error",
+      });
       router.push("/login");
       return;
     }
@@ -51,10 +54,6 @@ const Index = () => {
       <div className="flex flex-col items-center justify-center gap-5 px-5 md:flex-row md:items-start md:px-10">
         <div className="grid basis-3/4 grid-cols-1 gap-5 md:grid-cols-2">
           {cartItems.map((_, i) => {
-            let thumbnail_url = _.image;
-            if (thumbnail_url.startsWith("//")) {
-              thumbnail_url = "https:" + thumbnail_url;
-            }
             return (
               <div
                 key={i}
@@ -62,7 +61,7 @@ const Index = () => {
               >
                 <div className="flex flex-1 items-center gap-5">
                   <Image
-                    src={thumbnail_url}
+                    src={_.thumbnail}
                     width={100}
                     height={100}
                     alt={_?.chapter_name}
@@ -74,7 +73,7 @@ const Index = () => {
                       {_.teacher_name}
                     </h1>
                     <button
-                      onClick={() => dispatch(removeFromCart(_.demoId))}
+                      onClick={() => dispatch(removeFromCart(_.demo_pdf_id))}
                       href="signup"
                       className={cn(
                         buttonVariants({ variant: "ghost" }),
@@ -110,11 +109,11 @@ const Index = () => {
               </div>
               <div className="flex justify-between rounded-xl rounded-b-none rounded-t-none border border-t-0 bg-white px-4 py-2 text-sm font-medium">
                 <span>Sub Total:</span>
-                <span className="font-semibold">{totalPrice}</span>
+                <span className="font-semibold">₹{totalPrice}</span>
               </div>
               <div className="flex justify-between rounded-xl rounded-t-none border border-t-0 bg-white px-4 py-2 text-sm font-medium">
                 <span>Total:</span>{" "}
-                <span className="font-semibold">{totalPrice}</span>
+                <span className="font-semibold">₹{totalPrice}</span>
               </div>
             </div>
             <button

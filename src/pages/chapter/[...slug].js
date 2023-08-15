@@ -23,29 +23,40 @@ export default function Index({ data, title }) {
     thumbnail_url = "https:" + thumbnail_url;
   }
 
+  let pdfUrl = data.fields.fullPdf.fields.pdf.fields.file.url;
+  if (pdfUrl.startsWith("//")) {
+    pdfUrl = "https:" + pdfUrl;
+  }
+
   //handlers
   const handleCart = () => {
     if (isInCart) {
       dispatch(removeFromCart(data.sys.id));
       return;
     }
+
     const item = {
-      demoId: data.sys.id,
-      fullPdfId: data.fields.fullPdf.sys.id,
+      demo_pdf_id: data.sys.id,
+      full_pdf: {
+        url: pdfUrl,
+        fileSize: `${
+          data.fields.fullPdf.fields.pdf.fields.file.details.size / 1000000
+        } MB`,
+      },
       chapter_name: data.fields.chapterName,
       class: data.fields.class,
       teacher_name: data.fields.subject.fields.teacherName,
       subject_name: data.fields.subject.fields.subjectName,
       price: 25,
       quantity: 1,
-      image: thumbnail_url,
+      thumbnail: thumbnail_url,
     };
     dispatch(addToCart(item));
   };
 
   //useEffect
   useEffect(() => {
-    const findItem = cartItems.find((item) => item.demoId === data.sys.id);
+    const findItem = cartItems.find((item) => item.demo_pdf_id === data.sys.id);
     setIsInCart(findItem ? true : false);
   }, [cartItems]);
 

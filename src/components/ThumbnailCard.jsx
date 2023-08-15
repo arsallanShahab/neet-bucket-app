@@ -9,20 +9,18 @@ import { Avatar } from "./ui/avatar";
 import { buttonVariants } from "./ui/button";
 
 const ThumbnailCard = ({ data }) => {
-  const {
-    chapterName: chapter_name,
-    chapterThumbnail: chapter_thumbnail,
-    keyPoints: key_points,
-    price,
-  } = data.fields;
-  const { createdAt: created_at, updatedAt: updated_at, id } = data.sys;
   const { cartItems } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
   const [isInCart, setIsInCart] = useState(false);
 
-  if (chapter_thumbnail?.fields.file.url.startsWith("//")) {
-    chapter_thumbnail.fields.file.url =
-      chapter_thumbnail.fields.file.url.replace("//", "https://");
+  let thumbnail_url = data.fields.chapterThumbnail.fields.file.url;
+  if (thumbnail_url.startsWith("//")) {
+    thumbnail_url = "https:" + thumbnail_url;
+  }
+
+  let pdfUrl = data.fields.fullPdf.fields.pdf.fields.file.url;
+  if (pdfUrl.startsWith("//")) {
+    pdfUrl = "https:" + pdfUrl;
   }
   const handleCart = () => {
     if (isInCart) {
@@ -30,31 +28,40 @@ const ThumbnailCard = ({ data }) => {
       return;
     }
     const item = {
-      id: data.sys.id,
+      demo_pdf_id: data.sys.id,
+      full_pdf: {
+        url: pdfUrl,
+        fileSize: `${
+          data.fields.fullPdf.fields.pdf.fields.file.details.size / 1000000
+        } MB`,
+      },
       chapter_name: data.fields.chapterName,
       class: data.fields.class,
       teacher_name: data.fields.subject.fields.teacherName,
       subject_name: data.fields.subject.fields.subjectName,
       price: 25,
-      image: data.fields.chapterThumbnail.fields.file.url,
+      quantity: 1,
+      thumbnail: thumbnail_url,
     };
     dispatch(addToCart(item));
   };
   useEffect(() => {
-    const findItem = cartItems.find((item) => item.id === data.sys.id);
+    const findItem = cartItems.find((item) => item.demo_pdf_id === data.sys.id);
     setIsInCart(findItem ? true : false);
   }, [cartItems]);
   return (
     <div className="flex-col-start group w-full gap-2 rounded-3xl border border-transparent bg-white p-3 duration-300 hover:border-indigo-100 hover:bg-indigo-50">
       <Link
-        href={`/chapter/${chapter_name
+        href={`/chapter/${data.fields.chapterName
           .toLowerCase()
-          .replace(/\s/g, "-")}/${id}`}
+          .replace(/\s/g, "-")}/${data.sys.id}`}
         className="w-full"
       >
         <div className="flex-row-between w-full">
           <div className="rounded-3xl bg-indigo-600 px-4 py-2">
-            <h1 className="text-base font-bold text-white">{chapter_name}</h1>
+            <h1 className="text-base font-bold text-white">
+              {data.fields.chapterName}
+            </h1>
           </div>
           <div className="flex items-center">
             <Avatar className="h-auto w-auto -translate-x-2 scale-75 pr-1.5 text-indigo-600 opacity-0 duration-150 group-hover:translate-x-0 group-hover:scale-100 group-hover:opacity-100">
@@ -64,8 +71,8 @@ const ThumbnailCard = ({ data }) => {
         </div>
         <div className="mt-2 h-56 w-full rounded-3xl">
           <Image
-            src={chapter_thumbnail?.fields.file.url}
-            alt={chapter_thumbnail?.fields.title}
+            src={thumbnail_url}
+            alt={data.fields.chapterName}
             className="h-full w-full rounded-3xl border-2 object-cover object-top"
             width={500}
             height={500}
@@ -74,7 +81,7 @@ const ThumbnailCard = ({ data }) => {
       </Link>
       <div className="mt-2 flex w-full justify-between">
         <div className="rounded-3xl px-4 py-2 text-base font-semibold text-slate-900">
-          Price: ₹{price}
+          Price: ₹{data.fields.price}
         </div>
         <button
           onClick={handleCart}

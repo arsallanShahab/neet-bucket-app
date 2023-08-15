@@ -3,12 +3,12 @@ import { cn } from "@/lib/utils";
 import { setLoading, setToken, setUser } from "@/redux/reducer/auth";
 import { ShoppingCart } from "lucide-react";
 import Link from "next/link";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { UserNav } from "./UserNav";
 import { Logo } from "./icons";
 import { Avatar } from "./ui/avatar";
-import { buttonVariants } from "./ui/button";
+import { Button, buttonVariants } from "./ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -20,14 +20,27 @@ import { Input } from "./ui/input";
 const Navbar = () => {
   const { user } = useSelector((state) => state.auth);
   const { totalQuantity } = useSelector((state) => state.cart);
+  const [menuOpen, setMenuOpen] = useState(true);
   return (
     <>
       <div className="flex-row-between sticky top-0 z-[700] mx-auto w-full max-w-screen-2xl flex-wrap gap-5 border-b bg-white px-5 py-5 md:px-10">
-        <div className="flex-row-start flex-wrap gap-5 md:gap-10">
+        <div className="flex-row-start flex-1 flex-wrap gap-5 md:gap-10">
           <Link href={"/"}>
             <Logo height="25px" />
           </Link>
-          <nav className="flex flex-row justify-start gap-5">
+          <Button
+            onClick={() => setMenuOpen(!menuOpen)}
+            variant="outline"
+            className="ml-auto block h-auto text-xs sm:hidden"
+          >
+            Menu
+          </Button>
+          <nav
+            style={{
+              display: menuOpen ? "flex" : "none",
+            }}
+            className="flex w-full flex-col justify-start gap-5 sm:w-auto sm:flex-row"
+          >
             {[
               { name: "Home", path: "/" },
               { name: "Study Materials", path: "/study-materials" },
@@ -50,7 +63,7 @@ const Navbar = () => {
           <Input
             type="search"
             placeholder="Search..."
-            className="w-full md:w-[100px] lg:w-[300px]"
+            className="hidden w-full sm:flex md:w-[100px] lg:w-[300px]"
           />
           <div className="flex w-full items-center justify-between gap-5 md:w-auto">
             <Link
@@ -68,7 +81,7 @@ const Navbar = () => {
               <UserNav user={user} />
             ) : (
               <Link
-                href="/user/login"
+                href="/login"
                 className={cn(buttonVariants({ variant: "ghost" }), "border")}
               >
                 Login

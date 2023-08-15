@@ -13,7 +13,7 @@ const cartSlice = createSlice({
     addToCart(state, action) {
       const item = action.payload;
       const itemIndex = state.cartItems.findIndex(
-        (i) => i.demoId === item.demoId,
+        (i) => i.demo_pdf_id === item.demo_pdf_id,
       );
       if (itemIndex === -1) {
         state.cartItems.push({
@@ -38,7 +38,7 @@ const cartSlice = createSlice({
     },
     removeFromCart(state, action) {
       const id = action.payload;
-      const itemIndex = state.cartItems.findIndex((i) => i.demoId === id);
+      const itemIndex = state.cartItems.findIndex((i) => i.demo_pdf_id === id);
       if (itemIndex !== -1) {
         state.totalQuantity -= state.cartItems[itemIndex].quantity;
         state.totalPrice -=

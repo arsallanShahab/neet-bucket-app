@@ -19,7 +19,7 @@ const Index = () => {
       const { status } = paymentIntent;
       console.log(success, paymentIntent, status);
       if (success && status === "succeeded") {
-        router.push("/profile");
+        router.push("/orders");
       }
     };
     if (session_id) {

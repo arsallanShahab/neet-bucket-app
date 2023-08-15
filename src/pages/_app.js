@@ -1,6 +1,8 @@
+import AppLoader from "@/components/AppLoader";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import { Toaster } from "@/components/ui/toaster";
+import { setAppLoading, setAppSuccess } from "@/redux/reducer/app";
 import { setToken, setUser } from "@/redux/reducer/auth";
 import { addCartFromLocalStorage } from "@/redux/reducer/cart";
 import store from "@/redux/store";
@@ -15,6 +17,8 @@ import { Provider, useDispatch } from "react-redux";
 // pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
 
 export default function App({ Component, pageProps }) {
+  const { loading } = store.getState().app;
+
   useEffect(() => {
     const cart = JSON.parse(localStorage.getItem("cart"));
     const totalQuantity = JSON.parse(localStorage.getItem("totalQuantity"));
@@ -30,10 +34,13 @@ export default function App({ Component, pageProps }) {
       );
     }
     if (token && token !== "undefined" && token !== "null") {
+      store.dispatch(setAppLoading(true));
       store.dispatch(setUser(token));
       store.dispatch(setToken(token));
+      store.dispatch(setAppLoading(false));
     }
   }, []);
+
   return (
     <>
       <Provider store={store}>
@@ -41,6 +48,7 @@ export default function App({ Component, pageProps }) {
         <Component {...pageProps} />
         <Toaster />
         <Footer />
+        {loading && <AppLoader />}
       </Provider>
     </>
   );

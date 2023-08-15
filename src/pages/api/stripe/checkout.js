@@ -21,10 +21,11 @@ export default async function handler(req, res) {
           currency: "inr",
           product_data: {
             name: item.chapter_name,
-            images: [item.image],
+            images: [item.thumbnail],
             metadata: {
-              chapter_id: item.demoId,
-              fullPdfId: item.fullPdfId,
+              chapter_id: item.demo_pdf_id,
+              full_pdf_url: item.full_pdf.url,
+              full_pdf_size: item.full_pdf.fileSize,
             },
           },
 
@@ -35,6 +36,8 @@ export default async function handler(req, res) {
       client_reference_id: user_id,
       metadata: {
         order_mode: "softcopy",
+        total_quantity: totalQuantity,
+        total_price: totalPrice,
       },
 
       mode: "payment",

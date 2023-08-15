@@ -1,6 +1,5 @@
 import { verifyToken } from "@/lib/authUtils";
 import { createSlice } from "@reduxjs/toolkit";
-
 const authSlice = createSlice({
   name: "auth",
   initialState: {
