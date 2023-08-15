@@ -26,7 +26,7 @@ const Index = () => {
   // initializers
   const router = useRouter();
 
-  if (loading) {
+  if (loading || !user) {
     return <AppLoader />;
   }
 
