@@ -18,8 +18,8 @@ const ThumbnailCard = ({ data }) => {
     thumbnail_url = "https:" + thumbnail_url;
   }
 
-  let pdfUrl = data.fields.fullPdf.fields.pdf.fields.file.url;
-  if (pdfUrl.startsWith("//")) {
+  let pdfUrl = data.fields.fullPdf?.fields.pdf.fields.file.url;
+  if (pdfUrl?.startsWith("//")) {
     pdfUrl = "https:" + pdfUrl;
   }
   const handleCart = () => {

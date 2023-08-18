@@ -49,9 +49,9 @@ const Index = () => {
   };
   console.log(cartItems);
   return (
-    <div className="py-10">
+    <div className="p-5 md:p-10">
       <Heading>Cart</Heading>
-      <div className="flex flex-col items-center justify-center gap-5 px-5 md:flex-row md:items-start md:px-10">
+      <div className="flex flex-col items-center justify-center gap-5 md:flex-row md:items-start">
         <div className="grid basis-3/4 grid-cols-1 gap-5 md:grid-cols-2">
           {cartItems.map((_, i) => {
             return (

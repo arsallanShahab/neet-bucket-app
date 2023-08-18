@@ -12,7 +12,7 @@ const Footer = () => {
           { name: "Privacy Policy", link: "/privacy-policy" },
           { name: "Terms & Condition", link: "/terms-&-condition" },
           { name: "Cancellation & Refunds", link: "/cancellation-&-refunds" },
-          { name: "Support", link: "/support" },
+          // { name: "Support", link: "/support" },
         ].map((_, i) => {
           return (
             <Link key={i} href={_.link} className="text-sm text-slate-400">

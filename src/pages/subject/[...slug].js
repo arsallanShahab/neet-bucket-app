@@ -1,8 +1,6 @@
 import Heading from "@/components/Heading";
 import ThumbnailCard from "@/components/ThumbnailCard";
 import client from "@/lib/contentful";
-import { ChevronLeft } from "lucide-react";
-import Link from "next/link";
 
 export default function Index({ data, title }) {
   console.log(data);
@@ -12,25 +10,29 @@ export default function Index({ data, title }) {
     <div className="p-5 sm:p-10">
       <Heading>{title}</Heading>
       {classElevenChapters && classElevenChapters.length > 0 ? (
-        <div>
-          <h2 className="mb-5 font-sora text-3xl font-semibold">Class XI</h2>
-          <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
+        <div className="relative flex w-full flex-col items-start justify-start">
+          <h2 className="relative -z-10 -mb-9 rounded-2xl border bg-white px-5 pb-12 pt-3 font-inter text-xl font-semibold">
+            Class XI
+          </h2>
+          <div className="relative z-0 grid w-full grid-cols-1 gap-5 rounded-3xl border bg-white p-2 md:grid-cols-2 lg:grid-cols-3">
             {classElevenChapters.map((item, i) => {
               return <ThumbnailCard key={i} data={item} />;
             })}
           </div>
         </div>
       ) : null}
-      <div className="relative flex w-full flex-col items-start justify-start">
-        <h2 className="relative -z-10 -mb-9 rounded-2xl border bg-white px-5 pb-12 pt-3 font-inter text-xl font-semibold">
-          Class XII
-        </h2>
-        <div className="relative z-0 grid w-full grid-cols-1 gap-5 rounded-3xl border bg-white p-2 md:grid-cols-2 lg:grid-cols-3">
-          {classTwelveChapters.map((item, i) => {
-            return <ThumbnailCard key={i} data={item} />;
-          })}
+      {classTwelveChapters && classTwelveChapters.length > 0 ? (
+        <div className="relative flex w-full flex-col items-start justify-start">
+          <h2 className="relative -z-10 -mb-9 rounded-2xl border bg-white px-5 pb-12 pt-3 font-inter text-xl font-semibold">
+            Class XII
+          </h2>
+          <div className="relative z-0 grid w-full grid-cols-1 gap-5 rounded-3xl border bg-white p-2 md:grid-cols-2 lg:grid-cols-3">
+            {classTwelveChapters.map((item, i) => {
+              return <ThumbnailCard key={i} data={item} />;
+            })}
+          </div>
         </div>
-      </div>
+      ) : null}
     </div>
   );
 }

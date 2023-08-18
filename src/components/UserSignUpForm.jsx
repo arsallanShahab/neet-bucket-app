@@ -1,5 +1,6 @@
 import { cn } from "@/lib/utils";
 import { Loader } from "lucide-react";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import OTPInput from "react-otp-input";
@@ -274,6 +275,19 @@ export default function UserSignUpForm({ className, ...props }) {
               {isLoading && <Loader className="mr-2 h-4 w-4 animate-spin" />}
               Get OTP
             </Button>
+          )}
+          {formState.step_one && (
+            <div className="flex w-full justify-end gap-1 py-1">
+              <p className="text-sm text-slate-400">
+                Already have an account?{" "}
+              </p>
+              <Link
+                href="/login"
+                className=" text-sm font-medium text-slate-800"
+              >
+                Login
+              </Link>
+            </div>
           )}
           <Label className="text-red-600">{error}</Label>
         </div>

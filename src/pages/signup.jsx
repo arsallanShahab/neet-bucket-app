@@ -7,7 +7,7 @@ export default function AuthenticationPage() {
   return (
     <>
       <div className="container relative grid  h-screen max-h-[900px]  flex-col items-center justify-center lg:max-w-none lg:grid-cols-2 lg:px-0">
-        <Link
+        {/* <Link
           href="login"
           className={cn(
             buttonVariants({ variant: "ghost" }),
@@ -15,7 +15,7 @@ export default function AuthenticationPage() {
           )}
         >
           Login
-        </Link>
+        </Link> */}
         <div className="bg-muted relative hidden h-full flex-col p-10 text-white dark:border-r lg:flex">
           <div className="absolute inset-0 bg-zinc-900" />
           <div className="relative z-20 flex items-center text-lg font-medium">
@@ -58,14 +58,14 @@ export default function AuthenticationPage() {
             <p className="text-muted-foreground px-8 text-center text-sm">
               By clicking continue, you agree to our{" "}
               <Link
-                href="/terms"
+                href="/terms-&-condition"
                 className="hover:text-primary underline underline-offset-4"
               >
                 Terms of Service
               </Link>{" "}
               and{" "}
               <Link
-                href="/privacy"
+                href="/privacy-policy"
                 className="hover:text-primary underline underline-offset-4"
               >
                 Privacy Policy

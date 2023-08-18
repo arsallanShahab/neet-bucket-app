@@ -2,11 +2,13 @@ import Heading from "@/components/Heading";
 import ThumbnailCard from "@/components/ThumbnailCard";
 import ViewImage from "@/components/ViewImage";
 import { Button, buttonVariants } from "@/components/ui/button";
+import { useToast } from "@/components/ui/use-toast";
 import client from "@/lib/contentful";
 import { cn } from "@/lib/utils";
 import { addToCart, removeFromCart } from "@/redux/reducer/cart";
 import { Avatar } from "@radix-ui/react-avatar";
 import { ShoppingBag, ShoppingCart } from "lucide-react";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -14,9 +16,57 @@ export default function Index({ data, title }) {
   const { cartItems } = useSelector((state) => state.cart);
   const [pointsVisible, setPointsVisible] = useState(false);
   const [isInCart, setIsInCart] = useState(false);
-  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.auth);
 
-  console.log(data);
+  //initializers
+  const dispatch = useDispatch();
+  const router = useRouter();
+  const { toast } = useToast();
+
+  //handlers
+  const handleBuyNow = async () => {
+    const item = {
+      demo_pdf_id: data.sys.id,
+      full_pdf: {
+        url: pdfUrl,
+        fileSize: `${
+          data.fields.fullPdf.fields.pdf.fields.file.details.size / 1000000
+        } MB`,
+      },
+      chapter_name: data.fields.chapterName,
+      class: data.fields.class,
+      teacher_name: data.fields.subject.fields.teacherName,
+      subject_name: data.fields.subject.fields.subjectName,
+      price: 25,
+      quantity: 1,
+      thumbnail: thumbnail_url,
+    };
+    if (!user) {
+      toast({
+        title: "Please login to continue",
+        status: "error",
+      });
+      router.push("/login");
+      return;
+    }
+    const res = await fetch("/api/stripe/checkout", {
+      method: "POST",
+      body: JSON.stringify({
+        cartItems: [{ ...item }],
+        totalQuantity: 1,
+        totalPrice: 25,
+        user_id: user.id,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const { url, success, id } = await res.json();
+    console.log(url, success, id);
+    if (success) {
+      router.push(url);
+    }
+  };
 
   let thumbnail_url = data.fields.chapterThumbnail.fields.file.url;
   if (thumbnail_url.startsWith("//")) {
@@ -62,12 +112,18 @@ export default function Index({ data, title }) {
 
   return (
     <div className="p-2.5 md:p-10">
-      <div className="grid grid-cols-1 gap-5 rounded-3xl p-2.5 md:grid-cols-2 md:border md:p-10">
+      <div className="grid grid-cols-1 gap-5 rounded-3xl p-2.5 md:p-10 lg:grid-cols-2">
         <ViewImage images={data.fields?.demoImages} />
         <div className="flex-col-start gap-5 px-0 py-5 pb-20 pr-0 md:px-10 md:py-10">
           <h1 className="font-sora text-3xl font-bold capitalize text-black md:text-6xl">
             {title}
           </h1>
+          <h3 className="text-lg font-semibold text-black">
+            Price :{" "}
+            <span className="text-3xl text-indigo-600">
+              {data.fields?.price ? `₹${data.fields?.price}` : "Free"}
+            </span>
+          </h3>
           <div className="flex-col-start gap-5">
             <h3 className="text-sm font-semibold text-black">Key Points</h3>
             <div
@@ -116,15 +172,15 @@ export default function Index({ data, title }) {
               </div>
             </div>
           </div>
-          <div className="flex w-full flex-col gap-5 md:flex-row">
+          <div className="flex w-full flex-col flex-wrap gap-5 md:flex-row">
             <Button
               onClick={handleCart}
               className={cn(
                 buttonVariants({ variant: "ghost" }),
-                "group w-full gap-2 rounded-xl border bg-slate-50 px-10 py-7 text-base text-slate-950 transition-all active:scale-[0.97] active:bg-slate-200 md:flex-1",
+                "group w-full gap-2 break-keep rounded-xl border bg-slate-50 px-10 py-7 text-base text-slate-950 transition-all active:scale-[0.97] active:bg-slate-200 md:flex-1",
               )}
             >
-              <span className="translate-x-3 duration-150 group-hover:translate-x-0">
+              <span className="translate-x-3 break-keep duration-150 group-hover:translate-x-0">
                 {isInCart ? "Remove From Cart" : "Add To Cart"}
               </span>
               <Avatar className="h-auto w-auto -translate-x-2 scale-75 pr-1.5 text-slate-950 opacity-0 duration-150 group-hover:translate-x-0 group-hover:scale-100 group-hover:opacity-100">
@@ -136,6 +192,7 @@ export default function Index({ data, title }) {
                 buttonVariants({}),
                 "group w-full gap-2  rounded-xl border px-10 py-7 text-base transition-all active:scale-[0.97] active:bg-slate-800 md:flex-1 ",
               )}
+              onClick={handleBuyNow}
             >
               <span className="translate-x-3 duration-150 group-hover:translate-x-0">
                 Buy Now

@@ -2,6 +2,7 @@ import { useFetch } from "@/lib/hooks/useFetch";
 import { cn } from "@/lib/utils";
 import { setToken, setUser } from "@/redux/reducer/auth";
 import { Loader } from "lucide-react";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
@@ -100,6 +101,17 @@ export default function UserLoginForm({ className, ...props }) {
             {isLoading && <Loader className="mr-2 h-4 w-4 animate-spin" />}
             Login
           </Button>
+          <div className="flex w-full justify-end gap-1 py-1">
+            <p className="text-sm text-slate-400">
+              Don&apos;t have an account?{" "}
+            </p>
+            <Link
+              href="/signup"
+              className=" text-sm font-medium text-slate-800"
+            >
+              create one
+            </Link>
+          </div>
           <Label className="text-red-600">{error}</Label>
         </div>
       </form>

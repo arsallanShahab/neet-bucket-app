@@ -51,6 +51,7 @@ export default async function handler(req, res) {
         // console.log(session, "session");
         const { db } = await connectToDatabase();
         const order_item = {
+          order_id: session.id,
           order_items,
           total_quantity: session.metadata.total_quantity,
           total_price: session.metadata.total_price,

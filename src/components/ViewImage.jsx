@@ -23,14 +23,14 @@ const ViewImage = ({ images }) => {
               <div
                 key={index}
                 onClick={() => setCurrentImage(index)}
-                className="cursor-pointer overflow-hidden rounded-md border duration-150 hover:bg-slate-500"
+                className="origin-bottom cursor-pointer overflow-hidden rounded-md border duration-150 hover:scale-110 hover:bg-slate-500 hover:shadow-sm active:scale-100"
               >
                 <Image
                   src={imageUrl}
                   alt="image"
-                  width={500}
-                  height={500}
-                  className="h-16 w-16  object-cover object-top hover:opacity-80"
+                  width={100}
+                  height={100}
+                  className="h-16 w-16 object-cover object-top hover:opacity-80"
                 />
               </div>
             );
