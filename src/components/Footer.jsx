@@ -12,6 +12,7 @@ const Footer = () => {
           { name: "Privacy Policy", link: "/privacy-policy" },
           { name: "Terms & Condition", link: "/terms-&-condition" },
           { name: "Cancellation & Refunds", link: "/cancellation-&-refunds" },
+          { name: "shipping & delivery", link: "/shipping-&-delivery" },
           // { name: "Support", link: "/support" },
         ].map((_, i) => {
           return (
