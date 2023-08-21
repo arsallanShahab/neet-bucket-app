@@ -22,7 +22,7 @@ export default function Index({ data, title }) {
         </div>
       ) : null}
       {classTwelveChapters && classTwelveChapters.length > 0 ? (
-        <div className="relative flex w-full flex-col items-start justify-start">
+        <div className="relative mt-14 flex w-full flex-col items-start justify-start">
           <h2 className="relative -z-10 -mb-9 rounded-2xl border bg-white px-5 pb-12 pt-3 font-inter text-xl font-semibold">
             Class XII
           </h2>
@@ -62,7 +62,6 @@ export async function getStaticPaths() {
 export async function getStaticProps(ctx) {
   //get the slug
   const { slug } = ctx.params;
-  const title = slug[0].replace(/-/g, " ");
   const data = await client.getEntries({
     content_type: "productDemo",
     // "fields.subject.fields.slug": slug[0],
@@ -74,7 +73,7 @@ export async function getStaticProps(ctx) {
   return {
     props: {
       data: items,
-      title: title,
+      title: slug[0],
     },
     revalidate: process.env.NODE_ENV === "development" ? 1 : 3600,
   };
