@@ -4,7 +4,7 @@ const TermsAndCondition = () => {
   return (
     <div className="mx-auto max-w-4xl p-5 sm:p-10">
       <Heading>Terms and Conditions</Heading>
-      <p className="text-lg text-slate-950">
+      <p className="pb-10 text-lg text-slate-950 sm:pb-20">
         The Website Owner, including subsidiaries and affiliates (“Website” or
         “Website Owner” or “we” or “us” or “our”) provides the information
         contained on the website or any of the pages comprising the website

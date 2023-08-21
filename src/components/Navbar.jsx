@@ -48,7 +48,7 @@ const Navbar = () => {
               { name: "Home", path: "/" },
               { name: "Study Materials", path: "/study-materials" },
               { name: "About Us", path: "/about-us" },
-              { name: "Contact Us", path: "/contact" },
+              { name: "Contact Us", path: "/contact-us" },
             ].map((item, index) => {
               return (
                 <Link

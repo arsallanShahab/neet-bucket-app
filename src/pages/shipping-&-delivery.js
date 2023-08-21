@@ -4,7 +4,7 @@ const ShippingAndDelivery = () => {
   return (
     <div className="mx-auto max-w-4xl p-5 sm:p-10">
       <Heading>Shipping & Delivery</Heading>
-      <p className="text-lg text-slate-950">
+      <p className="pb-10 text-lg text-slate-950 sm:pb-20">
         For International buyers, orders are shipped and delivered through
         registered international courier companies and/or International speed
         post only. For domestic buyers, orders are shipped through registered

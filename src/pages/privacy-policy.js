@@ -4,7 +4,7 @@ const PrivacyPolicy = () => {
   return (
     <div className="mx-auto max-w-4xl p-5 sm:p-10">
       <Heading>Privacy Policy</Heading>
-      <p className="text-lg text-slate-950">
+      <p className="pb-10 text-lg text-slate-950 sm:pb-20">
         This privacy policy sets out how Neet Bucket uses and protects any
         information that you give Neet Bucket when you use this website.
         <br />
@@ -55,8 +55,8 @@ const PrivacyPolicy = () => {
         <br /> How we use cookies
         <br />
         <br /> A cookie is a small file which asks permission to be placed on
-        your computer's hard drive. Once you agree, the file is added and the
-        cookie helps analyses web traffic or lets you know when you visit a
+        your computer&apos;s hard drive. Once you agree, the file is added and
+        the cookie helps analyses web traffic or lets you know when you visit a
         particular site. Cookies allow web applications to respond to you as an
         individual. The web application can tailor its operations to your needs,
         likes and dislikes by gathering and remembering information about your

@@ -4,7 +4,7 @@ const CancellationAndRefunds = () => {
   return (
     <div className="mx-auto max-w-4xl p-5 sm:p-10">
       <Heading>Cancellation & Refunds</Heading>
-      <p className="text-lg text-slate-950">
+      <p className="pb-10 text-lg text-slate-950 sm:pb-20">
         Neet Bucket believes in helping its customers as far as possible, and
         has therefore a liberal cancellation policy. Under this policy:
         <br />
