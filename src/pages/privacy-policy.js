@@ -5,66 +5,102 @@ const PrivacyPolicy = () => {
     <div className="mx-auto max-w-4xl p-5 sm:p-10">
       <Heading>Privacy Policy</Heading>
       <p className="text-lg text-slate-950">
-        This Policy tells you how we use information that we collect during Your
-        use of our Website. The terms “we”, “us”, “our” and “NeetBucket” refers
-        to Sierra innovations. When you use the Service, you consent to our
-        collection, use, and disclosure of information about you as described in
-        this Privacy Policy.
+        This privacy policy sets out how Neet Bucket uses and protects any
+        information that you give Neet Bucket when you use this website.
         <br />
-        <br /> The Service may provide links to third party websites. This
-        Privacy Policy does not apply to any information you may provide while
-        on such third party websites. We encourage you to carefully read the
-        privacy policies on those third party websites before providing any of
-        your information on such sites. In every respect, by using our website,
-        you agree to be bound by terms of this Privacy Policy.
+        <br /> Neet Bucket is committed to ensuring that your privacy is
+        protected. Should we ask you to provide certain information by which you
+        can be identified when using this website, and then you can be assured
+        that it will only be used in accordance with this privacy statement.
         <br />
-        <br /> What Information we collect and how we use it?
+        <br /> Neet Bucket may change this policy from time to time by updating
+        this page. You should check this page from time to time to ensure that
+        you are happy with any changes.
         <br />
-        <br /> When you visit or use our Service, we collect and store
-        information about you, your computer or mobile device and your
-        activities. This information may include, but is not limited to:
+        <br /> We may collect the following information:
         <br />
-        <br /> 1) Your computer&apos;s IP address; technical information about
-        your computer or mobile device (such as type of device, web browser or
-        operating system).
+        <br /> Name and job title
         <br />
-        <br /> 2) Your mobile device&apos;s unique ID number (when
-        available);your mobile device&apos;s geographic location (specific
-        geographic location if you&apos;ve enabled collection of that
-        information, or generalgeographic location automatically).
+        <br /> Contact information including email address
         <br />
-        <br /> 3) Your account information: your provided full name, email
-        address, zip code and other information you may provide with your
-        account, such as your gender and birth date. Your profile picture that
-        will be publicly displayed as part of your account profile. You may
-        optionally provide us with this information through third party signin
-        services such as Facebook Connect and Google Plus. In such cases, we
-        fetch and store whatever information is made available to us by you
-        through these signin services.
+        <br /> Demographic information such as postcode, preferences and
+        interests
         <br />
-        <br /> 4) Your content: The information that you post to the Service,
-        including your reviews, photos, comments, likes, thanks, lists,
-        followers, the users you follow, and your account profile.
+        <br /> Other information relevant to customer surveys and/or offers
         <br />
-        <br /> 5) The URL of the last web page you visited before visiting our
-        Service.
+        <br /> What we do with the information we gather
         <br />
-        <br /> 6) The search terms you have looked up and results you selected;
-        how long you visited our Service and which features you used.
+        <br /> We require this information to understand your needs and provide
+        you with a better service, and in particular for the following reasons:
         <br />
-        <br /> Accessing and Updating Your Information:
         <br />
-        <br /> If You have created a user account on the Website, You can access
-        and update your Personal Information and Personal Sensitive Information
-        at any time by accessing the Website using Your registered username and
-        accessing Your user account.
+        Internal record keeping.
         <br />
-        <br /> You may also change and/or delete any of the information you have
-        submitted. Do note however, We reserve the right to save any usage
-        information and You are not entitled to seek the deletion of the same.
-        We may also in certain cases, deny You the ability to change of any
-        information, if we reasonably believe that the same is required to
-        observe applicable laws.
+        <br /> We may use the information to improve our products and services.
+        <br />
+        <br />
+        We may periodically send promotional emails about new products, special
+        offers or other information which we think you may find interesting
+        using the email address which you have provided.
+        <br />
+        <br /> From time to time, we may also use your information to contact
+        you for market research purposes. We may contact you by email, phone,
+        fax or mail. We may use the information to customise the website
+        according to your interests.
+        <br />
+        <br /> We are committed to ensuring that your information is secure. In
+        order to prevent unauthorised access or disclosure we have put in
+        suitable measures.
+        <br />
+        <br /> How we use cookies
+        <br />
+        <br /> A cookie is a small file which asks permission to be placed on
+        your computer's hard drive. Once you agree, the file is added and the
+        cookie helps analyses web traffic or lets you know when you visit a
+        particular site. Cookies allow web applications to respond to you as an
+        individual. The web application can tailor its operations to your needs,
+        likes and dislikes by gathering and remembering information about your
+        preferences.
+        <br />
+        <br /> We use traffic log cookies to identify which pages are being
+        used. This helps us analyses data about webpage traffic and improve our
+        website in order to tailor it to customer needs. We only use this
+        information for statistical analysis purposes and then the data is
+        removed from the system.
+        <br />
+        <br /> Overall, cookies help us provide you with a better website, by
+        enabling us to monitor which pages you find useful and which you do not.
+        A cookie in no way gives us access to your computer or any information
+        about you, other than the data you choose to share with us.
+        <br />
+        <br /> You can choose to accept or decline cookies. Most web browsers
+        automatically accept cookies, but you can usually modify your browser
+        setting to decline cookies if you prefer. This may prevent you from
+        taking full advantage of the website.
+        <br />
+        <br /> Controlling your personal information
+        <br />
+        <br /> You may choose to restrict the collection or use of your personal
+        information in the following ways:
+        <br />
+        <br /> whenever you are asked to fill in a form on the website, look for
+        the box that you can click to indicate that you do not want the
+        information to be used by anybody for direct marketing purposes
+        <br />
+        <br /> if you have previously agreed to us using your personal
+        information for direct marketing purposes, you may change your mind at
+        any time by writing to or emailing us at ayaan@neetbucket.com
+        <br />
+        <br /> We will not sell, distribute or lease your personal information
+        to third parties unless we have your permission or are required by law
+        to do so. We may use your personal information to send you promotional
+        information about third parties which we think you may find interesting
+        if you tell us that you wish this to happen.
+        <br />
+        <br /> If you believe that any information we are holding on you is
+        incorrect or incomplete, please write to or email us as soon as
+        possible, at the above address. We will promptly correct any information
+        found to be incorrect.
       </p>
     </div>
   );
