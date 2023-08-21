@@ -62,6 +62,7 @@ export async function getStaticPaths() {
 export async function getStaticProps(ctx) {
   //get the slug
   const { slug } = ctx.params;
+  const title = slug[0].replace(/-/g, " ");
   const data = await client.getEntries({
     content_type: "productDemo",
     // "fields.subject.fields.slug": slug[0],
@@ -73,7 +74,7 @@ export async function getStaticProps(ctx) {
   return {
     props: {
       data: items,
-      title: slug[0],
+      title: title,
     },
     revalidate: process.env.NODE_ENV === "development" ? 1 : 3600,
   };
