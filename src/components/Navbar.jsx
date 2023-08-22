@@ -18,6 +18,7 @@ import {
 import { Input } from "./ui/input";
 
 const Navbar = () => {
+  const [search, setSearch] = useState("");
   const { user } = useSelector((state) => state.auth);
   const { totalQuantity } = useSelector((state) => state.cart);
   const navRef = useRef(null);
@@ -26,6 +27,13 @@ const Navbar = () => {
       navRef.current.classList.toggle("responsive-nav");
     }
   };
+
+  const handleSearch = (e) => {
+    if (e.key === "Enter") {
+      window.location.href = `/search?q=${search.toLowerCase()}`;
+    }
+  };
+
   return (
     <>
       <div className="flex-row-between sticky top-0 z-[700] mx-auto w-full max-w-screen-2xl flex-wrap gap-5 border-b bg-white px-5 py-5 md:px-10">
@@ -46,8 +54,8 @@ const Navbar = () => {
           >
             {[
               { name: "Home", path: "/" },
-              { name: "Study Materials", path: "/study-materials" },
-              { name: "About Us", path: "/about-us" },
+              { name: "Soft Copy", path: "/soft-copy" },
+              // { name: "About Us", path: "/about-us" },
               { name: "Contact Us", path: "/contact-us" },
             ].map((item, index) => {
               return (
@@ -67,6 +75,9 @@ const Navbar = () => {
             type="search"
             placeholder="Search..."
             className="hidden w-full sm:flex md:w-[100px] lg:w-[300px]"
+            onKeyPress={handleSearch}
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
           />
           <div className="flex w-full items-center justify-between gap-5 md:w-auto">
             <Link
