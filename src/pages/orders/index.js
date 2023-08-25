@@ -10,7 +10,6 @@ import { useDispatch, useSelector } from "react-redux";
 const Index = () => {
   const { user } = useSelector((state) => state.auth);
   const { orders } = useSelector((state) => state.orders);
-  const { loading } = useSelector((state) => state.app);
   const [isLoading, setIsLoading] = useState(false);
   // handlers
   const handleDownload = (url, name) => async () => {
@@ -41,7 +40,9 @@ const Index = () => {
       const { user_orders, success } = await res.json();
 
       if (success) {
-        dispatch(setOrders(user_orders.orders));
+        //reverse the order of the orders
+        const reversedOrders = user_orders.orders.reverse();
+        dispatch(setOrders(reversedOrders));
       }
       setIsLoading(false);
       // console.log(orders, "orders");
@@ -76,6 +77,7 @@ const Index = () => {
         )}
         {orders &&
           orders.map((item, i) => {
+            const order_type = item.order_type;
             const { order_items } = item;
             return (
               <div key={i} className="flex w-full flex-col rounded-xl border">
@@ -139,7 +141,9 @@ const Index = () => {
                           />
                           <div className="flex flex-col">
                             <p className="text-sm capitalize text-slate-950 ">
-                              {order.chapter_name}
+                              {order_type == "hardcopy"
+                                ? order.name
+                                : order.chapter_name}
                             </p>
                           </div>
                         </div>
@@ -150,19 +154,21 @@ const Index = () => {
                           <p className="k hidden text-sm capitalize text-slate-950 sm:inline-block ">
                             {order.quantity}
                           </p>
-                          <Button
-                            variant={"outline"}
-                            onClick={handleDownload(
-                              order.full_pdf.url,
-                              order.chapter_name,
-                            )}
-                            className="h-auto w-full flex-col sm:w-auto"
-                          >
-                            Download PDF{" "}
-                            <span className="text-xs text-slate-500">
-                              {order.full_pdf.fileSize}
-                            </span>
-                          </Button>
+                          {order.full_pdf && (
+                            <Button
+                              variant={"outline"}
+                              onClick={handleDownload(
+                                order.full_pdf.url,
+                                order.chapter_name,
+                              )}
+                              className="h-auto w-full flex-col sm:w-auto"
+                            >
+                              Download PDF{" "}
+                              <span className="text-xs text-slate-500">
+                                {order.full_pdf.fileSize}
+                              </span>
+                            </Button>
+                          )}
                         </div>
                       </div>
                     );

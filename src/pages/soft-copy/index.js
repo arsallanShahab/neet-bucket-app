@@ -1,16 +1,20 @@
-import CustomButton from "@/components/CustomButton";
 import Heading from "@/components/Heading";
-import Icon from "@/components/LucideIcon";
 import client from "@/lib/contentful";
 import { cn } from "@/lib/utils";
-import { ChevronLeft } from "lucide-react";
+import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 
 const Index = ({ data }) => {
   console.log(data);
   return (
-    <div className="p-5 md:p-10">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.25, ease: "easeInOut" }}
+      className="p-5 md:p-10"
+    >
       <Heading>Soft copy</Heading>
       <div className="grid w-full grid-cols-1 place-items-center gap-5 border-b border-r pb-20 md:grid-cols-2 lg:grid-cols-3">
         {data.length > 0 &&
@@ -28,7 +32,7 @@ const Index = ({ data }) => {
             );
           })}
       </div>
-    </div>
+    </motion.div>
   );
 };
 
@@ -95,7 +99,7 @@ export async function getStaticProps(ctx) {
     props: {
       data: subjects,
     },
-    revalidate: process.env.NODE_ENV === "development" ? 1 : 3600,
+    // revalidate: process.env.NODE_ENV === "development" ? 1 : 3600,
   };
 }
 

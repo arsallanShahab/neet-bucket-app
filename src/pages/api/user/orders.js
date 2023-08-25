@@ -9,6 +9,7 @@ export default async function handler(req, res) {
 
   try {
     const { db } = await connectToDatabase();
+    // reverse the order of the orders
     const orders = await db.collection("orders").findOne({ user_id: id });
     res.status(200).json({ user_orders: orders, success: true });
   } catch (error) {}

@@ -1,6 +1,7 @@
 import Heading from "@/components/Heading";
 import ThumbnailCard from "@/components/ThumbnailCard";
 import client from "@/lib/contentful";
+import { motion } from "framer-motion";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
@@ -19,7 +20,13 @@ const Search = ({ data }) => {
   }, [query.q]);
 
   return (
-    <div className="p-5 pb-10 sm:p-10 sm:pb-20">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.25, ease: "easeInOut" }}
+      className="p-5 pb-10 sm:p-10 sm:pb-20"
+    >
       <Heading>Search</Heading>
       <p className="pb-5 text-lg text-slate-950">
         showing search results for {`"${query.q}"`}
@@ -30,7 +37,7 @@ const Search = ({ data }) => {
             return <ThumbnailCard key={i} data={item} />;
           })}
       </div>
-    </div>
+    </motion.div>
   );
 };
 

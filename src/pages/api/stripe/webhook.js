@@ -35,19 +35,36 @@ export default async function handler(req, res) {
 
         console.log(line_items, "line_items");
 
-        const order_items = line_items.map((item) => {
-          return {
-            chapter_id: item.price.product.metadata.chapter_id,
-            chapter_name: item.price.product.name,
-            thumbnail: item.price.product.images[0],
-            price: item.price.unit_amount / 100,
-            quantity: item.quantity,
-            full_pdf: {
-              url: item.price.product.metadata.full_pdf_url,
-              fileSize: item.price.product.metadata.full_pdf_size,
-            },
-          };
-        });
+        const order_type = session.metadata.order_mode;
+
+        let order_items;
+
+        if (order_type === "hardcopy") {
+          order_items = line_items.map((item) => {
+            return {
+              id: item.price.product.metadata.id,
+              name: item.price.product.name,
+              thumbnail: item.price.product.images[0],
+              price: item.price.unit_amount / 100,
+              quantity: item.quantity,
+            };
+          });
+        } else {
+          order_items = line_items.map((item) => {
+            return {
+              chapter_id: item.price.product.metadata.chapter_id,
+              chapter_name: item.price.product.name,
+              thumbnail: item.price.product.images[0],
+              price: item.price.unit_amount / 100,
+              quantity: item.quantity,
+              full_pdf: {
+                url: item.price.product.metadata.full_pdf_url,
+                fileSize: item.price.product.metadata.full_pdf_size,
+              },
+            };
+          });
+        }
+
         // console.log(session, "session");
         const { db } = await connectToDatabase();
         const order_item = {
@@ -56,7 +73,7 @@ export default async function handler(req, res) {
           total_quantity: session.metadata.total_quantity,
           total_price: session.metadata.total_price,
           payment_status: session.payment_status,
-          status: "completed",
+          status: order_type === "hardcopy" ? "pending" : "success",
           session_id: session.id,
           created_at: new Date(),
           customer_email: session.customer_details.email,

@@ -1,13 +1,20 @@
 import Heading from "@/components/Heading";
 import ThumbnailCard from "@/components/ThumbnailCard";
 import client from "@/lib/contentful";
+import { motion } from "framer-motion";
 
 export default function Index({ data, title }) {
   console.log(data);
   const classElevenChapters = data.filter((item) => item.fields.class === "11");
   const classTwelveChapters = data.filter((item) => item.fields.class === "12");
   return (
-    <div className="p-5 sm:p-10">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.25, ease: "easeInOut" }}
+      className="p-5 sm:p-10"
+    >
       <Heading>{title}</Heading>
       {classElevenChapters && classElevenChapters.length > 0 ? (
         <div className="relative flex w-full flex-col items-start justify-start">
@@ -33,7 +40,7 @@ export default function Index({ data, title }) {
           </div>
         </div>
       ) : null}
-    </div>
+    </motion.div>
   );
 }
 

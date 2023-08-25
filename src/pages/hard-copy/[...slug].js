@@ -26,21 +26,14 @@ export default function Index({ data, title }) {
   //handlers
   const handleBuyNow = async () => {
     const item = {
-      demo_pdf_id: data.sys.id,
-      full_pdf: {
-        url: pdfUrl,
-        fileSize: `${
-          data.fields.fullPdf.fields.pdf.fields.file.details.size / 1000000
-        } MB`,
-      },
-      chapter_name: data.fields.chapterName,
-      class: data.fields.class,
-      teacher_name: data.fields.subject.fields.teacherName,
-      subject_name: data.fields.subject.fields.subjectName,
-      price: 25,
+      id: data.sys.id,
+      heading: data.fields.heading,
+      price: data.fields.price,
       quantity: 1,
       thumbnail: thumbnail_url,
     };
+    console.log(item);
+
     if (!user) {
       toast({
         title: "Please login to continue",
@@ -49,12 +42,12 @@ export default function Index({ data, title }) {
       router.push("/login");
       return;
     }
-    const res = await fetch("/api/stripe/checkout", {
+    const res = await fetch("/api/stripe/hard-copy-checkout", {
       method: "POST",
       body: JSON.stringify({
         cartItems: [{ ...item }],
         totalQuantity: 1,
-        totalPrice: 25,
+        totalPrice: data.fields.price,
         user_id: user.id,
       }),
       headers: {
@@ -72,37 +65,6 @@ export default function Index({ data, title }) {
   if (thumbnail_url.startsWith("//")) {
     thumbnail_url = "https:" + thumbnail_url;
   }
-
-  let pdfUrl = data.fields.fullPdf.fields.pdf.fields.file.url;
-  if (pdfUrl.startsWith("//")) {
-    pdfUrl = "https:" + pdfUrl;
-  }
-
-  //handlers
-  const handleCart = () => {
-    if (isInCart) {
-      dispatch(removeFromCart(data.sys.id));
-      return;
-    }
-
-    const item = {
-      demo_pdf_id: data.sys.id,
-      full_pdf: {
-        url: pdfUrl,
-        fileSize: `${
-          data.fields.fullPdf.fields.pdf.fields.file.details.size / 1000000
-        } MB`,
-      },
-      chapter_name: data.fields.chapterName,
-      class: data.fields.class,
-      teacher_name: data.fields.subject.fields.teacherName,
-      subject_name: data.fields.subject.fields.subjectName,
-      price: 25,
-      quantity: 1,
-      thumbnail: thumbnail_url,
-    };
-    dispatch(addToCart(item));
-  };
 
   //useEffect
   useEffect(() => {
@@ -180,20 +142,6 @@ export default function Index({ data, title }) {
           </div>
           <div className="flex w-full flex-col flex-wrap gap-5 md:flex-row">
             <Button
-              onClick={handleCart}
-              className={cn(
-                buttonVariants({ variant: "ghost" }),
-                "group w-full gap-2 break-keep rounded-xl border bg-slate-50 px-10 py-7 text-base text-slate-950 transition-all active:scale-[0.97] active:bg-slate-200 md:flex-1",
-              )}
-            >
-              <span className="translate-x-3 break-keep duration-150 group-hover:translate-x-0">
-                {isInCart ? "Remove From Cart" : "Add To Cart"}
-              </span>
-              <Avatar className="h-auto w-auto -translate-x-2 scale-75 pr-1.5 text-slate-950 opacity-0 duration-150 group-hover:translate-x-0 group-hover:scale-100 group-hover:opacity-100">
-                <ShoppingCart className="h-[18px] w-[18px] stroke-[2px]" />
-              </Avatar>
-            </Button>
-            <Button
               className={cn(
                 buttonVariants({}),
                 "group w-full gap-2  rounded-xl border px-10 py-7 text-base transition-all active:scale-[0.97] active:bg-slate-800 md:flex-1 ",
@@ -217,15 +165,15 @@ export default function Index({ data, title }) {
 
 export async function getStaticPaths() {
   const data = await client.getEntries({
-    content_type: "productDemo",
+    content_type: "hardCopy",
   });
 
   const paths = data.items.map((_, i) => {
-    const chapter_name = _.fields.chapterName.toLowerCase().replace(/\s/g, "-");
+    const heading = _.fields.heading.toLowerCase().replace(/\s/g, "-");
     const id = _.sys.id;
     return {
       params: {
-        slug: [chapter_name, id],
+        slug: [heading, id],
       },
     };
   });
@@ -240,13 +188,13 @@ export async function getStaticProps(ctx) {
   const { slug } = ctx.params;
   const title = slug[0].replace(/-/g, " ");
   const data = await client.getEntry(slug[1]);
-  console.log(data);
+  //   console.log(data);
   //get the data
   return {
     props: {
       data,
       title,
     },
-    revalidate: process.env.NODE_ENV === "development" ? 1 : 3600,
+    // revalidate: process.env.NODE_ENV === "development" ? 1 : 3600,
   };
 }
