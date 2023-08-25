@@ -64,13 +64,6 @@ const Index = ({ data }) => {
                   <div className="rounded-3xl px-4 py-2 text-base font-semibold text-slate-900">
                     Price: ₹{_.fields.price}
                   </div>
-                  <Button
-                    // onClick={handleCart}
-                    className="h-auto rounded-3xl border bg-indigo-600 px-4 py-0 text-xs font-semibold leading-none text-white"
-                  >
-                    {isInCart ? "Remove from cart" : "Add to cart"}{" "}
-                    <ShoppingCart className="ml-1 h-4 w-4" />
-                  </Button>
                 </div>
               </div>
             );
