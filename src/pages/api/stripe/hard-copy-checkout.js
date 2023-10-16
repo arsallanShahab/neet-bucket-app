@@ -26,6 +26,55 @@ export default async function handler(req, res) {
         },
         quantity: item.quantity,
       })),
+      billing_address_collection: "required",
+      shipping_address_collection: {
+        allowed_countries: ["IN"],
+      },
+      phone_number_collection: {
+        enabled: true,
+      },
+      shipping_options: [
+        {
+          shipping_rate_data: {
+            type: "fixed_amount",
+            fixed_amount: {
+              amount: 0,
+              currency: "inr",
+            },
+            display_name: "Standard shipping",
+            delivery_estimate: {
+              minimum: {
+                unit: "business_day",
+                value: 5,
+              },
+              maximum: {
+                unit: "business_day",
+                value: 7,
+              },
+            },
+          },
+        },
+        {
+          shipping_rate_data: {
+            type: "fixed_amount",
+            fixed_amount: {
+              amount: 7000,
+              currency: "inr",
+            },
+            display_name: "Express shipping",
+            delivery_estimate: {
+              minimum: {
+                unit: "business_day",
+                value: 4,
+              },
+              maximum: {
+                unit: "business_day",
+                value: 5,
+              },
+            },
+          },
+        },
+      ],
       client_reference_id: user_id,
       metadata: {
         order_mode: "hardcopy",
