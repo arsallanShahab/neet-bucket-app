@@ -1,6 +1,7 @@
 import { FileIcon, TruckIcon } from "@/components/icons";
 import client from "@/lib/contentful";
 import { motion } from "framer-motion";
+import { BookOpenCheck } from "lucide-react";
 import Link from "next/link";
 
 export default function Home({ subjects }) {
@@ -44,6 +45,17 @@ export default function Home({ subjects }) {
               {" "}
               (Deliver at your doorstep)
             </span>
+          </div>
+        </Link>
+        <Link
+          href="/test-series"
+          className="custom-btn w-full border-slate-900 shadow-custom shadow-slate-900 active:shadow-btn-active md:w-auto"
+          // disabled={true}
+        >
+          <BookOpenCheck className="mr-2 h-5 w-5 stroke-slate-900 md:mr-5 md:h-7 md:w-7" />
+          <div>
+            Test Series
+            <span className="text-xs md:block"> (Neet Bucket Test Series)</span>
           </div>
         </Link>
       </div>

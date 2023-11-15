@@ -39,6 +39,45 @@ export default async function handler(req, res) {
 
         let order_items;
 
+        if (order_type === "testseries") {
+          const test_item = line_items.map((item) => {
+            return {
+              name: item.price.product.name,
+              price: item.price.unit_amount / 100,
+              quantity: item.quantity,
+            };
+          });
+
+          const { db } = await connectToDatabase();
+          const order_details = {
+            test_id: session.metadata.test_id,
+            order_details: {
+              order_id: session.id,
+              test_name: test_item[0].name,
+              test_price: test_item[0].price,
+              created_at: new Date(),
+              status: "success",
+            },
+            attempted: false,
+            test_summary: null,
+            payment_details: {
+              payment_status: session.payment_status,
+              customer_email: session.customer_details.email,
+              customer_name: session.customer_details.name,
+              order_type: session.metadata.order_mode,
+              currency: session.currency,
+            },
+          };
+          const res = await db.collection("tests").insertOne({
+            user_id: session.client_reference_id,
+            ...order_details,
+          });
+          console.log(res, "res");
+
+          return res
+            .status(200)
+            .json({ received: true, message: "test order placed" });
+        }
         if (order_type === "hardcopy") {
           order_items = line_items.map((item) => {
             return {

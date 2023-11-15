@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 const Heading = ({ children }) => {
   const router = useRouter();
   const path = router.pathname.split("/")[1];
-  console.log(router.pathname.split("/")[1]);
+  // console.log(router.pathname.split("/")[1]);
 
   // go back to previous page
   const goBack = () => {

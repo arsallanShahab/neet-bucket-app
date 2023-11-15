@@ -39,7 +39,7 @@ export default function UserLoginForm({ className, ...props }) {
   };
   const onSubmit = async (event) => {
     event.preventDefault();
-    console.log(form, "form");
+    // console.log(form, "form");
     setIsLoading(true);
     const res = await fetch("/api/auth/login", {
       method: "POST",
