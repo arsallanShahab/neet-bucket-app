@@ -1105,11 +1105,12 @@ export async function getStaticPaths() {
   //[...slug] generate path for this
   const paths = testSeries.map((item) => {
     const testSeriesName = item.fields.testSeriesName;
+    const name = testSeriesName.toLowerCase().replace(/\s/g, "-");
     const id = item.sys.id;
 
     return {
       params: {
-        slug: [testSeriesName, id],
+        slug: [name, id],
       },
     };
   });
