@@ -74,11 +74,10 @@ export default async function handler(req, res) {
           });
           console.log(res, "res");
 
-          return res
-            .status(200)
-            .json({ received: true, message: "test order placed" });
-        }
-        if (order_type === "hardcopy") {
+          // return res
+          //   .status(200)
+          //   .json({ received: true, message: "test order placed" });
+        } else if (order_type === "hardcopy") {
           order_items = line_items.map((item) => {
             return {
               id: item.price.product.metadata.id,
@@ -88,7 +87,47 @@ export default async function handler(req, res) {
               quantity: item.quantity,
             };
           });
-        } else {
+
+          const { db } = await connectToDatabase();
+          const order_item = {
+            order_id: session.id,
+            order_items,
+            total_quantity: session.metadata.total_quantity,
+            total_price: session.metadata.total_price,
+            payment_status: session.payment_status,
+            status: "pending",
+            session_id: session.id,
+            created_at: new Date(),
+            customer_email: session.customer_details.email,
+            customer_name: session.customer_details.name,
+            order_type: session.metadata.order_mode,
+            currency: session.currency,
+          };
+
+          const findUserOrder = await db.collection("orders").findOne({
+            user_id: session.client_reference_id,
+          });
+
+          console.log(findUserOrder, "findUserOrder");
+
+          if (findUserOrder) {
+            const res = await db.collection("orders").updateOne(
+              { user_id: session.client_reference_id },
+              {
+                $push: {
+                  orders: order_item,
+                },
+              },
+            );
+            console.log(res, "res");
+          } else {
+            const res = await db.collection("orders").insertOne({
+              user_id: session.client_reference_id,
+              orders: [order_item],
+            });
+            console.log(res, "res");
+          }
+        } else if (order_type === "softcopy") {
           order_items = line_items.map((item) => {
             return {
               chapter_id: item.price.product.metadata.chapter_id,
@@ -102,47 +141,42 @@ export default async function handler(req, res) {
               },
             };
           });
-        }
 
-        // console.log(session, "session");
-        const { db } = await connectToDatabase();
-        const order_item = {
-          order_id: session.id,
-          order_items,
-          total_quantity: session.metadata.total_quantity,
-          total_price: session.metadata.total_price,
-          payment_status: session.payment_status,
-          status: order_type === "hardcopy" ? "pending" : "success",
-          session_id: session.id,
-          created_at: new Date(),
-          customer_email: session.customer_details.email,
-          customer_name: session.customer_details.name,
-          order_type: session.metadata.order_mode,
-          currency: session.currency,
-        };
+          const { db } = await connectToDatabase();
+          const order_item = {
+            order_id: session.id,
+            order_items,
+            total_quantity: session.metadata.total_quantity,
+            total_price: session.metadata.total_price,
+            payment_status: session.payment_status,
+            status: "success",
+            session_id: session.id,
+            created_at: new Date(),
+            customer_email: session.customer_details.email,
+            customer_name: session.customer_details.name,
+            order_type: session.metadata.order_mode,
+            currency: session.currency,
+          };
 
-        const findUserOrder = await db.collection("orders").findOne({
-          user_id: session.client_reference_id,
-        });
-
-        console.log(findUserOrder, "findUserOrder");
-
-        if (findUserOrder) {
-          const res = await db.collection("orders").updateOne(
-            { user_id: session.client_reference_id },
-            {
-              $push: {
-                orders: order_item,
-              },
-            },
-          );
-          console.log(res, "res");
-        } else {
-          const res = await db.collection("orders").insertOne({
+          const findUserOrder = await db.collection("orders").findOne({
             user_id: session.client_reference_id,
-            orders: [order_item],
           });
-          console.log(res, "res");
+
+          if (findUserOrder) {
+            const res = await db.collection("orders").updateOne(
+              { user_id: session.client_reference_id },
+              {
+                $push: {
+                  orders: order_item,
+                },
+              },
+            );
+          } else {
+            const res = await db.collection("orders").insertOne({
+              user_id: session.client_reference_id,
+              orders: [order_item],
+            });
+          }
         }
 
         return res.status(200).json({ received: true });

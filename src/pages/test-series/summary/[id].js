@@ -113,7 +113,7 @@ const TestSummary = () => {
   return (
     <div className="p-5 md:p-10">
       <Heading>Test Summary</Heading>
-      <div className="grid grid-cols-2 gap-5">
+      <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
         <div className="rounded-xl bg-lime-50 p-5">
           {marksGraphData && (
             <ResponsiveContainer width="100%" height={350}>
@@ -133,6 +133,7 @@ const TestSummary = () => {
                   fontSize={12}
                   tickLine={false}
                   axisLine={false}
+                  hide={true}
                   tickFormatter={(value) => `${value}`}
                   domain={[0, 180]}
                   // domain={[
@@ -151,7 +152,9 @@ const TestSummary = () => {
                     dataKey="total"
                     position={"top"}
                     fontSize={12}
-                    formatter={(value) => (value > 0 ? `${value} Marks` : "")} // You can format the label as needed
+                    formatter={(value) =>
+                      value > 0 ? `${value} Marks` : "-ve"
+                    } // You can format the label as needed
                   />
                 </Bar>
               </BarChart>
@@ -176,12 +179,20 @@ const TestSummary = () => {
                   stroke="#888888"
                   fontSize={12}
                   tickLine={false}
+                  hide={true}
                   axisLine={false}
                   tickFormatter={(value) => `${value}`}
                   domain={[0, 50]}
                   interval={0}
                 />
-                <Bar dataKey="total" fill="#adfa1d" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="total" fill="#adfa1d" radius={[4, 4, 0, 0]}>
+                  <LabelList
+                    dataKey="total"
+                    position={"top"}
+                    fontSize={12}
+                    formatter={(value) => (value > 0 ? `${value}Q` : "None")} // You can format the label as needed
+                  />
+                </Bar>
               </BarChart>
             </ResponsiveContainer>
           )}{" "}
@@ -190,7 +201,7 @@ const TestSummary = () => {
           <h3 className="text-lg font-semibold text-gray-700">
             Question Stats
           </h3>
-          <div className="mt-5 grid grid-cols-2 gap-5 font-inter">
+          <div className="mt-5 grid grid-cols-1 gap-5 font-inter md:grid-cols-2">
             <p className="rounded-xl bg-[#adfa1d] px-3 py-2 text-sm font-semibold text-gray-700">
               <span className="text-black">
                 {data?.test_summary?.attempted}
@@ -217,7 +228,7 @@ const TestSummary = () => {
         </div>
         <div className="rounded-xl bg-lime-50 p-5">
           <h3 className="text-lg font-semibold text-gray-700">Marks Stats</h3>
-          <div className="mt-5 grid grid-cols-2 gap-5 font-inter">
+          <div className="mt-5 grid grid-cols-1 gap-5 font-inter md:grid-cols-2">
             <p className="rounded-xl bg-[#adfa1d] px-3 py-2 text-sm font-semibold text-gray-700">
               <span className="text-black">
                 {data?.test_summary?.totalMarks}
