@@ -16,7 +16,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 const TEST_DURATION = 200;
 
-const TestSeiesById = ({ data, title, sections }) => {
+const TestSeiesById = ({ data, sections }) => {
   const { user } = useSelector((state) => state.auth);
   const [isLoading, setIsLoading] = useState(false);
   const [activeSubject, setActiveSubject] = useState(SUBJECTS.Physics);
@@ -191,11 +191,8 @@ const TestSeiesById = ({ data, title, sections }) => {
     if (alert) {
       window.location.href = "/profile";
     } else {
-      router.push(`/profile`);
+      return;
     }
-    // alert(
-    //   "Are you sure you want to leave the test? Your progress will be lost.",
-    // );
   };
 
   useEffect(() => {
@@ -1161,46 +1158,46 @@ export async function getStaticProps(ctx) {
   );
   //   console.log(data);
   //get the data
+  const sections = {
+    physics: {
+      sectionA: {
+        ...physicsSectionA,
+      },
+      sectionB: {
+        ...physicsSectionB,
+      },
+    },
+    chemistry: {
+      sectionA: {
+        ...chemistrySectionA,
+      },
+      sectionB: {
+        ...chemistrySectionB,
+      },
+    },
+    botany: {
+      sectionA: {
+        ...botanySectionA,
+      },
+      sectionB: {
+        ...botanySectionB,
+      },
+    },
+    zoology: {
+      sectionA: {
+        ...zoologySectionA,
+      },
+      sectionB: {
+        ...zoologySectionB,
+      },
+    },
+  };
   return {
     props: {
       data: {
         ...data,
       },
-      sections: {
-        physics: {
-          sectionA: {
-            ...physicsSectionA,
-          },
-          sectionB: {
-            ...physicsSectionB,
-          },
-        },
-        chemistry: {
-          sectionA: {
-            ...chemistrySectionA,
-          },
-          sectionB: {
-            ...chemistrySectionB,
-          },
-        },
-        botany: {
-          sectionA: {
-            ...botanySectionA,
-          },
-          sectionB: {
-            ...botanySectionB,
-          },
-        },
-        zoology: {
-          sectionA: {
-            ...zoologySectionA,
-          },
-          sectionB: {
-            ...zoologySectionB,
-          },
-        },
-      },
-      title,
+      sections,
     },
     // revalidate: process.env.NODE_ENV === "development" ? 1 : 3600,
   };
