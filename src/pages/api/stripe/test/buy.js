@@ -1,3 +1,4 @@
+import { PROFILE_TABS } from "@/lib/CONST";
 import Stripe from "stripe";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
@@ -29,7 +30,7 @@ export default async function handler(req, res) {
         order_mode: "testseries",
       },
       mode: "payment",
-      success_url: `${req.headers.origin}/success?session_id={CHECKOUT_SESSION_ID}`,
+      success_url: `${req.headers.origin}/profile?success=true&tab=${PROFILE_TABS.TestSeries}`,
       cancel_url: `${req.headers.origin}/profile`,
     });
     res.status(200).json({ id: session.id, url: session.url, success: true });

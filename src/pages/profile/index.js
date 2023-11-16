@@ -13,6 +13,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { PROFILE_TABS } from "@/lib/CONST";
 import { setOrders } from "@/redux/reducer/orders";
 import { setTests } from "@/redux/reducer/test";
 import Image from "next/image";
@@ -27,6 +28,18 @@ const Index = () => {
   const { orders } = useSelector((state) => state.orders);
   const { loading } = useSelector((state) => state.app);
 
+  const [activeTab, setActiveTab] = useState(null);
+
+  const router = useRouter();
+  const params = router.query;
+  const { tab } = params;
+
+  useEffect(() => {
+    if (tab) {
+      setActiveTab(tab);
+    }
+  }, [tab]);
+
   if (loading || !user) {
     return <AppLoader />;
   }
@@ -34,37 +47,55 @@ const Index = () => {
   return (
     <div className="p-5 py-16 md:p-10">
       <Heading>My Account</Heading>
-      <Tabs defaultValue="softcopy">
+      <Tabs
+        defaultValue={PROFILE_TABS.Softcopy}
+        value={
+          tab === PROFILE_TABS.Softcopy ||
+          tab === PROFILE_TABS.Hardcopy ||
+          tab === PROFILE_TABS.TestSeries ||
+          tab === PROFILE_TABS.Account
+            ? tab
+            : PROFILE_TABS.Softcopy
+        }
+        onValueChange={(value) => {
+          setActiveTab(value);
+          router.push(`/profile?tab=${value}`, undefined, { shallow: true }); // shallow routing
+        }}
+      >
         <TabsList className="grid w-full grid-cols-4 gap-1 rounded-md sm:max-w-2xl">
-          <TabsTrigger value="softcopy" className="rounded-md">
+          <TabsTrigger
+            value={PROFILE_TABS.Softcopy}
+            //set tab value to the current tab
+            className="rounded-md"
+          >
             Soft Copy
           </TabsTrigger>
-          <TabsTrigger value="hardcopy" className="rounded-md">
+          <TabsTrigger value={PROFILE_TABS.Hardcopy} className="rounded-md">
             Hard Copy
           </TabsTrigger>
-          <TabsTrigger value="testseries" className="rounded-md">
+          <TabsTrigger value={PROFILE_TABS.TestSeries} className="rounded-md">
             Test Series
           </TabsTrigger>
-          <TabsTrigger value="account" className="rounded-md">
+          <TabsTrigger value={PROFILE_TABS.Account} className="rounded-md">
             Account
           </TabsTrigger>
         </TabsList>
-        <TabsContent value="softcopy">
+        <TabsContent value={PROFILE_TABS.Softcopy}>
           <Card className="p-5">
             <SoftCopy />
           </Card>
         </TabsContent>
-        <TabsContent value="hardcopy">
+        <TabsContent value={PROFILE_TABS.Hardcopy}>
           <Card className="p-5">
             <HardCopy />
           </Card>
         </TabsContent>
-        <TabsContent value="testseries">
+        <TabsContent value={PROFILE_TABS.TestSeries}>
           <Card className="p-5">
             <TestSeries />
           </Card>
         </TabsContent>
-        <TabsContent value="account">
+        <TabsContent value={PROFILE_TABS.Account}>
           <Card>
             <CardHeader>
               <CardTitle>Account</CardTitle>
@@ -303,7 +334,7 @@ const SoftCopy = () => {
       fetchOrders(user.id);
     }
   }, [user]);
-  if (isLoading || !user || !orders) {
+  if (isLoading || !user) {
     return <Loader />;
   }
 
@@ -478,7 +509,7 @@ const HardCopy = () => {
 
   return (
     <div className="flex flex-col gap-5">
-      {orders.length === 0 && (
+      {orders?.length === 0 && (
         <div className="flex w-full flex-col items-center justify-center gap-5 px-5 py-28">
           <p className="text-2xl font-semibold text-slate-950">
             You have not purchased any hard copy yet

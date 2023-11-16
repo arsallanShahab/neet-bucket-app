@@ -5,7 +5,13 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { OPTIONS, SECTIONS, SUBJECTS, formatTime } from "@/lib/CONST";
+import {
+  OPTIONS,
+  PROFILE_TABS,
+  SECTIONS,
+  SUBJECTS,
+  formatTime,
+} from "@/lib/CONST";
 import client from "@/lib/contentful";
 import { cn } from "@/lib/utils";
 import { setTest } from "@/redux/reducer/test";
@@ -677,7 +683,7 @@ const TestSeiesById = ({ data, sections }) => {
       const resData = await res.json();
       if (resData.success) {
         dispatch(setTest(resData.data));
-        router.push("/profile");
+        router.push(`/profile?tab=${PROFILE_TABS.TestSeries}`);
       }
     } catch (error) {
       console.log(error);

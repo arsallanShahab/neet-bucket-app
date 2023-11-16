@@ -10,44 +10,6 @@ import {
   YAxis,
 } from "recharts";
 
-// const graphData = [
-//   {
-//     name: "Physics",
-//     total: data.test_summary.physicsMarks || 0.25,
-//   },
-//   {
-//     name: "Chemistry",
-//     total: data.test_summary.chemistryMarks || 0.25,
-//   },
-//   {
-//     name: "Botany",
-//     total: data.test_summary.botanyMarks || 0.25,
-//   },
-//   {
-//     name: "Zoology",
-//     total: data.test_summary.zoologyMarks || 0.25,
-//   },
-// ];
-
-// const progressData = [
-//   {
-//     name: "Attempted",
-//     total: data.test_summary.attempted,
-//   },
-//   {
-//     name: "Skipped",
-//     total: data.test_summary.skipped,
-//   },
-//   {
-//     name: "Marked for Review",
-//     total: data.test_summary.markedForReview,
-//   },
-//   {
-//     name: "Not Visited",
-//     total: data.test_summary.notVisited,
-//   },
-// ];
-
 const TestSummary = () => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
@@ -114,53 +76,6 @@ const TestSummary = () => {
     <div className="p-5 md:p-10">
       <Heading>Test Summary</Heading>
       <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
-        <div className="rounded-xl bg-lime-50 p-5">
-          {marksGraphData && (
-            <ResponsiveContainer width="100%" height={350}>
-              <BarChart
-                margin={{ top: 20, right: 30, left: 0, bottom: 0 }}
-                data={marksGraphData}
-              >
-                <XAxis
-                  dataKey="name"
-                  stroke="#888888"
-                  fontSize={12}
-                  tickLine={false}
-                  axisLine={false}
-                />
-                <YAxis
-                  stroke="#888888"
-                  fontSize={12}
-                  tickLine={false}
-                  axisLine={false}
-                  hide={true}
-                  tickFormatter={(value) => `${value}`}
-                  domain={[0, 180]}
-                  // domain={[
-                  //   0,
-                  //   Math.max(...marksGraphData.map((item) => item.total)),
-                  // ]}
-                  interval={0}
-                />
-                <Bar
-                  dataKey="total"
-                  fill="#adfa1d"
-                  radius={[4, 4, 0, 0]}
-                  min={"0"}
-                >
-                  <LabelList
-                    dataKey="total"
-                    position={"top"}
-                    fontSize={12}
-                    formatter={(value) =>
-                      value > 0 ? `${value} Marks` : "-ve"
-                    } // You can format the label as needed
-                  />
-                </Bar>
-              </BarChart>
-            </ResponsiveContainer>
-          )}
-        </div>
         <div className="rounded-xl bg-lime-50 p-5">
           {progressGraphData && (
             <ResponsiveContainer width="100%" height={350}>

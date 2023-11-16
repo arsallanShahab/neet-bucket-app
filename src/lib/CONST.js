@@ -25,3 +25,11 @@ export const formatTime = (seconds) => {
     minutes < 10 ? "0" + minutes : minutes
   }:${remainingSeconds < 10 ? "0" + remainingSeconds : remainingSeconds}`;
 };
+
+export const PROFILE_TABS = Object.freeze({
+  Profile: "profile",
+  Softcopy: "softcopy",
+  Hardcopy: "hardcopy",
+  TestSeries: "test-series",
+  Account: "account",
+});
