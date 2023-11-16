@@ -50,7 +50,7 @@ const Index = ({ testSeries }) => {
             <div className="absolute right-4 top-4 z-30 flex h-16 w-16 items-start justify-end rounded-3xl bg-[#ecf976]  text-center font-sora font-semibold duration-200 group-hover:right-0 group-hover:top-0 group-hover:z-10 group-hover:h-full group-hover:w-full group-hover:rounded-xl">
               {/* <BookOpen className="h-6 w-6" /> */}
               <span className="h-full w-auto pr-3.5 text-center leading-[4rem] duration-150 group-hover:pr-5">
-                ₹60
+                ₹75
               </span>
             </div>
             <div className="relative z-20 mt-4 w-full text-left">

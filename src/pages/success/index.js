@@ -23,7 +23,7 @@ const Index = () => {
       const { status } = paymentIntent;
       console.log(success, paymentIntent, status);
       if (success && status === "succeeded") {
-        router.push("/orders");
+        router.push("/profile");
         dispatch(setCartItems({ cart: [], totalQuantity: 0, totalPrice: 0 }));
       }
     };
