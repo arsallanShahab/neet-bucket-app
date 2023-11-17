@@ -700,7 +700,7 @@ const TestSeiesById = ({ data, sections }) => {
     <div className="relative flex flex-row overflow-hidden border-b px-5 ">
       <div
         className={cn(
-          "absolute inset-y-0 left-0 top-0 z-[800] h-full w-[300px] -translate-x-full overflow-y-scroll bg-white p-5 shadow-2xl transition-transform duration-150 md:relative md:inset-y-auto md:h-screen md:max-h-[720px] md:-translate-x-0 md:shadow-none",
+          "absolute inset-y-0 left-0 top-0 z-[800] h-full w-[300px] -translate-x-full overflow-y-scroll bg-white p-5 shadow-2xl transition-transform duration-150 md:relative md:inset-y-auto md:h-screen md:max-h-[660px] md:-translate-x-0 md:shadow-none",
           sidebarOpen && "translate-x-0",
         )}
       >
@@ -1029,7 +1029,7 @@ const TestSeiesById = ({ data, sections }) => {
           </div>
         </div>
       </div>
-      <div className="relative flex min-h-[80vh] flex-1 flex-col items-start justify-between gap-5 border-l p-5">
+      <div className="relative flex min-h-[75vh] flex-1 flex-col items-start justify-between gap-5 border-l p-5">
         <div>
           <div className="flex w-full justify-end pb-5 md:hidden">
             <Button
@@ -1087,8 +1087,8 @@ const TestSeiesById = ({ data, sections }) => {
             </div>
           </div>
         </div>
-        <div className="mt-10 flex w-full flex-row flex-wrap justify-between gap-5">
-          <div className="flex flex-row flex-wrap gap-5">
+        <div className="mt-10 flex w-full flex-row flex-wrap-reverse justify-between gap-5 md:flex-wrap">
+          <div className="flex w-full flex-row justify-between gap-5 md:w-auto">
             <button
               onClick={handleClearResponse}
               className="flex items-center justify-center rounded-md bg-rose-500 px-5 py-2.5 text-sm font-semibold text-slate-100 hover:bg-rose-600"
@@ -1102,7 +1102,7 @@ const TestSeiesById = ({ data, sections }) => {
               Mark for Review
             </button>
           </div>
-          <div className="flex flex-row flex-wrap gap-5">
+          <div className="flex w-full flex-row justify-between gap-5 md:w-auto">
             <button
               onClick={() => {
                 if (activeQuestion > 0) {
