@@ -45,7 +45,19 @@ const Index = () => {
   }
 
   if (!loading && !user) {
-    router.push("/login");
+    return (
+      <div className="flex flex-col items-center justify-center gap-5 px-5 py-28">
+        <p className="text-2xl font-semibold text-slate-950">
+          Please login to view your profile
+        </p>
+        <Button
+          className="bg-indigo-600 hover:bg-indigo-700"
+          onClick={() => router.push("/login")}
+        >
+          Login
+        </Button>
+      </div>
+    );
   }
 
   return (
