@@ -41,7 +41,7 @@ const Index = () => {
   }, [tab]);
 
   if (loading) {
-    return <Loader />;
+    return <AppLoader />;
   }
 
   if (!loading && !user) {
