@@ -507,7 +507,11 @@ const HardCopy = () => {
         const { user_orders, success } = await res.json();
         if (success) {
           const reversedOrders = user_orders.orders.reverse();
-          dispatch(setOrders(reversedOrders));
+          if (reversedOrders.length > 0) {
+            dispatch(setOrders(reversedOrders));
+          } else {
+            dispatch(setOrders([]));
+          }
         }
       } catch (error) {
         console.log(error);

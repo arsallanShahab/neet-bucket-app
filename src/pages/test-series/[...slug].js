@@ -612,6 +612,7 @@ const TestSeiesById = ({ data, sections }) => {
         },
       },
     }));
+    setActiveSelectedOption("");
   };
 
   const handleSkip = () => {
