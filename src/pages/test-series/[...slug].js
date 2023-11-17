@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -15,6 +16,7 @@ import {
 import client from "@/lib/contentful";
 import { cn } from "@/lib/utils";
 import { setTest } from "@/redux/reducer/test";
+import { ChevronRight } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
@@ -29,6 +31,7 @@ const TestSeiesById = ({ data, sections }) => {
   const [activeSection, setActiveSection] = useState(SECTIONS.sectionA);
   const [activeQuestion, setActiveQuestion] = useState(0);
   const [activeSelectedOption, setActiveSelectedOption] = useState("");
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [testProgress, setTestProgress] = useState({
     attempted: 0,
     skipped: 0,
@@ -694,8 +697,61 @@ const TestSeiesById = ({ data, sections }) => {
 
   console.log(testData);
   return (
-    <div className="flex flex-row border-b px-10">
-      <div className="h-[75vh] max-h-[900px] w-[300px] overflow-y-scroll rounded-xl py-5 pb-10 pr-5">
+    <div className="relative flex flex-row overflow-hidden border-b px-5 ">
+      <div
+        className={cn(
+          "absolute inset-y-0 left-0 top-0 z-[800] h-full w-[300px] -translate-x-full overflow-y-scroll bg-white p-5 shadow-2xl transition-transform duration-150 md:relative md:inset-y-auto md:h-screen md:max-h-[720px]",
+          sidebarOpen && "translate-x-0",
+        )}
+      >
+        <div className="my-2.5 flex w-full justify-end">
+          <Button
+            variant="ghost"
+            className="h-auto"
+            onClick={() => setSidebarOpen((prev) => !prev)}
+          >
+            close
+          </Button>
+        </div>
+        <Dialog>
+          <DialogTrigger
+            onClick={progress}
+            className="group/progress relative w-full rounded-lg bg-black px-5 py-3 font-sora text-sm font-semibold text-white hover:bg-opacity-90 active:bg-opacity-80"
+          >
+            <button className="flex w-full items-center justify-center gap-0 duration-100 group-hover/progress:translate-x-1">
+              view summary{" "}
+              <ChevronRight className="inline-block h-3.5 w-3.5 -translate-x-2 transform stroke-[3.5px] opacity-0 duration-100 group-hover/progress:translate-x-0 group-hover/progress:opacity-100" />
+            </button>
+            <span className="block text-xs font-medium opacity-80">
+              Time Left: {formatTime(timeRemaining / 1000)}
+            </span>
+          </DialogTrigger>
+          <DialogContent className="z-[900]">
+            <DialogHeader>
+              <DialogTitle>Test Summary</DialogTitle>
+              <div className="mt-5 grid grid-cols-2 gap-5 py-5 font-inter">
+                <p className="rounded-xl bg-gray-100 px-3 py-2 text-sm font-semibold text-gray-700">
+                  <span className="text-black">{testProgress.attempted}</span>{" "}
+                  Attempted
+                </p>
+                <p className="rounded-xl bg-gray-100 px-3 py-2 text-sm font-semibold text-gray-700">
+                  <span className="text-black">{testProgress.skipped}</span>{" "}
+                  Skipped
+                </p>
+                <p className="rounded-xl bg-gray-100 px-3 py-2 text-sm font-semibold text-gray-700">
+                  <span className="text-black">
+                    {testProgress.markedForReview}
+                  </span>{" "}
+                  Marked for Review
+                </p>
+                <p className="rounded-xl bg-gray-100 px-3 py-2 text-sm font-semibold text-gray-700">
+                  <span className="text-black">{testProgress.notVisited}</span>{" "}
+                  Not Visited
+                </p>
+              </div>
+            </DialogHeader>
+          </DialogContent>
+        </Dialog>
         <div className="flex flex-col gap-2 p-2">
           <h3 className="font-sora text-xl font-semibold capitalize">
             Physics
@@ -833,72 +889,74 @@ const TestSeiesById = ({ data, sections }) => {
               );
             })}
           </div>
-        </div>
-        <div className="mt-2 flex flex-col gap-2 p-2">
-          <h3 className="font-sora text-xl font-semibold capitalize">Botany</h3>
-          <h4 className="font-inter text-sm font-semibold capitalize text-gray-500 ">
-            {sections?.botany?.sectionA.fields.sectionName}
-          </h4>
-          <div className="flex flex-wrap gap-2">
-            {sections?.botany?.sectionA.fields.questions.map((_, i) => {
-              return (
-                <button
-                  key={i}
-                  data-section={SUBJECTS.Botany}
-                  data-section-type={SECTIONS.sectionA}
-                  data-question={i}
-                  onClick={handleJumpToQuestion}
-                  data-marks={1}
-                  className={cn(
-                    "flex h-6 w-6 items-center justify-center rounded-md bg-gray-100 text-sm text-black",
-                    testData.botany.sectionA.questions[i].isAttempted &&
-                      "bg-green-500 text-white",
-                    testData.botany.sectionA.questions[i].isSkipped &&
-                      "bg-rose-500 text-white",
-                    testData.botany.sectionA.questions[i].isMarkedForReview &&
-                      "bg-yellow-500 text-white",
-                    activeSubject === SUBJECTS.Botany &&
-                      activeSection === SECTIONS.sectionA &&
-                      i === activeQuestion &&
-                      "bg-indigo-600 text-white",
-                  )}
-                >
-                  {i + 1}
-                </button>
-              );
-            })}
-          </div>
-          <h4 className="font-inter text-sm font-semibold capitalize text-gray-500 ">
-            {sections.botany?.sectionB.fields.sectionName}
-          </h4>
-          <div className="flex flex-wrap gap-2">
-            {sections?.botany?.sectionB.fields.questions.map((_, i) => {
-              return (
-                <button
-                  key={i}
-                  data-section={SUBJECTS.Botany}
-                  data-section-type={SECTIONS.sectionB}
-                  data-question={i}
-                  onClick={handleJumpToQuestion}
-                  data-marks={2}
-                  className={cn(
-                    "flex h-6 w-6 items-center justify-center rounded-md bg-gray-100 text-sm text-black",
-                    testData.botany.sectionB.questions[i].isAttempted &&
-                      "bg-green-500 text-white",
-                    testData.botany.sectionB.questions[i].isSkipped &&
-                      "bg-rose-500 text-white",
-                    testData.botany.sectionB.questions[i].isMarkedForReview &&
-                      "bg-yellow-500 text-white",
-                    activeSubject === SUBJECTS.Botany &&
-                      activeSection === SECTIONS.sectionB &&
-                      i === activeQuestion &&
-                      "bg-indigo-600 text-white",
-                  )}
-                >
-                  {i + 1}
-                </button>
-              );
-            })}
+          <div className="mt-2 flex flex-col gap-2 p-2">
+            <h3 className="font-sora text-xl font-semibold capitalize">
+              Botany
+            </h3>
+            <h4 className="font-inter text-sm font-semibold capitalize text-gray-500 ">
+              {sections?.botany?.sectionA.fields.sectionName}
+            </h4>
+            <div className="flex flex-wrap gap-2">
+              {sections?.botany?.sectionA.fields.questions.map((_, i) => {
+                return (
+                  <button
+                    key={i}
+                    data-section={SUBJECTS.Botany}
+                    data-section-type={SECTIONS.sectionA}
+                    data-question={i}
+                    onClick={handleJumpToQuestion}
+                    data-marks={1}
+                    className={cn(
+                      "flex h-6 w-6 items-center justify-center rounded-md bg-gray-100 text-sm text-black",
+                      testData.botany.sectionA.questions[i].isAttempted &&
+                        "bg-green-500 text-white",
+                      testData.botany.sectionA.questions[i].isSkipped &&
+                        "bg-rose-500 text-white",
+                      testData.botany.sectionA.questions[i].isMarkedForReview &&
+                        "bg-yellow-500 text-white",
+                      activeSubject === SUBJECTS.Botany &&
+                        activeSection === SECTIONS.sectionA &&
+                        i === activeQuestion &&
+                        "bg-indigo-600 text-white",
+                    )}
+                  >
+                    {i + 1}
+                  </button>
+                );
+              })}
+            </div>
+            <h4 className="font-inter text-sm font-semibold capitalize text-gray-500 ">
+              {sections.botany?.sectionB.fields.sectionName}
+            </h4>
+            <div className="flex flex-wrap gap-2">
+              {sections?.botany?.sectionB.fields.questions.map((_, i) => {
+                return (
+                  <button
+                    key={i}
+                    data-section={SUBJECTS.Botany}
+                    data-section-type={SECTIONS.sectionB}
+                    data-question={i}
+                    onClick={handleJumpToQuestion}
+                    data-marks={2}
+                    className={cn(
+                      "flex h-6 w-6 items-center justify-center rounded-md bg-gray-100 text-sm text-black",
+                      testData.botany.sectionB.questions[i].isAttempted &&
+                        "bg-green-500 text-white",
+                      testData.botany.sectionB.questions[i].isSkipped &&
+                        "bg-rose-500 text-white",
+                      testData.botany.sectionB.questions[i].isMarkedForReview &&
+                        "bg-yellow-500 text-white",
+                      activeSubject === SUBJECTS.Botany &&
+                        activeSection === SECTIONS.sectionB &&
+                        i === activeQuestion &&
+                        "bg-indigo-600 text-white",
+                    )}
+                  >
+                    {i + 1}
+                  </button>
+                );
+              })}
+            </div>
           </div>
         </div>
         <div className="mt-2 flex flex-col gap-2 p-2">
@@ -971,7 +1029,16 @@ const TestSeiesById = ({ data, sections }) => {
           </div>
         </div>
       </div>
-      <div className="relative flex flex-1 flex-col items-start justify-between border-l p-5">
+      <div className="relative flex min-h-[80vh] flex-1 flex-col items-start justify-between border-l p-5">
+        <div className="flex w-full justify-end py-5 md:hidden">
+          <Button
+            // variant="ghost"
+            className="h-auto"
+            onClick={() => setSidebarOpen((prev) => !prev)}
+          >
+            {sidebarOpen ? "close" : "open"}
+          </Button>
+        </div>
         <div>
           {testData &&
             testData[activeSubject][activeSection].questions[activeQuestion]
@@ -1016,41 +1083,6 @@ const TestSeiesById = ({ data, sections }) => {
               );
             })}
           </div>
-          <Dialog>
-            <DialogTrigger
-              onClick={progress}
-              className="absolute right-5 top-5 rounded-3xl bg-black px-5 py-2 font-sora text-sm font-semibold text-white"
-            >
-              see progress : {formatTime(timeRemaining / 1000)}
-            </DialogTrigger>
-            <DialogContent>
-              <DialogHeader>
-                <DialogTitle>Test Summary</DialogTitle>
-                <div className="mt-5 grid grid-cols-2 gap-5 py-5 font-inter">
-                  <p className="rounded-xl bg-gray-100 px-3 py-2 text-sm font-semibold text-gray-700">
-                    <span className="text-black">{testProgress.attempted}</span>{" "}
-                    Attempted
-                  </p>
-                  <p className="rounded-xl bg-gray-100 px-3 py-2 text-sm font-semibold text-gray-700">
-                    <span className="text-black">{testProgress.skipped}</span>{" "}
-                    Skipped
-                  </p>
-                  <p className="rounded-xl bg-gray-100 px-3 py-2 text-sm font-semibold text-gray-700">
-                    <span className="text-black">
-                      {testProgress.markedForReview}
-                    </span>{" "}
-                    Marked for Review
-                  </p>
-                  <p className="rounded-xl bg-gray-100 px-3 py-2 text-sm font-semibold text-gray-700">
-                    <span className="text-black">
-                      {testProgress.notVisited}
-                    </span>{" "}
-                    Not Visited
-                  </p>
-                </div>
-              </DialogHeader>
-            </DialogContent>
-          </Dialog>
         </div>
         <div className="mt-10 flex w-full flex-row flex-wrap justify-between gap-5">
           <div className="flex flex-row flex-wrap gap-5">

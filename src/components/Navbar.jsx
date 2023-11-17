@@ -74,7 +74,7 @@ const Navbar = () => {
           <Input
             type="search"
             placeholder="Search..."
-            className="hidden w-full sm:flex md:w-[100px] lg:w-[300px]"
+            className="hidden w-full sm:flex md:w-[150px] lg:w-[300px]"
             onKeyPress={handleSearch}
             value={search}
             onChange={(e) => setSearch(e.target.value)}

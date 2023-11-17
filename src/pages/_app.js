@@ -8,11 +8,15 @@ import { setCartItems } from "@/redux/reducer/cart";
 import store from "@/redux/store";
 import "@/styles/globals.css";
 import { AnimatePresence } from "framer-motion";
+import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { Provider } from "react-redux";
 
 export default function App({ Component, pageProps }) {
   const { loading } = store.getState().app;
+  const router = useRouter();
+  const path = router.pathname;
+  const isTestPage = path.includes("test");
 
   useEffect(() => {
     const cart = JSON.parse(localStorage.getItem("cart"));
@@ -43,7 +47,7 @@ export default function App({ Component, pageProps }) {
           <Navbar />
           <Component {...pageProps} />
           <Toaster />
-          <Footer />
+          {!isTestPage && <Footer />}
           {loading && <AppLoader />}
         </Provider>
       </AnimatePresence>
