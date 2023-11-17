@@ -40,8 +40,12 @@ const Index = () => {
     }
   }, [tab]);
 
-  if (loading || !user) {
-    return <AppLoader />;
+  if (loading) {
+    return <Loader />;
+  }
+
+  if (!loading && !user) {
+    router.push("/login");
   }
 
   return (
