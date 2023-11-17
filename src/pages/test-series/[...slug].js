@@ -1052,10 +1052,8 @@ const TestSeiesById = ({ data, sections }) => {
                     ].questionImage.sys.id
                   }
                   src={`https:${testData[activeSubject][activeSection].questions[activeQuestion].questionImage.fields.file.url}`}
-                  width={1000}
-                  height={1000}
-                  placeholder="blur"
-                  blurDataURL={`https:${testData[activeSubject][activeSection].questions[activeQuestion].questionImage.fields.file.url}`}
+                  width={500}
+                  height={500}
                   priority={true}
                   className="h-auto max-h-[225px] min-h-[125px] w-full object-contain"
                 />
