@@ -6,6 +6,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { useToast } from "@/components/ui/use-toast";
 import {
   OPTIONS,
   PROFILE_TABS,
@@ -148,6 +149,7 @@ const TestSeiesById = ({ data, sections }) => {
 
   const dispatch = useDispatch();
   const router = useRouter();
+  const { toast } = useToast();
 
   useEffect(() => {
     const timerInterval = setInterval(() => {
@@ -442,6 +444,98 @@ const TestSeiesById = ({ data, sections }) => {
 
   const handleOptionsClick = (e) => {
     const { value } = e.target.dataset;
+
+    let physicsSectionBAttempted = 0;
+    let chemistrySectionBAttempted = 0;
+    let botanySectionBAttempted = 0;
+    let zoologySectionBAttempted = 0;
+
+    testData.physics.sectionB.questions.forEach((item) => {
+      if (item.isMarkedForReview) {
+        physicsSectionBAttempted += 1;
+      }
+      if (item.isAttempted) {
+        physicsSectionBAttempted += 1;
+      }
+    });
+
+    testData.chemistry.sectionB.questions.forEach((item) => {
+      if (item.isMarkedForReview) {
+        chemistrySectionBAttempted += 1;
+      }
+      if (item.isAttempted) {
+        chemistrySectionBAttempted += 1;
+      }
+    });
+
+    testData.botany.sectionB.questions.forEach((item) => {
+      if (item.isMarkedForReview) {
+        botanySectionBAttempted += 1;
+      }
+      if (item.isAttempted) {
+        botanySectionBAttempted += 1;
+      }
+    });
+    testData.zoology.sectionB.questions.forEach((item) => {
+      if (item.isMarkedForReview) {
+        zoologySectionBAttempted += 1;
+      }
+      if (item.isAttempted) {
+        zoologySectionBAttempted += 1;
+      }
+    });
+    if (activeSubject === SUBJECTS.Physics) {
+      if (activeSection === SECTIONS.sectionB) {
+        if (physicsSectionBAttempted >= 10) {
+          toast({
+            title: "All questions attempted",
+            description:
+              "You have attempted all the questions in this section.",
+            variant: "destructive",
+          });
+          return;
+        }
+      }
+    }
+    if (activeSubject === SUBJECTS.Chemistry) {
+      if (activeSection === SECTIONS.sectionB) {
+        if (chemistrySectionBAttempted >= 10) {
+          toast({
+            title: "All questions attempted",
+            description:
+              "You have attempted all the questions in this section.",
+            variant: "destructive",
+          });
+          return;
+        }
+      }
+    }
+    if (activeSubject === SUBJECTS.Botany) {
+      if (activeSection === SECTIONS.sectionB) {
+        if (botanySectionBAttempted >= 10) {
+          toast({
+            title: "All questions attempted",
+            description:
+              "You have attempted all the questions in this section.",
+            variant: "destructive",
+          });
+          return;
+        }
+      }
+    }
+    if (activeSubject === SUBJECTS.Zoology) {
+      if (activeSection === SECTIONS.sectionB) {
+        if (zoologySectionBAttempted >= 10) {
+          toast({
+            title: "All questions attempted",
+            description:
+              "You have attempted all the questions in this section.",
+            variant: "destructive",
+          });
+          return;
+        }
+      }
+    }
     setActiveSelectedOption(value);
     console.log(value);
     setTestData((prev) => ({
@@ -546,6 +640,46 @@ const TestSeiesById = ({ data, sections }) => {
   };
 
   const handleNext = () => {
+    let physicsSectionBAttempted = 0;
+    let chemistrySectionBAttempted = 0;
+    let botanySectionBAttempted = 0;
+    let zoologySectionBAttempted = 0;
+
+    testData.physics.sectionB.questions.forEach((item) => {
+      if (item.isMarkedForReview) {
+        physicsSectionBAttempted += 1;
+      }
+      if (item.isAttempted) {
+        physicsSectionBAttempted += 1;
+      }
+    });
+
+    testData.chemistry.sectionB.questions.forEach((item) => {
+      if (item.isMarkedForReview) {
+        chemistrySectionBAttempted += 1;
+      }
+      if (item.isAttempted) {
+        chemistrySectionBAttempted += 1;
+      }
+    });
+
+    testData.botany.sectionB.questions.forEach((item) => {
+      if (item.isMarkedForReview) {
+        botanySectionBAttempted += 1;
+      }
+      if (item.isAttempted) {
+        botanySectionBAttempted += 1;
+      }
+    });
+    testData.zoology.sectionB.questions.forEach((item) => {
+      if (item.isMarkedForReview) {
+        zoologySectionBAttempted += 1;
+      }
+      if (item.isAttempted) {
+        zoologySectionBAttempted += 1;
+      }
+    });
+
     setActiveSelectedOption("");
     if (
       !testData[activeSubject][activeSection].questions[activeQuestion]
@@ -557,6 +691,7 @@ const TestSeiesById = ({ data, sections }) => {
     ) {
       handleSkip();
     }
+
     if (activeSubject === SUBJECTS.Physics) {
       if (activeSection === SECTIONS.sectionA) {
         if (
@@ -570,6 +705,12 @@ const TestSeiesById = ({ data, sections }) => {
         setActiveQuestion((prev) => prev + 1);
       }
       if (activeSection === SECTIONS.sectionB) {
+        if (physicsSectionBAttempted >= 10) {
+          setActiveSubject(SUBJECTS.Chemistry);
+          setActiveSection(SECTIONS.sectionA);
+          setActiveQuestion(0);
+          return;
+        }
         if (
           activeQuestion ===
           sections.physics.sectionB.fields.questions.length - 1
@@ -595,6 +736,13 @@ const TestSeiesById = ({ data, sections }) => {
         setActiveQuestion((prev) => prev + 1);
       }
       if (activeSection === SECTIONS.sectionB) {
+        if (chemistrySectionBAttempted >= 10) {
+          setActiveSubject(SUBJECTS.Botany);
+          setActiveSection(SECTIONS.sectionA);
+          setActiveQuestion(0);
+          return;
+        }
+
         if (
           activeQuestion ===
           sections.chemistry.sectionB.fields.questions.length - 1
@@ -620,6 +768,12 @@ const TestSeiesById = ({ data, sections }) => {
         setActiveQuestion((prev) => prev + 1);
       }
       if (activeSection === SECTIONS.sectionB) {
+        if (botanySectionBAttempted >= 10) {
+          setActiveSubject(SUBJECTS.Zoology);
+          setActiveSection(SECTIONS.sectionA);
+          setActiveQuestion(0);
+          return;
+        }
         if (
           activeQuestion ===
           sections.botany.sectionB.fields.questions.length - 1
@@ -645,6 +799,9 @@ const TestSeiesById = ({ data, sections }) => {
         setActiveQuestion((prev) => prev + 1);
       }
       if (activeSection === SECTIONS.sectionB) {
+        if (zoologySectionBAttempted >= 10) {
+          return;
+        }
         if (
           activeQuestion ===
           sections.zoology.sectionB.fields.questions.length - 1
@@ -697,7 +854,7 @@ const TestSeiesById = ({ data, sections }) => {
 
   console.log(testData);
   return (
-    <div className="relative flex flex-row overflow-hidden border-b px-5 ">
+    <div className="relative flex flex-row overflow-hidden border-b py-5 md:px-5 ">
       <div
         className={cn(
           "absolute inset-y-0 left-0 top-0 z-[800] h-full w-[300px] -translate-x-full overflow-y-scroll bg-white p-5 shadow-2xl transition-transform duration-150 md:relative md:inset-y-auto md:h-screen md:max-h-[660px] md:-translate-x-0 md:shadow-none",
@@ -1029,15 +1186,22 @@ const TestSeiesById = ({ data, sections }) => {
           </div>
         </div>
       </div>
-      <div className="relative flex min-h-[75vh] flex-1 flex-col items-start justify-between gap-5 border-l p-5">
-        <div>
+      <div className="relative flex min-h-[75vh] w-full flex-1 flex-col items-start justify-between gap-5 border-l p-5">
+        <div className="w-full">
           <div className="flex w-full justify-end pb-5 md:hidden">
             <Button
               // variant="ghost"
               className="h-auto"
               onClick={() => setSidebarOpen((prev) => !prev)}
             >
-              {sidebarOpen ? "close" : "open"}
+              {sidebarOpen ? (
+                "close"
+              ) : (
+                <span>
+                  All Questions
+                  <ChevronRight className="inline-block h-4 w-4 stroke-[3px]" />
+                </span>
+              )}
             </Button>
           </div>
 
