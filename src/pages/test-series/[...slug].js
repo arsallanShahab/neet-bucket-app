@@ -1058,7 +1058,7 @@ const TestSeiesById = ({ data, sections }) => {
                   className="h-auto max-h-[225px] min-h-[125px] w-full object-contain"
                 />
               )}
-            <div className="mt-10 flex w-full flex-row justify-center gap-2.5 md:justify-start md:pl-14">
+            <div className="mt-10 flex w-full flex-col justify-center gap-2.5 md:flex-row md:justify-start md:pl-14">
               {OPTIONS.map((item, i) => {
                 return (
                   <button
@@ -1069,7 +1069,7 @@ const TestSeiesById = ({ data, sections }) => {
                     data-question={activeQuestion}
                     data-value={item.value}
                     className={cn(
-                      "flex items-center justify-center rounded-md bg-gray-100 px-5 py-2.5 font-semibold",
+                      "flex items-center justify-start rounded-md bg-gray-100 px-5 py-2.5 text-sm font-semibold md:justify-center md:text-base",
                       item.value ===
                         testData[activeSubject][activeSection].questions[
                           activeQuestion
