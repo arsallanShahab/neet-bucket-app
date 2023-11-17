@@ -700,11 +700,11 @@ const TestSeiesById = ({ data, sections }) => {
     <div className="relative flex flex-row overflow-hidden border-b px-5 ">
       <div
         className={cn(
-          "absolute inset-y-0 left-0 top-0 z-[800] h-full w-[300px] -translate-x-full overflow-y-scroll bg-white p-5 shadow-2xl transition-transform duration-150 md:relative md:inset-y-auto md:h-screen md:max-h-[720px]",
+          "absolute inset-y-0 left-0 top-0 z-[800] h-full w-[300px] -translate-x-full overflow-y-scroll bg-white p-5 shadow-2xl transition-transform duration-150 md:relative md:inset-y-auto md:h-screen md:max-h-[720px] md:-translate-x-0 md:shadow-none",
           sidebarOpen && "translate-x-0",
         )}
       >
-        <div className="my-2.5 flex w-full justify-end">
+        <div className="my-2.5 flex w-full justify-end md:hidden">
           <Button
             variant="ghost"
             className="h-auto"
@@ -1029,59 +1029,62 @@ const TestSeiesById = ({ data, sections }) => {
           </div>
         </div>
       </div>
-      <div className="relative flex min-h-[80vh] flex-1 flex-col items-start justify-between border-l p-5">
-        <div className="flex w-full justify-end py-5 md:hidden">
-          <Button
-            // variant="ghost"
-            className="h-auto"
-            onClick={() => setSidebarOpen((prev) => !prev)}
-          >
-            {sidebarOpen ? "close" : "open"}
-          </Button>
-        </div>
+      <div className="relative flex min-h-[80vh] flex-1 flex-col items-start justify-between gap-5 border-l p-5">
         <div>
-          {testData &&
-            testData[activeSubject][activeSection].questions[activeQuestion]
-              .questionImage && (
-              <Image
-                alt={
-                  testData[activeSubject][activeSection].questions[
-                    activeQuestion
-                  ].questionImage.sys.id
-                }
-                src={`https:${testData[activeSubject][activeSection].questions[activeQuestion].questionImage.fields.file.url}`}
-                width={1000}
-                height={1000}
-                placeholder="blur"
-                blurDataURL={`https:${testData[activeSubject][activeSection].questions[activeQuestion].questionImage.fields.file.url}`}
-                priority={true}
-                className="h-auto max-h-[225px] min-h-[125px] w-full object-contain"
-              />
-            )}
-          <div className="mt-10 flex flex-row gap-2.5 pl-14">
-            {OPTIONS.map((item, i) => {
-              return (
-                <button
-                  key={i}
-                  onClick={handleOptionsClick}
-                  data-section={activeSubject}
-                  data-section-type={activeSection}
-                  data-question={activeQuestion}
-                  data-value={item.value}
-                  className={cn(
-                    "flex items-center justify-center rounded-md bg-gray-100 px-5 py-2.5 font-semibold",
-                    item.value ===
-                      testData[activeSubject][activeSection].questions[
-                        activeQuestion
-                      ].optionSelectedbyUser && "bg-indigo-600 text-white",
-                    item.value === activeSelectedOption &&
-                      "bg-indigo-600 text-white",
-                  )}
-                >
-                  ({item.value}) {item.option}
-                </button>
-              );
-            })}
+          <div className="flex w-full justify-end pb-5 md:hidden">
+            <Button
+              // variant="ghost"
+              className="h-auto"
+              onClick={() => setSidebarOpen((prev) => !prev)}
+            >
+              {sidebarOpen ? "close" : "open"}
+            </Button>
+          </div>
+
+          <div>
+            {testData &&
+              testData[activeSubject][activeSection].questions[activeQuestion]
+                .questionImage && (
+                <Image
+                  alt={
+                    testData[activeSubject][activeSection].questions[
+                      activeQuestion
+                    ].questionImage.sys.id
+                  }
+                  src={`https:${testData[activeSubject][activeSection].questions[activeQuestion].questionImage.fields.file.url}`}
+                  width={1000}
+                  height={1000}
+                  placeholder="blur"
+                  blurDataURL={`https:${testData[activeSubject][activeSection].questions[activeQuestion].questionImage.fields.file.url}`}
+                  priority={true}
+                  className="h-auto max-h-[225px] min-h-[125px] w-full object-contain"
+                />
+              )}
+            <div className="mt-10 flex w-full flex-row justify-center gap-2.5 md:justify-start md:pl-14">
+              {OPTIONS.map((item, i) => {
+                return (
+                  <button
+                    key={i}
+                    onClick={handleOptionsClick}
+                    data-section={activeSubject}
+                    data-section-type={activeSection}
+                    data-question={activeQuestion}
+                    data-value={item.value}
+                    className={cn(
+                      "flex items-center justify-center rounded-md bg-gray-100 px-5 py-2.5 font-semibold",
+                      item.value ===
+                        testData[activeSubject][activeSection].questions[
+                          activeQuestion
+                        ].optionSelectedbyUser && "bg-indigo-600 text-white",
+                      item.value === activeSelectedOption &&
+                        "bg-indigo-600 text-white",
+                    )}
+                  >
+                    ({item.value}) {item.option}
+                  </button>
+                );
+              })}
+            </div>
           </div>
         </div>
         <div className="mt-10 flex w-full flex-row flex-wrap justify-between gap-5">
