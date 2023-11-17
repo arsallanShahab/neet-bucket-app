@@ -356,7 +356,7 @@ const SoftCopy = () => {
 
   return (
     <div className="flex flex-col gap-5">
-      {orders?.length === 0 && (
+      {(orders?.length === 0 || !orders) && (
         <div className="flex w-full flex-col items-center justify-center gap-5 px-5 py-28">
           <p className="text-2xl font-semibold text-slate-950">
             You have not purchased any soft copy yet
@@ -507,11 +507,7 @@ const HardCopy = () => {
         const { user_orders, success } = await res.json();
         if (success) {
           const reversedOrders = user_orders.orders.reverse();
-          if (reversedOrders.length > 0) {
-            dispatch(setOrders(reversedOrders));
-          } else {
-            dispatch(setOrders([]));
-          }
+          dispatch(setOrders(reversedOrders));
         }
       } catch (error) {
         console.log(error);
@@ -529,7 +525,7 @@ const HardCopy = () => {
 
   return (
     <div className="flex flex-col gap-5">
-      {orders?.length === 0 && (
+      {(orders?.length === 0 || !orders) && (
         <div className="flex w-full flex-col items-center justify-center gap-5 px-5 py-28">
           <p className="text-2xl font-semibold text-slate-950">
             You have not purchased any hard copy yet
