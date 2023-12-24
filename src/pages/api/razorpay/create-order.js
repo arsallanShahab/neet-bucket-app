@@ -2,13 +2,27 @@
 // const razorpay = require("@/lib/razorpay");
 import Razorpay from "razorpay";
 
+const generateReceiptId = () => {
+  const result = [];
+  const characters =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  const charactersLength = characters.length;
+  for (let i = 0; i < 10; i++) {
+    result.push(
+      characters.charAt(Math.floor(Math.random() * charactersLength)),
+    );
+  }
+  return result.join("");
+};
+
 export default async function handler(req, res) {
   const { amount } = req.body;
   const options = {
     amount: amount * 100, // amount in smallest currency unit
     currency: "INR",
-    receipt: "receipt#1",
+    receipt: "receipt_" + generateReceiptId(),
     payment_capture: 1,
+    notes: [],
   };
 
   const razorpay = new Razorpay({

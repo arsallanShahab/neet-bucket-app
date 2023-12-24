@@ -58,6 +58,19 @@ const Index = () => {
       router.push("/login");
       return;
     }
+
+    const notes = cartItems.map((item) => {
+      return {
+        item: {
+          name: item.chapter_name,
+          quantity: item.quantity,
+          full_pdf: item.full_pdf.url,
+          amount: item.price * 100,
+        },
+        totalQuantity,
+        totalPrice,
+      };
+    });
     const res = await fetch("/api/razorpay/create-order", {
       method: "POST",
       body: JSON.stringify({
@@ -73,7 +86,15 @@ const Index = () => {
       key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
       order_id: id,
       handler: function (response) {
-        alert(response.razorpay_payment_id);
+        toast({
+          title: "Payment Successful",
+          description:
+            response.razorpay_payment_id +
+            " " +
+            response.razorpay_order_id +
+            " " +
+            response.razorpay_signature,
+        });
       },
       prefill: {
         name: user.name,
@@ -82,7 +103,7 @@ const Index = () => {
       notes: {
         user_id: user.id,
         order_id: id,
-        item: cartItems,
+        item: JSON.stringify(notes),
       },
       // theme: {
       //   color: "#F37254",
