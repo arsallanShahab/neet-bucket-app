@@ -1,3 +1,4 @@
+import { useToast } from "@/components/ui/use-toast";
 import client from "@/lib/contentful";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -6,13 +7,13 @@ import { useSelector } from "react-redux";
 const Index = ({ testSeries }) => {
   const { user } = useSelector((state) => state.auth);
   const router = useRouter();
+  const { toast } = useToast();
 
   const handleCheckout = async (e) => {
     const { testId, testName, testDesc } = e.target.dataset;
     if (!user) {
       toast({
         title: "Please login to continue",
-        status: "error",
       });
       router.push("/login");
       return;
