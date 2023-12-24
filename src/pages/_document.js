@@ -39,7 +39,11 @@ export default function Document() {
       </Head>
       <body>
         <Main />
-        <NextScript />
+        <NextScript></NextScript>
+        <script
+          async
+          src="https://checkout.razorpay.com/v1/checkout.js"
+        ></script>
       </body>
     </Html>
   );

@@ -20,6 +20,35 @@ const Index = () => {
   const { toast } = useToast();
 
   //handlers
+  // const handleCheckout = async () => {
+  //   if (!user) {
+  //     toast({
+  //       title: "Please login to continue",
+  //       status: "error",
+  //     });
+  //     router.push("/login");
+  //     return;
+  //   }
+  //   const res = await fetch("/api/stripe/checkout", {
+  //     method: "POST",
+  //     body: JSON.stringify({
+  //       cartItems,
+  //       totalQuantity,
+  //       totalPrice,
+  //       user_id: user.id,
+  //     }),
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //   });
+  //   const { url, success, id } = await res.json();
+  //   console.log(url, success, id);
+  //   if (success) {
+  //     router.push(url);
+  //   }
+  // };
+
+  // src/index.js
   const handleCheckout = async () => {
     if (!user) {
       toast({
@@ -29,24 +58,39 @@ const Index = () => {
       router.push("/login");
       return;
     }
-    const res = await fetch("/api/stripe/checkout", {
+    const res = await fetch("/api/razorpay/create-order", {
       method: "POST",
       body: JSON.stringify({
-        cartItems,
-        totalQuantity,
-        totalPrice,
-        user_id: user.id,
+        amount: totalPrice,
       }),
       headers: {
         "Content-Type": "application/json",
       },
     });
-    const { url, success, id } = await res.json();
-    console.log(url, success, id);
-    if (success) {
-      router.push(url);
-    }
+    const { id } = await res.json();
+    console.log(id);
+    const options = {
+      key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
+      order_id: id,
+      handler: function (response) {
+        alert(response.razorpay_payment_id);
+      },
+      // prefill: {
+      //   name: "John Doe",
+      //   email: "john@example.com",
+      //   contact: "9999999999",
+      // },
+      // notes: {
+      //   address: "Some address",
+      // },
+      // theme: {
+      //   color: "#F37254",
+      // },
+    };
+    const rzp1 = await new window.Razorpay(options);
+    rzp1.open();
   };
+
   console.log(cartItems);
   return (
     <div className="p-5 md:p-10">
