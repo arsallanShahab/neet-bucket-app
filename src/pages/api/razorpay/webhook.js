@@ -16,7 +16,7 @@ export default async function handler(req, res) {
     // The request is from Razorpay. You can save the order in your database here.
     console.log("Order saved:", body);
     const { db } = await connectToDatabase();
-    db.collection("orders").insertOne(body);
+    db.collection("orders").insertOne(body.payload.payment.entity);
     res.status(200).send("OK");
   } else {
     // The request is not from Razorpay. Do not process it.

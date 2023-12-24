@@ -75,14 +75,15 @@ const Index = () => {
       handler: function (response) {
         alert(response.razorpay_payment_id);
       },
-      // prefill: {
-      //   name: "John Doe",
-      //   email: "john@example.com",
-      //   contact: "9999999999",
-      // },
-      // notes: {
-      //   address: "Some address",
-      // },
+      prefill: {
+        name: user.name,
+        email: user.email,
+      },
+      notes: {
+        user_id: user.id,
+        order_id: id,
+        item: cartItems,
+      },
       // theme: {
       //   color: "#F37254",
       // },
