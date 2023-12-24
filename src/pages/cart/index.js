@@ -65,10 +65,7 @@ const Index = () => {
           name: item.chapter_name,
           quantity: item.quantity,
           full_pdf: item.full_pdf.url,
-          amount: item.price * 100,
         },
-        totalQuantity,
-        totalPrice,
       };
     });
     const res = await fetch("/api/razorpay/create-order", {
@@ -89,11 +86,7 @@ const Index = () => {
         toast({
           title: "Payment Successful",
           description:
-            response.razorpay_payment_id +
-            " " +
-            response.razorpay_order_id +
-            " " +
-            response.razorpay_signature,
+            "Your payment has been successfully processed. Please check your email for the receipt.",
         });
       },
       prefill: {
@@ -103,7 +96,7 @@ const Index = () => {
       notes: {
         user_id: user.id,
         order_id: id,
-        item: JSON.stringify(notes),
+        order: JSON.stringify(notes),
       },
       // theme: {
       //   color: "#F37254",

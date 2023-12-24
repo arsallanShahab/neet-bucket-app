@@ -22,7 +22,6 @@ export default async function handler(req, res) {
     currency: "INR",
     receipt: "receipt_" + generateReceiptId(),
     payment_capture: 1,
-    notes: [],
   };
 
   const razorpay = new Razorpay({
