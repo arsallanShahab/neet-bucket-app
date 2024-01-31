@@ -19,11 +19,33 @@ export default function App({ Component, pageProps }) {
   const isTestPage = path.includes("test");
 
   useEffect(() => {
-    const cart = JSON.parse(localStorage.getItem("cart"));
-    const totalQuantity = JSON.parse(localStorage.getItem("totalQuantity"));
-    const totalPrice = JSON.parse(localStorage.getItem("totalPrice"));
+    const cartWeb = localStorage.getItem("cart");
+    let cart;
+    if (cartWeb && cartWeb !== "undefined" && cartWeb !== "null") {
+      cart = JSON.parse(cartWeb);
+    }
+
+    const totalQuantityWeb = localStorage.getItem("totalQuantity");
+    let totalQuantity;
+    if (
+      totalQuantityWeb &&
+      totalQuantityWeb !== "undefined" &&
+      totalQuantityWeb !== "null"
+    ) {
+      totalQuantity = JSON.parse(totalQuantityWeb);
+    }
+
+    const totalPriceWeb = localStorage.getItem("totalPrice");
+    let totalPrice;
+    if (
+      totalPriceWeb &&
+      totalPriceWeb !== "undefined" &&
+      totalPriceWeb !== "null"
+    ) {
+      totalPrice = JSON.parse(totalPriceWeb);
+    }
     const token = localStorage.getItem("token");
-    if (cart) {
+    if (cart?.length) {
       store.dispatch(
         setCartItems({
           cart,

@@ -1,6 +1,8 @@
 import { hashPassword } from "@/lib/authUtils";
 import { connectToDatabase } from "@/lib/mongodb";
 
+const avatars = ["Simba", "Bear", "Jasper", "George"];
+
 export default async function handler(req, res) {
   const { name, email, password } = req.body;
 
@@ -39,6 +41,11 @@ export default async function handler(req, res) {
       name,
       email,
       password: hashedPassword,
+      avatar: `https://api.dicebear.com/7.x/big-ears-neutral/svg?seed=${
+        avatars[Math.floor(Math.random() * avatars.length)]
+      }`,
+      createdAt: Date.now(),
+      updatedAt: Date.now(),
     });
 
     return res

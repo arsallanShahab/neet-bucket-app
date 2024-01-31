@@ -30,7 +30,16 @@ export default async function handler(req, res) {
   //   const getOtp = await db.collection("otps").deleteMany({ email });
 
   //save otp and expiry in db
-  const saveOtp = await db.collection("otps").insertOne({ email, otp, expiry });
+  const saveOtp = await db.collection("otps").updateOne(
+    { email },
+    {
+      $set: {
+        otp,
+        expiry,
+      },
+    },
+    { upsert: true },
+  );
 
   //send thorugh smtp
   const transporter = nodemailer.createTransport({

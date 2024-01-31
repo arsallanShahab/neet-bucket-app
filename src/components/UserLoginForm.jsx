@@ -85,7 +85,7 @@ export default function UserLoginForm({ className, ...props }) {
             />
           </div>
           <div className="grid gap-1">
-            <Label className="sr-only" htmlFor="email">
+            <Label className="sr-only" htmlFor="password">
               Password
             </Label>
             <Input

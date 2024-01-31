@@ -21,7 +21,6 @@
     "@radix-ui/react-toast": "^1.1.4",
     "@reduxjs/toolkit": "^1.9.5",
     "@stripe/stripe-js": "^2.0.0",
-    "autoprefixer": "10.4.14",
     "bcryptjs": "^2.4.3",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
@@ -34,7 +33,6 @@
     "mongodb": "^5.7.0",
     "next": "13.4.12",
     "nodemailer": "^6.9.4",
-    "postcss": "8.4.27",
     "razorpay": "^2.9.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
@@ -43,12 +41,14 @@
     "recharts": "^2.9.3",
     "stripe": "^12.18.0",
     "tailwind-merge": "^1.14.0",
-    "tailwindcss": "3.3.3",
     "tailwindcss-animate": "^1.0.6"
   },
   "devDependencies": {
+    "autoprefixer": "^10.4.17",
     "babel-plugin-transform-remove-console": "^6.9.4",
+    "postcss": "^8.4.33",
     "prettier": "^3.0.1",
-    "prettier-plugin-tailwindcss": "^0.4.1"
+    "prettier-plugin-tailwindcss": "^0.4.1",
+    "tailwindcss": "^3.4.1"
   }
 }

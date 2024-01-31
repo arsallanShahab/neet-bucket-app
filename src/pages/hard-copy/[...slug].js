@@ -1,9 +1,10 @@
 import ViewImage from "@/components/ViewImage";
 import { Button, buttonVariants } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
 import client from "@/lib/contentful";
 import { cn } from "@/lib/utils";
-import { addToCart, removeFromCart } from "@/redux/reducer/cart";
+import { setHardCopyItem } from "@/redux/reducer/cart";
 import { Avatar } from "@radix-ui/react-avatar";
 import { motion } from "framer-motion";
 import { ShoppingBag, ShoppingCart } from "lucide-react";
@@ -13,9 +14,15 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function Index({ data, title }) {
   console.log(data);
+  const [step, setStep] = useState(1);
   const { cartItems } = useSelector((state) => state.cart);
   const [pointsVisible, setPointsVisible] = useState(false);
   const [isInCart, setIsInCart] = useState(false);
+  const [quantity, setQuantity] = useState(1);
+  const [pincode, setPincode] = useState("");
+  const [address, setAddress] = useState("");
+  const [city, setCity] = useState("");
+  const [state, setState] = useState("");
   const { user } = useSelector((state) => state.auth);
 
   //initializers
@@ -32,33 +39,35 @@ export default function Index({ data, title }) {
       quantity: 1,
       thumbnail: thumbnail_url,
     };
+    dispatch(setHardCopyItem({ data }));
+    router.push("buy");
     console.log(item);
 
-    if (!user) {
-      toast({
-        title: "Please login to continue",
-        status: "error",
-      });
-      router.push("/login");
-      return;
-    }
-    const res = await fetch("/api/stripe/hard-copy-checkout", {
-      method: "POST",
-      body: JSON.stringify({
-        cartItems: [{ ...item }],
-        totalQuantity: 1,
-        totalPrice: data.fields.price,
-        user_id: user.id,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const { url, success, id } = await res.json();
-    console.log(url, success, id);
-    if (success) {
-      router.push(url);
-    }
+    // if (!user) {
+    //   toast({
+    //     title: "Please login to continue",
+    //     status: "error",
+    //   });
+    //   router.push("/login");
+    //   return;
+    // }
+    // const res = await fetch("/api/stripe/hard-copy-checkout", {
+    //   method: "POST",
+    //   body: JSON.stringify({
+    //     cartItems: [{ ...item }],
+    //     totalQuantity: 1,
+    //     totalPrice: data.fields.price,
+    //     user_id: user.id,
+    //   }),
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    // });
+    // const { url, success, id } = await res.json();
+    // console.log(url, success, id);
+    // if (success) {
+    //   router.push(url);
+    // }
   };
 
   let thumbnail_url = data.fields.chapterThumbnail.fields.file.url;
@@ -156,7 +165,6 @@ export default function Index({ data, title }) {
               </Avatar>
             </Button>
           </div>
-          <div className="flex-col-start gap-2"></div>
         </div>
       </div>
     </motion.div>

@@ -23,7 +23,7 @@ export function UserNav({ user }) {
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="relative h-8 w-8 rounded-full">
           <Avatar className="h-8 w-8">
-            <AvatarImage src={user?.image} />
+            <AvatarImage src={user?.avatar} />
             <AvatarFallback>
               {user?.name?.split(" ").map((n) => n[0])}
             </AvatarFallback>

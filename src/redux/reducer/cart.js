@@ -2,6 +2,7 @@ const { createSlice } = require("@reduxjs/toolkit");
 
 const INITIAL_STATE = {
   cartItems: [],
+  hardCopyItem: null,
   totalQuantity: 0,
   totalPrice: 0,
 };
@@ -65,9 +66,15 @@ const cartSlice = createSlice({
       );
       localStorage.setItem("totalPrice", JSON.stringify(state.totalPrice));
     },
+    setHardCopyItem(state, action) {
+      const { data } = action.payload;
+      state.hardCopyItem = data;
+      // localStorage.setItem("hardCopyItems", JSON.stringify(hardCopyItems));
+    },
   },
 });
 
-export const { addToCart, removeFromCart, setCartItems } = cartSlice.actions;
+export const { addToCart, removeFromCart, setCartItems, setHardCopyItem } =
+  cartSlice.actions;
 
 export default cartSlice.reducer;

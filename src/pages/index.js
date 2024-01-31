@@ -47,7 +47,7 @@ export default function Home({ subjects }) {
             </span>
           </div>
         </Link>
-        <Link
+        {/* <Link
           href="/test-series"
           className="custom-btn w-full border-slate-900 shadow-custom shadow-slate-900 active:shadow-btn-active md:w-auto"
           // disabled={true}
@@ -57,7 +57,7 @@ export default function Home({ subjects }) {
             Test Series
             <span className="text-xs md:block"> (Neet Bucket Test Series)</span>
           </div>
-        </Link>
+        </Link> */}
       </div>
     </motion.main>
   );

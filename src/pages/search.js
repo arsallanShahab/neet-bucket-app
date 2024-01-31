@@ -1,3 +1,5 @@
+"use client";
+
 import Heading from "@/components/Heading";
 import ThumbnailCard from "@/components/ThumbnailCard";
 import client from "@/lib/contentful";

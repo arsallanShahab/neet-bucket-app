@@ -143,7 +143,7 @@ export default function UserSignUpForm({ className, ...props }) {
         <div className="grid gap-2">
           {formState.step_three && (
             <div className="grid gap-1">
-              <Label className="sr-only" htmlFor="email">
+              <Label className="sr-only" htmlFor="name">
                 Name
               </Label>
               <Input
@@ -177,7 +177,7 @@ export default function UserSignUpForm({ className, ...props }) {
           {formState.step_three && (
             <>
               <div className="relative grid gap-1">
-                <Label className="sr-only" htmlFor="email">
+                <Label className="sr-only" htmlFor="password">
                   Password
                 </Label>
                 <Input

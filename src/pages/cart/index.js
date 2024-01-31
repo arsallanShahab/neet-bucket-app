@@ -2,7 +2,7 @@ import Heading from "@/components/Heading";
 import { buttonVariants } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import { cn } from "@/lib/utils";
-import { removeFromCart } from "@/redux/reducer/cart";
+import { removeFromCart, setCartItems } from "@/redux/reducer/cart";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
@@ -18,37 +18,6 @@ const Index = () => {
   const dispatch = useDispatch();
   const router = useRouter();
   const { toast } = useToast();
-
-  //handlers
-  // const handleCheckout = async () => {
-  //   if (!user) {
-  //     toast({
-  //       title: "Please login to continue",
-  //       status: "error",
-  //     });
-  //     router.push("/login");
-  //     return;
-  //   }
-  //   const res = await fetch("/api/stripe/checkout", {
-  //     method: "POST",
-  //     body: JSON.stringify({
-  //       cartItems,
-  //       totalQuantity,
-  //       totalPrice,
-  //       user_id: user.id,
-  //     }),
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //   });
-  //   const { url, success, id } = await res.json();
-  //   console.log(url, success, id);
-  //   if (success) {
-  //     router.push(url);
-  //   }
-  // };
-
-  // src/index.js
   const handleCheckout = async () => {
     if (!user) {
       toast({
@@ -58,31 +27,28 @@ const Index = () => {
       router.push("/login");
       return;
     }
-
-    const notes = cartItems.map((item) => {
-      return {
-        item: {
-          name: item.chapter_name,
-          quantity: item.quantity,
-          full_pdf: item.full_pdf.url,
-        },
-      };
-    });
-    const res = await fetch("/api/razorpay/create-order", {
+    // return;
+    const res = await fetch("/api/razorpay/order/soft-copy", {
       method: "POST",
       body: JSON.stringify({
         amount: totalPrice,
+        quantity: totalQuantity,
+        notes: cartItems,
+        user: user,
       }),
       headers: {
         "Content-Type": "application/json",
       },
     });
-    const { id } = await res.json();
-    console.log(id);
+    const data = await res.json();
+    console.log(data, "data");
     const options = {
       key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
-      order_id: id,
+      order_id: data.id,
+      amount: data.amount,
       handler: function (response) {
+        dispatch(setCartItems({ cart: [], totalPrice: 0, totalQuantity: 0 }));
+        router.push("/profile");
         toast({
           title: "Payment Successful",
           description:
@@ -90,17 +56,16 @@ const Index = () => {
         });
       },
       prefill: {
-        name: user.name,
-        email: user.email,
+        name: data.notes.user_name,
+        email: data.notes.user_email,
       },
       notes: {
-        user_id: user.id,
-        order_id: id,
-        order: JSON.stringify(notes),
+        user_id: data.notes.user_id,
+        order_id: data.id,
       },
-      // theme: {
-      //   color: "#F37254",
-      // },
+      theme: {
+        color: "#F37254",
+      },
     };
     const rzp1 = await new window.Razorpay(options);
     rzp1.open();
@@ -112,7 +77,7 @@ const Index = () => {
       <Heading>Cart</Heading>
       <div className="flex flex-col items-center justify-center gap-5 md:flex-row md:items-start">
         <div className="grid basis-3/4 grid-cols-1 gap-5 md:grid-cols-2">
-          {cartItems.map((_, i) => {
+          {cartItems?.map((_, i) => {
             return (
               <div
                 key={i}
