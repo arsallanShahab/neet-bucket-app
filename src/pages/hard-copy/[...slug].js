@@ -14,73 +14,30 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function Index({ data, title }) {
   console.log(data);
-  const [step, setStep] = useState(1);
   const { cartItems } = useSelector((state) => state.cart);
   const [pointsVisible, setPointsVisible] = useState(false);
-  const [isInCart, setIsInCart] = useState(false);
-  const [quantity, setQuantity] = useState(1);
-  const [pincode, setPincode] = useState("");
-  const [address, setAddress] = useState("");
-  const [city, setCity] = useState("");
-  const [state, setState] = useState("");
-  const { user } = useSelector((state) => state.auth);
 
   //initializers
   const dispatch = useDispatch();
   const router = useRouter();
-  const { toast } = useToast();
 
   //handlers
   const handleBuyNow = async () => {
-    const item = {
-      id: data.sys.id,
-      heading: data.fields.heading,
-      price: data.fields.price,
-      quantity: 1,
-      thumbnail: thumbnail_url,
-    };
+    // const item = {
+    //   id: data.sys.id,
+    //   heading: data.fields.heading,
+    //   price: data.fields.price,
+    //   quantity: 1,
+    //   thumbnail: thumbnail_url,
+    // };
     dispatch(setHardCopyItem({ data }));
     router.push("buy");
-    console.log(item);
-
-    // if (!user) {
-    //   toast({
-    //     title: "Please login to continue",
-    //     status: "error",
-    //   });
-    //   router.push("/login");
-    //   return;
-    // }
-    // const res = await fetch("/api/stripe/hard-copy-checkout", {
-    //   method: "POST",
-    //   body: JSON.stringify({
-    //     cartItems: [{ ...item }],
-    //     totalQuantity: 1,
-    //     totalPrice: data.fields.price,
-    //     user_id: user.id,
-    //   }),
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    // });
-    // const { url, success, id } = await res.json();
-    // console.log(url, success, id);
-    // if (success) {
-    //   router.push(url);
-    // }
   };
 
   let thumbnail_url = data.fields.chapterThumbnail.fields.file.url;
   if (thumbnail_url.startsWith("//")) {
     thumbnail_url = "https:" + thumbnail_url;
   }
-
-  //useEffect
-  useEffect(() => {
-    const findItem = cartItems.find((item) => item.demo_pdf_id === data.sys.id);
-    setIsInCart(findItem ? true : false);
-  }, [cartItems]);
-
   return (
     <motion.div
       initial={{ opacity: 0 }}

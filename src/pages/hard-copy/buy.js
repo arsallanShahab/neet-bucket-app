@@ -5,7 +5,7 @@ import { useToast } from "@/components/ui/use-toast";
 import Wrapper from "@/components/wrapper";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 
 const BuyHardCopy = () => {
@@ -24,17 +24,19 @@ const BuyHardCopy = () => {
   const router = useRouter();
   const { toast } = useToast();
 
-  if (
-    hardCopyItem === null ||
-    hardCopyItem === "undefined" ||
-    !hardCopyItem ||
-    hardCopyItem.length === 0
-  ) {
-    router.push("/hard-copy");
-  }
+  useEffect(() => {
+    if (
+      hardCopyItem === null ||
+      hardCopyItem === "undefined" ||
+      !hardCopyItem ||
+      hardCopyItem.length === 0
+    ) {
+      router.push("/");
+    }
+  }, [hardCopyItem, router]);
   let thumbnail_url = hardCopyItem?.fields?.chapterThumbnail?.fields?.file?.url;
 
-  if (thumbnail_url.startsWith("//images.ctfassets.net/")) {
+  if (thumbnail_url?.startsWith("//images.ctfassets.net/")) {
     thumbnail_url = "https:" + thumbnail_url;
   }
 
@@ -155,7 +157,7 @@ const BuyHardCopy = () => {
   return (
     <Wrapper>
       <Heading>{hardCopyItem?.fields?.heading}</Heading>
-      <div className="grid w-full grid-cols-2 gap-10 rounded-xl border bg-zinc-50 px-10 py-5 shadow-sm">
+      <div className="grid w-full gap-5 rounded-xl border bg-zinc-50 px-5 py-5 shadow-sm sm:grid-cols-2 sm:gap-10 sm:px-10">
         <div className="grid">
           <div className="grid gap-5 border-b py-10">
             <h4 className="text-xl font-medium">Contact Information</h4>
