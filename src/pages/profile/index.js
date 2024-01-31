@@ -234,6 +234,7 @@ const TestSeries = () => {
     if (user && !tests) {
       fetchOrders(user.id);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
   if (isLoading || !user || !tests) {
     return <Loader />;

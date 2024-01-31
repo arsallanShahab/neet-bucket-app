@@ -21,10 +21,9 @@ const BuyHardCopy = () => {
   const [phone, setPhone] = React.useState("");
   const [pincode, setPincode] = React.useState("");
 
+  const router = useRouter();
   const { toast } = useToast();
 
-  const router = useRouter();
-  console.log(hardCopyItem, "hardCopyItems");
   if (
     hardCopyItem === null ||
     hardCopyItem === "undefined" ||
