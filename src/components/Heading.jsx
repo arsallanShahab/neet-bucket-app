@@ -1,8 +1,9 @@
+import { cn } from "@/lib/utils";
 import { ChevronLeft } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
-const Heading = ({ children }) => {
+const Heading = ({ children, className }) => {
   const router = useRouter();
   const path = router.pathname.split("/")[1];
   // console.log(router.pathname.split("/")[1]);
@@ -19,7 +20,12 @@ const Heading = ({ children }) => {
       >
         <ChevronLeft className="h-4 w-4 stroke-black" /> Back
       </button>
-      <h1 className="pb-10 text-left font-sora text-5xl font-bold capitalize text-slate-950">
+      <h1
+        className={cn(
+          "pb-10 text-left font-sora text-5xl font-bold capitalize text-slate-950",
+          className,
+        )}
+      >
         {children}
       </h1>
     </div>

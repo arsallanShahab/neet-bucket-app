@@ -13,7 +13,7 @@ export default async function handler(req, res) {
     // reverse the order of the orders
     const orders = await db
       .collection("orders")
-      .find({ user_id: id })
+      .find({ user_id: id, payment_status: "paid" })
       .toArray();
     console.log(orders, "orders");
     const orderbyGroup = groupByProp(orders, ["order_type"]);

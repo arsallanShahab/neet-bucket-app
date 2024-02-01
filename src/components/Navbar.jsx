@@ -1,20 +1,12 @@
-import { verifyToken } from "@/lib/authUtils";
 import { cn } from "@/lib/utils";
-import { setLoading, setToken, setUser } from "@/redux/reducer/auth";
 import { ShoppingCart } from "lucide-react";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useRef, useState } from "react";
+import { useSelector } from "react-redux";
 import { UserNav } from "./UserNav";
 import { Logo } from "./icons";
 import { Avatar } from "./ui/avatar";
 import { Button, buttonVariants } from "./ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "./ui/dropdown-menu";
 import { Input } from "./ui/input";
 
 const Navbar = () => {
@@ -55,6 +47,7 @@ const Navbar = () => {
             {[
               { name: "Home", path: "/" },
               { name: "Soft Copy", path: "/soft-copy" },
+              { name: "Hard Copy", path: "/hard-copy" },
               // { name: "About Us", path: "/about-us" },
               { name: "Contact Us", path: "/contact-us" },
             ].map((item, index) => {

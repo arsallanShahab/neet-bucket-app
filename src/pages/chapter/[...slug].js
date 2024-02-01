@@ -182,18 +182,17 @@ export default function Index({ data, title }) {
             <Button
               onClick={handleCart}
               className={cn(
-                buttonVariants({ variant: "ghost" }),
-                "group w-full gap-2 break-keep rounded-xl border bg-slate-50 px-10 py-7 text-base text-slate-950 transition-all active:scale-[0.97] active:bg-slate-200 md:flex-1",
+                "group w-full gap-2  rounded-xl border px-10 py-7 text-base transition-all active:scale-[0.97] active:bg-slate-800 md:flex-1 ",
               )}
             >
               <span className="translate-x-3 break-keep duration-150 group-hover:translate-x-0">
                 {isInCart ? "Remove From Cart" : "Add To Cart"}
               </span>
-              <Avatar className="h-auto w-auto -translate-x-2 scale-75 pr-1.5 text-slate-950 opacity-0 duration-150 group-hover:translate-x-0 group-hover:scale-100 group-hover:opacity-100">
+              <Avatar className="h-auto w-auto -translate-x-2 scale-75 pr-1.5 text-white opacity-0 duration-150 group-hover:translate-x-0 group-hover:scale-100 group-hover:opacity-100">
                 <ShoppingCart className="h-[18px] w-[18px] stroke-[2px]" />
               </Avatar>
             </Button>
-            <Button
+            {/* <Button
               className={cn(
                 buttonVariants({}),
                 "group w-full gap-2  rounded-xl border px-10 py-7 text-base transition-all active:scale-[0.97] active:bg-slate-800 md:flex-1 ",
@@ -206,7 +205,7 @@ export default function Index({ data, title }) {
               <Avatar className="h-auto w-auto -translate-x-2 scale-75 pr-1.5 text-slate-50 opacity-0 duration-150 group-hover:translate-x-0 group-hover:scale-100 group-hover:opacity-100">
                 <ShoppingBag className="h-[18px] w-[18px] stroke-[2px]" />
               </Avatar>
-            </Button>
+            </Button> */}
           </div>
           <div className="flex-col-start gap-2"></div>
         </div>
