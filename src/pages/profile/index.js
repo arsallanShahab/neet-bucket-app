@@ -66,8 +66,8 @@ const Index = () => {
           console.log(data, "data");
           console.log(softcopyOrders, "softcopyOrders");
           console.log(hardcopyOrders, "hardcopyOrders");
-          setSoftCopy(softcopyOrders.data);
-          setHardCopy(hardcopyOrders.data);
+          setSoftCopy(softcopyOrders?.data);
+          setHardCopy(hardcopyOrders?.data);
         }
       } catch (error) {
         console.log(error);
