@@ -45,7 +45,7 @@ const Index = () => {
   }, [tab]);
 
   useEffect(() => {
-    const fetchOrders = async (id) => {
+    const fetchOrders = async () => {
       try {
         setIsLoading(true);
         const res = await fetch("/api/user/orders", {
@@ -53,16 +53,19 @@ const Index = () => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ id }),
+          body: JSON.stringify({ id: user.id }),
         });
         const data = await res.json();
         if (data.success) {
-          const softcopyOrders = data.user_orders.filter(
+          const softcopyOrders = data?.user_orders.filter(
             (order) => order.order_type === ORDER_TYPE.SOFT_COPY,
           )[0];
-          const hardcopyOrders = data.user_orders.filter(
+          const hardcopyOrders = data?.user_orders.filter(
             (order) => order.order_type === ORDER_TYPE.HARD_COPY,
           )[0];
+          console.log(data, "data");
+          console.log(softcopyOrders, "softcopyOrders");
+          console.log(hardcopyOrders, "hardcopyOrders");
           setSoftCopy(softcopyOrders.data);
           setHardCopy(hardcopyOrders.data);
         }
@@ -72,8 +75,8 @@ const Index = () => {
         setIsLoading(false);
       }
     };
-    if (user) {
-      fetchOrders(user.id);
+    if (user?.id) {
+      fetchOrders();
     }
   }, [user]);
 
