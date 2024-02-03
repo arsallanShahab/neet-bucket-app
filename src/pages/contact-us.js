@@ -9,7 +9,8 @@ const ConatctUs = () => {
         <br /> <br /> Merchant Legal entity name: Neet Bucket
         <br /> <br /> Registered Address: 34 Taltala Lane Kolkata 700016 Kolkata
         WEST BENGAL 700016
-        <br /> <br /> Telephone No: 7890020158 E-Mail ID: ayaan@neetbucket.com
+        <br /> <br /> Telephone No: +91 81005 17624 E-Mail ID:
+        ayaan@neetbucket.com
       </p>
     </div>
   );
