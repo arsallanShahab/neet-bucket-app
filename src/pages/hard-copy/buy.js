@@ -12,13 +12,14 @@ const BuyHardCopy = () => {
   const { user } = useSelector((state) => state.auth);
   const { hardCopyItem } = useSelector((state) => state.cart);
 
-  const [email, setEmail] = React.useState("");
-  const [firstName, setFirstName] = React.useState("");
+  const [email, setEmail] = React.useState(user?.email || "");
+  const [firstName, setFirstName] = React.useState(user?.name || "");
   const [lastName, setLastName] = React.useState("");
   const [address, setAddress] = React.useState("");
   const [city, setCity] = React.useState("");
   const [state, setState] = React.useState("");
   const [phone, setPhone] = React.useState("");
+  const [alternatePhone, setAlternatePhone] = React.useState("");
   const [pincode, setPincode] = React.useState("");
 
   const router = useRouter();
@@ -190,6 +191,15 @@ const BuyHardCopy = () => {
               />
             </div>
             <div className="flex w-full flex-col items-start gap-2.5">
+              <Label>Phone Number</Label>
+              <Input
+                type="number"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                className="w-full shadow-sm"
+              />
+            </div>
+            <div className="flex w-full flex-col items-start gap-2.5">
               <Label>Address</Label>
               <Input
                 value={address}
@@ -219,15 +229,6 @@ const BuyHardCopy = () => {
                 type="number"
                 value={pincode}
                 onChange={(e) => setPincode(e.target.value)}
-                className="w-full shadow-sm"
-              />
-            </div>
-            <div className="flex w-full flex-col items-start gap-2.5">
-              <Label>Phone Number</Label>
-              <Input
-                type="number"
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
                 className="w-full shadow-sm"
               />
             </div>

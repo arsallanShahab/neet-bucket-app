@@ -475,7 +475,7 @@ const HardCopy = ({ data }) => {
       {(data?.length === 0 || !data) && (
         <div className="flex w-full flex-col items-center justify-center gap-5 px-5 py-28">
           <p className="text-2xl font-semibold text-slate-950">
-            You have not purchased any soft copy yet
+            You have not purchased any hard copy yet
           </p>
           <Button
             className="bg-indigo-600 hover:bg-indigo-700"
