@@ -1,6 +1,7 @@
 import { Head, Html, Main, NextScript } from "next/document";
 
 export default function Document() {
+  const GA_MEASUREMENT_ID = "G-33KP1TNFDZ";
   return (
     <Html lang="en">
       <Head>
@@ -25,6 +26,23 @@ export default function Document() {
           content="NeetBucket is a platform where you can buy study material like notes, pdfs, etc. for students preparing NEET exams"
         />
         <link rel="canonical" href="https://www.neetbucket.com/" />
+        <script
+          async
+          src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
+        />
+        <script
+          // eslint-disable-next-line react/no-danger
+          dangerouslySetInnerHTML={{
+            __html: `
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', '${GA_MEASUREMENT_ID}', {
+                  page_path: window.location.pathname,
+                });
+              `,
+          }}
+        />
         {/* <meta name="robots" content="index, follow" />
           <meta name="googlebot" content="index, follow" />
           <meta name="google" content="notranslate" />
@@ -39,7 +57,7 @@ export default function Document() {
       </Head>
       <body>
         <Main />
-        <NextScript></NextScript>
+        <NextScript />
         <script
           async
           src="https://checkout.razorpay.com/v1/checkout.js"
