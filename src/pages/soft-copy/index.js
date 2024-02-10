@@ -4,6 +4,7 @@ import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
+import Script from "next/script";
 
 const Index = ({ data }) => {
   console.log(data);
@@ -16,6 +17,52 @@ const Index = ({ data }) => {
       className="p-5 md:p-10"
     >
       <Heading>Soft copy</Heading>
+      <div className="grid w-full grid-cols-3 rounded-xl border bg-zinc-100 p-5">
+        <Script id="adsense-display-id">
+          <script
+            async
+            src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5096956769841020"
+            crossorigin="anonymous"
+          ></script>
+          <ins
+            class="adsbygoogle"
+            style="display:block"
+            data-ad-client="ca-pub-5096956769841020"
+            data-ad-slot="2083849617"
+            data-ad-format="auto"
+            data-full-width-responsive="true"
+          ></ins>
+          <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+          <script
+            async
+            src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5096956769841020"
+            crossorigin="anonymous"
+          ></script>
+          <ins
+            class="adsbygoogle"
+            style="display:block"
+            data-ad-client="ca-pub-5096956769841020"
+            data-ad-slot="2083849617"
+            data-ad-format="auto"
+            data-full-width-responsive="true"
+          ></ins>
+          <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+          <script
+            async
+            src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5096956769841020"
+            crossorigin="anonymous"
+          ></script>
+          <ins
+            class="adsbygoogle"
+            style="display:block"
+            data-ad-client="ca-pub-5096956769841020"
+            data-ad-slot="2083849617"
+            data-ad-format="auto"
+            data-full-width-responsive="true"
+          ></ins>
+          <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        </Script>
+      </div>
       <div className="grid w-full grid-cols-1 place-items-center gap-5 border-b border-r pb-20 md:grid-cols-2 lg:grid-cols-3">
         {data.length > 0 &&
           data?.map((item, i) => {
