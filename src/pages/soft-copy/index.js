@@ -17,7 +17,7 @@ const Index = ({ data }) => {
       className="p-5 md:p-10"
     >
       <Heading>Soft copy</Heading>
-      <div className="grid w-full grid-cols-3 rounded-xl border bg-zinc-100 p-5">
+      <div className="mb-5 grid w-full grid-cols-3 rounded-xl border bg-zinc-100 p-5">
         <Script id="adsense-display-id">
           <script
             async
@@ -63,7 +63,7 @@ const Index = ({ data }) => {
           <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
         </Script>
       </div>
-      <div className="grid w-full grid-cols-1 place-items-center gap-5 border-b border-r pb-20 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid w-full grid-cols-1 place-items-center gap-5 pb-20 md:grid-cols-2 lg:grid-cols-3">
         {data.length > 0 &&
           data?.map((item, i) => {
             return (
