@@ -11,7 +11,7 @@ const ViewImage = ({ images }) => {
     return image;
   });
   return (
-    <div className="flex h-full w-full flex-col-reverse items-center gap-5 md:flex-row md:items-start">
+    <div className="sticky top-0 flex h-full w-full flex-col-reverse items-center gap-5 md:flex-row md:items-start">
       <div className="flex gap-2.5 rounded-lg bg-slate-100 p-2 md:flex-col">
         {images &&
           images.map((image, index) => {

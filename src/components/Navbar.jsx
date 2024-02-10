@@ -1,6 +1,7 @@
 import { cn } from "@/lib/utils";
 import { ShoppingCart } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { UserNav } from "./UserNav";
@@ -11,6 +12,8 @@ import { Input } from "./ui/input";
 
 const Navbar = () => {
   const [search, setSearch] = useState("");
+  const pathname = useRouter().pathname;
+  console.log(pathname);
   const { user } = useSelector((state) => state.auth);
   const { totalQuantity } = useSelector((state) => state.cart);
   const navRef = useRef(null);
@@ -28,7 +31,12 @@ const Navbar = () => {
 
   return (
     <>
-      <div className="flex-row-between relative top-0 z-[700] mx-auto w-full max-w-screen-2xl flex-wrap gap-5 border-b bg-white px-5 py-5 md:px-10">
+      <div
+        className={cn(
+          "flex-row-between relative top-0 z-[700] mx-auto w-full max-w-screen-2xl flex-wrap gap-5 border-b bg-white px-5 py-5 md:px-10",
+          pathname == "/login" && " hidden",
+        )}
+      >
         <div className="flex-row-start flex-1 flex-wrap gap-5 md:gap-10">
           <Link href={"/"}>
             <Logo height="25px" />

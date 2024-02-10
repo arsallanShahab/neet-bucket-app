@@ -118,7 +118,7 @@ export default function Index({ data, title }) {
       transition={{ duration: 0.25, ease: "easeInOut" }}
       className="p-2.5 md:p-10"
     >
-      <div className="grid grid-cols-1 gap-5 rounded-3xl p-2.5 md:p-10 lg:grid-cols-2">
+      <div className="relative grid grid-cols-1 gap-5 rounded-3xl p-2.5 md:p-10 lg:grid-cols-2">
         <ViewImage images={data.fields?.demoImages} />
         <div className="flex-col-start gap-5 px-0 py-5 pb-20 pr-0 md:px-10 md:py-10">
           <h1 className="font-sora text-3xl font-bold capitalize text-black md:text-6xl">

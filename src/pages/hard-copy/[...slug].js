@@ -34,7 +34,7 @@ export default function Index({ data, title }) {
     router.push("buy");
   };
 
-  let thumbnail_url = data.fields.chapterThumbnail.fields.file.url;
+  let thumbnail_url = data.fields?.chapterThumbnail?.fields?.file.url;
   if (thumbnail_url.startsWith("//")) {
     thumbnail_url = "https:" + thumbnail_url;
   }
@@ -62,7 +62,7 @@ export default function Index({ data, title }) {
             <h3 className="text-sm font-semibold text-black">Key Points</h3>
             <div
               style={{
-                maxHeight: pointsVisible ? "100%" : "145px",
+                maxHeight: pointsVisible ? "100%" : "275px",
               }}
               className="relative z-10 overflow-hidden"
             >

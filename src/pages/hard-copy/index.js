@@ -16,14 +16,14 @@ const Index = ({ data }) => {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.25, ease: "easeInOut" }}
-      className="p-5 md:p-10"
+      className="mx-auto max-w-screen-xl p-5 md:p-10"
     >
       <Heading>Hard copy</Heading>
-      <div className="grid w-full grid-cols-1 place-items-center gap-5 border-b border-r pb-20 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid w-full grid-cols-1 place-items-center gap-5 pb-20 md:grid-cols-2 lg:grid-cols-3">
         {data.length > 0 &&
           data.map((_, i) => {
-            let thumbnail_url = _.fields.chapterThumbnail.fields.file.url;
-            if (thumbnail_url.startsWith("//images.ctfassets.net/")) {
+            let thumbnail_url = _.fields?.chapterThumbnail?.fields?.file?.url;
+            if (thumbnail_url?.startsWith("//images.ctfassets.net/")) {
               thumbnail_url = "https:" + thumbnail_url;
             }
             const isInCart = false;
@@ -33,14 +33,14 @@ const Index = ({ data }) => {
                 className="flex-col-start group relative z-10 w-full gap-2 rounded-3xl border border-transparent bg-white p-3 duration-300 hover:border-indigo-100 hover:bg-slate-50"
               >
                 <Link
-                  href={`/hard-copy/${_.fields.heading
+                  href={`/hard-copy/${_.fields?.heading
                     .toLowerCase()
                     .replace(/\s/g, "-")}/${_.sys.id}`}
                   className="w-full"
                 >
                   <div className="flex-row-between w-full">
                     <div className="rounded-3xl bg-slate-900 px-4 py-2">
-                      <h1 className="text-base font-bold text-white">
+                      <h1 className="font-sora text-base font-semibold text-white">
                         {_.fields.heading}
                       </h1>
                     </div>
@@ -54,7 +54,7 @@ const Index = ({ data }) => {
                     <Image
                       src={thumbnail_url}
                       alt={_.fields.heading}
-                      className="h-full w-full rounded-3xl border-2 object-cover object-top"
+                      className="h-full w-full rounded-3xl object-cover object-top"
                       width={500}
                       height={500}
                     />
