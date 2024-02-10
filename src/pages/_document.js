@@ -62,6 +62,11 @@ export default function Document() {
           async
           src="https://checkout.razorpay.com/v1/checkout.js"
         ></script>
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5096956769841020"
+          crossorigin="anonymous"
+        ></script>
       </body>
     </Html>
   );
