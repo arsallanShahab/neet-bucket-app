@@ -95,12 +95,20 @@ const Navbar = () => {
             {user ? (
               <UserNav user={user} />
             ) : (
-              <Link
-                href="/login"
-                className={cn(buttonVariants({ variant: "ghost" }), "border")}
-              >
-                Login
-              </Link>
+              <div className="flex items-center gap-2.5">
+                <Link
+                  href="/login"
+                  className={cn(buttonVariants({ variant: "ghost" }))}
+                >
+                  Login
+                </Link>
+                <Link
+                  href="/signup"
+                  className={cn(buttonVariants({ variant: "default" }), "px-6")}
+                >
+                  Signup
+                </Link>
+              </div>
             )}
           </div>
         </div>

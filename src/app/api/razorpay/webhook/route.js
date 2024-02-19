@@ -17,6 +17,7 @@ export async function POST(request) {
         status: 200,
       });
     }
+
     const entity = payment.payload.payment.entity;
     const { db } = await connectToDatabase();
     const order = await db

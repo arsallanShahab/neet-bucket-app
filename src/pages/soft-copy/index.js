@@ -38,28 +38,6 @@ const Index = ({ data }) => {
   );
 };
 
-const Card = (props) => {
-  const { subject, teacher, icon_name, slug } = props;
-  return (
-    <div
-      className={cn(
-        "flex flex-col gap-2 rounded-3xl p-2.5",
-        color === "blue" && "border border-blue-300 bg-blue-100",
-        color === "green" && "border border-green-300 bg-green-100",
-        color === "red" && "border border-red-300 bg-red-100",
-        color === "yellow" && "border border-yellow-300 bg-yellow-100",
-      )}
-    >
-      <h2 className="rounded-3xl bg-blue-600 px-4 py-2 text-2xl font-bold text-white">
-        {subject}
-      </h2>
-      <p className="rounded-3xl bg-blue-600 px-4 py-2 text-sm font-medium text-white">
-        {teacher}
-      </p>
-    </div>
-  );
-};
-
 const AnimatedCard = (props) => {
   const { subject, teacher, icon_name, slug = "#", id, teacher_image } = props;
   console.log(teacher_image);

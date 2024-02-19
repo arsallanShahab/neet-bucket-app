@@ -1,12 +1,12 @@
 import ViewImage from "@/components/ViewImage";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import client from "@/lib/contentful";
 import { cn } from "@/lib/utils";
 import { addToCart, removeFromCart } from "@/redux/reducer/cart";
 import { Avatar } from "@radix-ui/react-avatar";
 import { motion } from "framer-motion";
-import { ShoppingBag, ShoppingCart } from "lucide-react";
+import { ShoppingCart } from "lucide-react";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -108,6 +108,7 @@ export default function Index({ data, title }) {
   useEffect(() => {
     const findItem = cartItems.find((item) => item.demo_pdf_id === data.sys.id);
     setIsInCart(findItem ? true : false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cartItems]);
 
   return (
