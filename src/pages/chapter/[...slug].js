@@ -216,11 +216,17 @@ export default function Index({ data, title }) {
 }
 
 export async function getStaticPaths() {
-  const data = await client.getEntries({
+  const productDemoData = await client.getEntries({
+    // get entries of productDemo or shortNotes here
     content_type: "productDemo",
   });
+  const shortNotesData = await client.getEntries({
+    content_type: "shortNotes",
+  });
 
-  const paths = data.items.map((_, i) => {
+  const data = [...productDemoData.items, ...shortNotesData.items];
+
+  const paths = data?.map((_, i) => {
     const chapter_name = _.fields.chapterName.toLowerCase().replace(/\s/g, "-");
     const id = _.sys.id;
     return {
