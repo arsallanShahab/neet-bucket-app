@@ -47,6 +47,16 @@ export default function Home({ subjects }) {
             </span>
           </div>
         </Link>
+        <Link
+          href="/short-notes"
+          className="custom-btn w-full border-slate-900 shadow-custom shadow-slate-900 active:shadow-btn-active md:w-auto"
+        >
+          <FileIcon className="mr-2 h-5 w-5 stroke-slate-900 md:mr-5 md:h-7 md:w-7" />
+          <div>
+            Short Notes
+            <span className="text-xs md:block"> (PDF&apos;s)</span>
+          </div>
+        </Link>
         {/* <Link
           href="/test-series"
           className="custom-btn w-full border-slate-900 shadow-custom shadow-slate-900 active:shadow-btn-active md:w-auto"

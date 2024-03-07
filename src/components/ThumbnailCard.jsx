@@ -48,6 +48,7 @@ const ThumbnailCard = ({ data }) => {
   useEffect(() => {
     const findItem = cartItems.find((item) => item.demo_pdf_id === data.sys.id);
     setIsInCart(findItem ? true : false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cartItems]);
   return (
     <div className="flex-col-start group relative z-10 w-full gap-2 rounded-3xl border border-transparent bg-white p-3 duration-300 hover:border-indigo-100 hover:bg-slate-50">

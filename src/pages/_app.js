@@ -7,6 +7,7 @@ import { setToken, setUser } from "@/redux/reducer/auth";
 import { setCartItems } from "@/redux/reducer/cart";
 import store from "@/redux/store";
 import "@/styles/globals.css";
+import { NextUIProvider } from "@nextui-org/react";
 import { AnimatePresence } from "framer-motion";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
@@ -63,7 +64,7 @@ export default function App({ Component, pageProps }) {
   }, []);
 
   return (
-    <>
+    <NextUIProvider>
       <AnimatePresence mode="sync">
         <Provider store={store}>
           <Navbar />
@@ -73,6 +74,6 @@ export default function App({ Component, pageProps }) {
           {loading && <AppLoader />}
         </Provider>
       </AnimatePresence>
-    </>
+    </NextUIProvider>
   );
 }

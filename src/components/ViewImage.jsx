@@ -12,7 +12,7 @@ const ViewImage = ({ images }) => {
   });
   return (
     <div className="relative flex h-full w-full flex-col-reverse items-center gap-5 md:flex-row md:items-start">
-      <div className="flex gap-2.5 rounded-lg bg-slate-100 p-2 md:flex-col">
+      <div className="flex h-[350px] w-auto gap-2.5 overflow-y-auto overflow-x-hidden rounded-lg bg-slate-100 p-2 md:flex-col">
         {images &&
           images.map((image, index) => {
             let imageUrl = image.fields.file.url;
@@ -23,27 +23,27 @@ const ViewImage = ({ images }) => {
               <div
                 key={index}
                 onClick={() => setCurrentImage(index)}
-                className="origin-bottom cursor-pointer overflow-hidden rounded-md border duration-150 hover:bg-slate-500 hover:shadow-sm active:ring-2"
+                className="h-16 w-16 origin-bottom cursor-pointer rounded-md border duration-150 hover:bg-slate-500 hover:shadow-sm active:ring-2"
               >
                 <Image
                   src={imageUrl}
                   alt="image"
                   width={100}
                   height={100}
-                  className="h-16 w-16 object-cover object-top hover:opacity-80"
+                  className="h-full w-full object-cover object-top hover:opacity-80"
                 />
               </div>
             );
           })}
       </div>
-      <div className="h-full max-h-[575px] w-full">
+      <div className="h-full max-h-[575px] w-full rounded-xl border shadow-md">
         {images && (
           <Image
             src={images[currentImage].fields.file.url}
             alt="image"
             width={500}
             height={500}
-            className="h-full w-full rounded-xl border object-cover object-top"
+            className="h-full w-full rounded-xl object-cover object-top"
           />
         )}
       </div>

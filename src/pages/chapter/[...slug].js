@@ -97,7 +97,7 @@ export default function Index({ data, title }) {
       class: data.fields.class,
       teacher_name: data.fields.subject.fields.teacherName,
       subject_name: data.fields.subject.fields.subjectName,
-      price: 25,
+      price: data.fields.price ? data.fields.price : 25,
       quantity: 1,
       thumbnail: thumbnail_url,
     };

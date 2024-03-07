@@ -1,21 +1,32 @@
 import { cn } from "@/lib/utils";
+import { removeFromCart } from "@/redux/reducer/cart";
+import {
+  Button,
+  Input,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  useDisclosure,
+} from "@nextui-org/react";
 import { ShoppingCart } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useRef, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { UserNav } from "./UserNav";
 import { Logo } from "./icons";
 import { Avatar } from "./ui/avatar";
-import { Button, buttonVariants } from "./ui/button";
-import { Input } from "./ui/input";
 
 const Navbar = () => {
+  const { totalQuantity } = useSelector((state) => state.cart);
+
   const [search, setSearch] = useState("");
   const pathname = useRouter().pathname;
   console.log(pathname);
   const { user } = useSelector((state) => state.auth);
-  const { totalQuantity } = useSelector((state) => state.cart);
   const navRef = useRef(null);
   const handleMenuOpen = () => {
     if (navRef.current) {
@@ -28,6 +39,8 @@ const Navbar = () => {
       window.location.href = `/search?q=${search.toLowerCase()}`;
     }
   };
+
+  const dispatch = useDispatch();
 
   return (
     <>
@@ -75,7 +88,12 @@ const Navbar = () => {
           <Input
             type="search"
             placeholder="Search..."
-            className="hidden w-full sm:flex md:w-[150px] lg:w-[300px]"
+            labelPlacement="outside"
+            classNames={{
+              input: "font-medium",
+              inputWrapper:
+                "ring-2 ring-transparent focus-within:ring-2 focus-within:ring-zinc-200 transition-all duration-200 ease-in-out",
+            }}
             onKeyPress={handleSearch}
             value={search}
             onChange={(e) => setSearch(e.target.value)}
@@ -96,17 +114,18 @@ const Navbar = () => {
               <UserNav user={user} />
             ) : (
               <div className="flex items-center gap-2.5">
-                <Link
-                  href="/login"
-                  className={cn(buttonVariants({ variant: "ghost" }))}
-                >
-                  Login
+                <Link href="/login">
+                  <Button className="rounded-md" variant="ghost">
+                    Login
+                  </Button>
                 </Link>
-                <Link
-                  href="/signup"
-                  className={cn(buttonVariants({ variant: "default" }), "px-6")}
-                >
-                  Signup
+                <Link href="/signup">
+                  <Button
+                    className="rounded-md bg-zinc-800 text-white"
+                    variant="solid"
+                  >
+                    Signup
+                  </Button>
                 </Link>
               </div>
             )}

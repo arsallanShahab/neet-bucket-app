@@ -80,4 +80,17 @@ body {
   }
 }
 
+::-webkit-scrollbar {
+  width: 0.25em;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #a9a9a9;
+  border-radius: 0.125em;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #9ca3af;
+}
+
 /* p-[calc((4em-(1em*1.5)-(0.125em*2)-0.375em)/2)calc(1em*1.5)] */
