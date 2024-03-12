@@ -46,7 +46,7 @@ const Navbar = () => {
     <>
       <div
         className={cn(
-          "flex-row-between relative top-0 z-[700] mx-auto w-full max-w-screen-2xl flex-wrap gap-5 border-b bg-white px-5 py-5 md:px-10",
+          "flex-row-between sticky top-0 z-[700] mx-auto w-full max-w-screen-2xl flex-wrap gap-5 border-b bg-white px-5 py-5 md:px-10",
           pathname == "/login" && " hidden",
         )}
       >
