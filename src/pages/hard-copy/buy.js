@@ -83,7 +83,7 @@ const BuyHardCopy = () => {
         });
       } else {
         toast({
-          title: "Invalid coupon code",
+          title: data?.message || "Invalid coupon code",
           status: "error",
         });
       }
