@@ -30,6 +30,12 @@ export async function POST(request) {
           { order_id: entity.order_id },
           { $set: { payment_status: "paid" } },
         );
+      await db
+        .collection("coupons")
+        .updateOne(
+          { coupon: order?.coupon },
+          { $push: { user: order?.user_id } },
+        );
     } else {
       return new Response(
         JSON.stringify({

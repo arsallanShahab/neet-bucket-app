@@ -16,7 +16,7 @@ const generateReceiptId = () => {
 };
 
 export default async function handler(req, res) {
-  const { amount, quantity, notes: hardcopy, user } = req.body;
+  const { amount, quantity, notes: hardcopy, user, coupon } = req.body;
   const options = {
     amount: amount * 100, // amount in smallest currency unit
     currency: "INR",
@@ -32,6 +32,7 @@ export default async function handler(req, res) {
       user_state: user.state,
       user_pincode: user.pincode,
       user_phone: user.phone,
+      coupon: coupon,
     },
   };
   const razorpay = new Razorpay({
@@ -63,6 +64,7 @@ export default async function handler(req, res) {
         pincode: user.pincode,
         phone: user.phone,
       },
+      coupon: coupon,
     };
     console.log(response, "response");
     const orderRes = await db.collection("orders").insertOne(order);

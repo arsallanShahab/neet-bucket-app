@@ -3,6 +3,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/components/ui/use-toast";
 import Wrapper from "@/components/wrapper";
+import { Button, Input as NextUiInput } from "@nextui-org/react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
@@ -21,6 +22,9 @@ const BuyHardCopy = () => {
   const [phone, setPhone] = React.useState("");
   const [alternatePhone, setAlternatePhone] = React.useState("");
   const [pincode, setPincode] = React.useState("");
+  const [coupon, setCoupon] = React.useState("");
+  const [isCouponApplied, setIsCouponApplied] = React.useState(false);
+  const [price, setPrice] = React.useState(hardCopyItem?.fields?.price || 0);
 
   const router = useRouter();
   const { toast } = useToast();
@@ -40,6 +44,57 @@ const BuyHardCopy = () => {
   if (thumbnail_url?.startsWith("//images.ctfassets.net/")) {
     thumbnail_url = "https:" + thumbnail_url;
   }
+
+  const handleCheckCoupon = async () => {
+    if (!user) {
+      toast({
+        title: "Please login to continue",
+        status: "error",
+      });
+      router.push("/login");
+      return;
+    }
+    if (!coupon) {
+      toast({
+        title: "Please enter a coupon code",
+      });
+      return;
+    }
+    //check the coupon code
+    try {
+      const res = await fetch("/api/coupon/check", {
+        method: "POST",
+        body: JSON.stringify({
+          code: coupon,
+          user: user.id,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await res.json();
+      if (data.discount) {
+        setPrice(price - (data.discount / 100) * price);
+        setIsCouponApplied(true);
+        toast({
+          title: "Coupon code applied successfully",
+          status: "success",
+        });
+      } else {
+        toast({
+          title: "Invalid coupon code",
+          status: "error",
+        });
+      }
+
+      console.log(data, "data");
+    } catch (error) {
+      toast({
+        title: "Invalid coupon code",
+        status: "error",
+      });
+    }
+  };
 
   const handleSubmit = async () => {
     if (!user) {
@@ -101,7 +156,7 @@ const BuyHardCopy = () => {
       const res = await fetch("/api/razorpay/order/hard-copy", {
         method: "POST",
         body: JSON.stringify({
-          amount: hardCopyItem?.fields?.price,
+          amount: price,
           quantity: 1,
           notes: hardCopyItem,
           user: {
@@ -114,6 +169,7 @@ const BuyHardCopy = () => {
             phone,
             pincode,
           },
+          coupon: isCouponApplied ? coupon : "",
         }),
         headers: {
           "Content-Type": "application/json",
@@ -155,83 +211,98 @@ const BuyHardCopy = () => {
       });
     }
   };
+
   return (
     <Wrapper>
       <Heading>{hardCopyItem?.fields?.heading}</Heading>
       <div className="grid w-full gap-5 rounded-xl border bg-zinc-50 px-5 py-5 shadow-sm sm:grid-cols-2 sm:gap-10 sm:px-10">
         <div className="grid">
-          <div className="grid gap-5 border-b py-10">
+          <div className="grid gap-5 border-b pb-5 pt-10">
             <h4 className="text-xl font-medium">Contact Information</h4>
-            <div className="flex w-full flex-col items-start gap-2.5">
-              <Label>Email Address</Label>
-              <Input
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="abc@gmail.com"
-                className="w-full shadow-sm"
-              />
-            </div>
+            <NextUiInput
+              label="Email Address"
+              placeholder="Enter your email address"
+              labelPlacement="outside"
+              value={email}
+              onValueChange={setEmail}
+              variant="bordered"
+              radius="sm"
+            />
           </div>
-          <div className="grid gap-5 py-10">
+          <div className="grid gap-5 py-5">
             <h4 className="text-xl font-medium">Shipping Information</h4>
-            <div className="flex w-full flex-col items-start gap-2.5">
-              <Label>First Name</Label>
-              <Input
-                value={firstName}
-                onChange={(e) => setFirstName(e.target.value)}
-                className="w-full shadow-sm"
-              />
-            </div>
-            <div className="flex w-full flex-col items-start gap-2.5">
-              <Label>Last Name</Label>
-              <Input
-                value={lastName}
-                onChange={(e) => setLastName(e.target.value)}
-                className="w-full shadow-sm"
-              />
-            </div>
-            <div className="flex w-full flex-col items-start gap-2.5">
-              <Label>Phone Number</Label>
-              <Input
-                type="number"
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-                className="w-full shadow-sm"
-              />
-            </div>
-            <div className="flex w-full flex-col items-start gap-2.5">
-              <Label>Address</Label>
-              <Input
-                value={address}
-                onChange={(e) => setAddress(e.target.value)}
-                className="w-full shadow-sm"
-              />
-            </div>
-            <div className="flex w-full flex-col items-start gap-2.5">
-              <Label>City</Label>
-              <Input
-                value={city}
-                onChange={(e) => setCity(e.target.value)}
-                className="w-full shadow-sm"
-              />
-            </div>
-            <div className="flex w-full flex-col items-start gap-2.5">
-              <Label>State</Label>
-              <Input
-                value={state}
-                onChange={(e) => setState(e.target.value)}
-                className="w-full shadow-sm"
-              />
-            </div>
-            <div className="flex w-full flex-col items-start gap-2.5">
-              <Label>Zip / Postal Code</Label>
-              <Input
-                type="number"
-                value={pincode}
-                onChange={(e) => setPincode(e.target.value)}
-                className="w-full shadow-sm"
-              />
-            </div>
+            <NextUiInput
+              label="First Name"
+              placeholder="Enter your first name"
+              labelPlacement="outside"
+              value={firstName}
+              onValueChange={setFirstName}
+              variant="bordered"
+              radius="sm"
+            />
+            <NextUiInput
+              label="Last Name"
+              placeholder="Enter your last name"
+              labelPlacement="outside"
+              value={lastName}
+              onValueChange={setLastName}
+              variant="bordered"
+              radius="sm"
+            />
+            <NextUiInput
+              label="Phone Number"
+              placeholder="Enter your phone number"
+              labelPlacement="outside"
+              value={phone}
+              onValueChange={setPhone}
+              variant="bordered"
+              radius="sm"
+            />
+            {/* <NextUiInput
+              label="Alternate Phone Number"
+              placeholder="Enter your alternate phone number"
+              labelPlacement="outside"
+              value={alternatePhone}
+              onValueChange={setAlternatePhone}
+              variant="bordered"
+              radius="sm"
+            /> */}
+            <NextUiInput
+              label="Address"
+              placeholder="Enter your address"
+              labelPlacement="outside"
+              value={address}
+              onValueChange={setAddress}
+              variant="bordered"
+              radius="sm"
+            />
+            <NextUiInput
+              label="City"
+              placeholder="Enter your city"
+              labelPlacement="outside"
+              value={city}
+              onValueChange={setCity}
+              variant="bordered"
+              radius="sm"
+            />
+            <NextUiInput
+              label="State"
+              placeholder="Enter your state"
+              labelPlacement="outside"
+              value={state}
+              onValueChange={setState}
+              variant="bordered"
+              radius="sm"
+            />
+            <NextUiInput
+              label="Zip / Postal Code"
+              placeholder="Enter your zip / postal code"
+              labelPlacement="outside"
+              value={pincode}
+              onValueChange={setPincode}
+              variant="bordered"
+              radius="sm"
+            />
           </div>
         </div>
         <div>
@@ -254,7 +325,7 @@ const BuyHardCopy = () => {
                 </h4>
                 <div className="flex gap-2.5">
                   <h4 className="text-sm font-medium text-zinc-700">
-                    Price: ₹{hardCopyItem?.fields?.price}
+                    Price: ₹{price}
                   </h4>
                   <h4 className="text-sm font-medium text-zinc-700">
                     Quantity: 1
@@ -262,6 +333,16 @@ const BuyHardCopy = () => {
                 </div>
               </div>
             </div>
+            <NextUiInput
+              label="Coupon Code"
+              placeholder="Enter your coupon code"
+              labelPlacement="outside"
+              value={coupon}
+              onValueChange={setCoupon}
+              variant="bordered"
+              radius="sm"
+              endContent={<Label onClick={handleCheckCoupon}>Apply</Label>}
+            />
           </div>
           <div className="grid gap-5">
             <button

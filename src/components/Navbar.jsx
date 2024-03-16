@@ -92,7 +92,7 @@ const Navbar = () => {
             classNames={{
               input: "font-medium",
               inputWrapper:
-                "ring-2 ring-transparent focus-within:ring-2 focus-within:ring-zinc-200 transition-all duration-200 ease-in-out",
+                "ring-2 ring-transparent focus-within:ring-2 hidden sm:block focus-within:ring-zinc-200 transition-all duration-200 ease-in-out",
             }}
             onKeyPress={handleSearch}
             value={search}

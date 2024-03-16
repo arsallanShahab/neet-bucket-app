@@ -12,7 +12,7 @@ const ViewImage = ({ images }) => {
   });
   return (
     <div className="relative flex h-full w-full flex-col-reverse items-center gap-5 md:flex-row md:items-start">
-      <div className="flex h-[350px] w-auto gap-2.5 overflow-y-auto overflow-x-hidden rounded-lg bg-slate-100 p-2 md:flex-col">
+      <div className="flex w-full gap-2.5 overflow-x-auto rounded-lg bg-slate-100 p-2 sm:h-[350px] sm:w-auto sm:overflow-y-auto sm:overflow-x-hidden md:flex-col">
         {images &&
           images.map((image, index) => {
             let imageUrl = image.fields.file.url;
@@ -23,7 +23,7 @@ const ViewImage = ({ images }) => {
               <div
                 key={index}
                 onClick={() => setCurrentImage(index)}
-                className="h-16 w-16 origin-bottom cursor-pointer rounded-md border duration-150 hover:bg-slate-500 hover:shadow-sm active:ring-2"
+                className="block h-16 w-16 origin-bottom cursor-pointer rounded-md border duration-150 hover:bg-slate-500 hover:shadow-sm active:ring-2"
               >
                 <Image
                   src={imageUrl}
