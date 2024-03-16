@@ -60,6 +60,7 @@ const BuyHardCopy = () => {
       });
       return;
     }
+    if (isCouponApplied) return;
     //check the coupon code
     try {
       const res = await fetch("/api/coupon/check", {
